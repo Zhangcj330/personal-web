@@ -1,98 +1,118 @@
-// 网站全部文案集中放在这里，方便你后续替换成真实内容。
+// All copy for the site lives here. Edit this file to update content
+// without touching component/layout code.
+
 export const site = {
-  name: "你的名字",
-  role: "软件工程师",
-  since: "写代码始于 2020",
-  email: "you@example.com",
+  name: "Your Name",
+  eyebrow: "AI Systems Portfolio",
+  eyebrowSecondary: "Financial Services",
+  headline: "I build AI systems that work in the real world.",
   intro:
-    "嗨，我是[你的名字]，一名专注于构建现代化、可扩展产品的软件工程师。",
-  bio: [
-    "我热衷于打造简洁、高性能的数字产品，擅长从想法到上线的全流程开发。",
-    "多年来，我参与并交付过多个 SaaS 产品与网站项目，帮助团队更快地上线并稳定运行。",
-  ],
-  tagline:
-    "从想法到上线。干净、可扩展的数字产品，追求快速、简单、真实可用，由清晰的思路、结构化的系统与用心的设计驱动。",
+    "Hands-on engineering, agentic AI, and 0→1 product thinking — from ambiguous problem to production system.",
+  tags: ["Hands-on Engineering", "Agentic AI", "Founder Mindset", "Financial Services"],
+  email: "you@example.com",
 };
 
-export const services = [
+export const focusAreas = [
   {
-    title: "全栈开发",
-    items: ["前端开发", "后端 API", "数据库设计"],
+    number: "01",
+    title: "BUILD",
+    description:
+      "Production APIs, cloud systems, data pipelines, security and enterprise integration.",
   },
   {
-    title: "产品工程",
-    items: ["MVP 搭建", "性能优化", "自动化部署"],
+    number: "02",
+    title: "AGENT",
+    description:
+      "Tool use, orchestration, evaluation, guardrails and human-in-the-loop workflows.",
   },
   {
-    title: "UI / 前端",
-    items: ["响应式布局", "交互设计", "组件体系"],
-  },
-  {
-    title: "技术咨询",
-    items: ["架构评审", "技术选型", "团队协作"],
-  },
-];
-
-export const projects = [
-  {
-    title: "项目一标题",
-    description: "项目一简短描述，可替换为真实项目内容。",
-    href: "#",
-    tag: "Web App",
-    image: "https://picsum.photos/seed/project-one/800/500",
-  },
-  {
-    title: "项目二标题",
-    description: "项目二简短描述，可替换为真实项目内容。",
-    href: "#",
-    tag: "SaaS",
-    image: "https://picsum.photos/seed/project-two/800/500",
-  },
-  {
-    title: "项目三标题",
-    description: "项目三简短描述，可替换为真实项目内容。",
-    href: "#",
-    tag: "开源",
-    image: "https://picsum.photos/seed/project-three/800/500",
-  },
-  {
-    title: "项目四标题",
-    description: "项目四简短描述，可替换为真实项目内容。",
-    href: "#",
-    tag: "移动端",
-    image: "https://picsum.photos/seed/project-four/800/500",
+    number: "03",
+    title: "CREATE",
+    description:
+      "0→1 product discovery, rapid prototyping, architecture, deployment and iteration.",
   },
 ];
 
-export const testimonials = [
+export const caseStudies = [
   {
-    quote: "这里放一条客户/同事对你的评价，突出你的专业与合作体验。",
-    name: "张三",
-    role: "产品经理",
+    key: "remediation",
+    index: "01",
+    category: "Agentic AI",
+    title: "AI Remediation Agent",
+    description:
+      "Turning a multi-system manual investigation process into a guided agentic workflow with tool use, classification, validation and human review.",
+    flowLabel: "Incident → context → decision → action",
+    impactLabel: "Impact",
+    impactValue: "0.5 day → <1 hr",
+    note: "Designed the workflow around four remediation pathways, combining context retrieval, reasoning, deterministic checks and human oversight for ambiguous cases.",
+    tags: ["Tool Use", "Agent Workflow", "Evaluation", "Human-in-the-loop"],
   },
   {
-    quote: "这里放另一条推荐语，可以来自合作过的团队或客户。",
-    name: "李四",
-    role: "创业者",
+    key: "homeHealth",
+    index: "02",
+    category: "Production Engineering",
+    title: "Home Health Check",
+    description:
+      "Shipping a customer-facing property intelligence capability across cloud services, vendor systems and enterprise security boundaries.",
+    flowLabel: "Production path",
+    impactLabel: "Scale",
+    impactValue: "50,000 customers",
+    note: "Built for customer-facing delivery with async processing, rate limiting, retries, signed URLs and gateway controls.",
+    tags: ["Cloud Run", "Cloud Tasks", "API Gateway", "HMAC", "Nearmap / Vexcel"],
   },
   {
-    quote: "这里放第三条推荐语，展示不同角度的认可。",
-    name: "王五",
-    role: "前端工程师",
+    key: "situational",
+    index: "03",
+    category: "Real-time Intelligence",
+    title: "Situational Awareness Map",
+    description:
+      "Combining catastrophe observations and forecasts with property and policy exposure to support operational decisions during major events.",
+    flowLabel: "Cyclone / Flood / Hail — forecast + observed → exposure",
+    impactLabel: "Question",
+    impactValue: "What is impacted — now and next?",
+    note: "Built around near-real-time event data, geospatial processing, observation-vs-forecast logic and exposure matching across internal and external datasets.",
+    tags: ["Geospatial", "Catastrophe", "Near Real-time", "Decision Support"],
+  },
+  {
+    key: "brickAi",
+    index: "04",
+    category: "Founder Mindset",
+    title: "Brick AI",
+    description:
+      "A 0→1 AI property intelligence product built across user discovery, product design, data quality, conversational AI and deployment.",
+    flowLabel: "Founder Journey",
+    impactLabel: "Founder Journey",
+    impactValue: "0 → 1",
+    note: "No predefined ticket. No fixed spec. I owned the problem, product hypothesis, architecture, implementation, evaluation and iteration.",
+    tags: ["LLM Product", "Property Data", "Evaluation", "Product Discovery"],
+  },
+  {
+    key: "newsRec",
+    index: "05",
+    category: "Production ML",
+    title: "News Recommendation",
+    description:
+      "Earlier production ML work connecting recommendation logic, data pipelines and cloud services — showing continuity from ML systems into GenAI.",
+    flowLabel: "Personalised news feed",
+    impactLabel: "Why it matters",
+    impactValue: "ML → GenAI",
+    note: "Production recommendation experience provides the foundation: data quality, serving, product feedback loops and real-world system constraints.",
+    tags: ["Recommendation", "ML Pipelines", "Cloud", "Production"],
   },
 ];
 
-export const posts = [
-  {
-    date: "2025 年 5 月 5 日",
-    title: "文章标题一",
-    summary: "文章简短摘要，介绍这篇文章讨论的主题。",
-    href: "#",
-  },
-  {
-    date: "2025 年 6 月 16 日",
-    title: "文章标题二",
-    summary: "文章简短摘要，介绍这篇文章讨论的主题。",
-    href: "#",
-  },
+export const process = [
+  { number: "01", title: "Discover", description: "Find the real business problem." },
+  { number: "02", title: "Prototype", description: "Build the smallest useful solution." },
+  { number: "03", title: "Integrate", description: "Connect APIs, data and systems." },
+  { number: "04", title: "Evaluate", description: "Accuracy, safety, latency, value." },
+  { number: "05", title: "Productionise", description: "Security, reliability, observability." },
+  { number: "06", title: "Scale", description: "Turn patterns into reusable capability." },
 ];
+
+export const closing = {
+  eyebrow: "Forward Deployed Engineering",
+  statement: "AI is only useful when it survives the real world.",
+  description:
+    "I build at the intersection of AI, software engineering and messy enterprise problems — especially in financial services.",
+};

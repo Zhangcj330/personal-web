@@ -2,12 +2,10 @@ import Link from "next/link";
 import { site } from "@/data/content";
 
 const navItems = [
-  { label: "关于", href: "#about" },
-  { label: "服务", href: "#services" },
-  { label: "作品", href: "#projects" },
-  { label: "推荐语", href: "#testimonials" },
-  { label: "博客", href: "#blog" },
-  { label: "联系", href: "#contact" },
+  { label: "Focus", href: "#focus" },
+  { label: "Case Studies", href: "#case-studies" },
+  { label: "How I Build", href: "#process" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
@@ -34,7 +32,7 @@ export default function Navbar() {
           href="#contact"
           className="rounded-full border border-foreground px-4 py-2 text-sm font-medium transition-colors duration-300 hover:bg-foreground hover:text-white"
         >
-          联系我
+          Get in Touch
         </a>
       </nav>
     </header>

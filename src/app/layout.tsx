@@ -17,14 +17,15 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "你的名字 · 个人网站",
-  description: "软件工程师 / 个人作品集与博客",
+  title: "Your Name · AI Systems Portfolio",
+  description:
+    "AI Systems Portfolio for Financial Services — hands-on engineering, agentic AI, and 0→1 product thinking.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="zh-CN"
+      lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
