@@ -12,7 +12,7 @@ export default function Hero() {
         <span>{site.since}</span>
       </Reveal>
       <Reveal delay={0.1}>
-        <h1 className="max-w-4xl text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
+        <h1 className="max-w-4xl font-display text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
           {site.role.toUpperCase()}
         </h1>
       </Reveal>

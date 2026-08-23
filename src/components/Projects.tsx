@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data/content";
 import Reveal from "@/components/Reveal";
@@ -21,10 +22,14 @@ export default function Projects() {
                 href={project.href}
                 className="group flex flex-col gap-4 rounded-2xl border border-border p-6 transition-colors hover:border-foreground"
               >
-                <div className="flex aspect-video items-center justify-center overflow-hidden rounded-xl bg-zinc-100 text-sm text-muted">
-                  <span className="transition-transform duration-500 ease-out group-hover:scale-110">
-                    项目预览图
-                  </span>
+                <div className="relative aspect-video overflow-hidden rounded-xl bg-zinc-100">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                  />
                 </div>
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold group-hover:underline">

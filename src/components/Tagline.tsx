@@ -6,7 +6,7 @@ export default function Tagline() {
     <section className="mx-auto max-w-6xl px-6 py-16">
       <div className="border-t border-border pt-12">
         <Reveal>
-          <p className="text-3xl font-medium leading-snug tracking-tight sm:text-5xl">
+          <p className="font-display text-3xl font-medium leading-snug tracking-tight sm:text-5xl">
             {site.tagline}
           </p>
         </Reveal>

@@ -6,7 +6,7 @@ export default function Contact() {
     <section id="contact" className="mx-auto max-w-6xl px-6 py-20">
       <Reveal className="flex flex-col gap-10 rounded-3xl border border-border p-10 sm:p-16">
         <div>
-          <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+          <h2 className="font-display text-4xl font-semibold tracking-tight sm:text-5xl">
             聊一聊。
           </h2>
           <p className="mt-4 max-w-xl text-lg text-muted">

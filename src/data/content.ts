@@ -39,24 +39,28 @@ export const projects = [
     description: "项目一简短描述，可替换为真实项目内容。",
     href: "#",
     tag: "Web App",
+    image: "https://picsum.photos/seed/project-one/800/500",
   },
   {
     title: "项目二标题",
     description: "项目二简短描述，可替换为真实项目内容。",
     href: "#",
     tag: "SaaS",
+    image: "https://picsum.photos/seed/project-two/800/500",
   },
   {
     title: "项目三标题",
     description: "项目三简短描述，可替换为真实项目内容。",
     href: "#",
     tag: "开源",
+    image: "https://picsum.photos/seed/project-three/800/500",
   },
   {
     title: "项目四标题",
     description: "项目四简短描述，可替换为真实项目内容。",
     href: "#",
     tag: "移动端",
+    image: "https://picsum.photos/seed/project-four/800/500",
   },
 ];
 
