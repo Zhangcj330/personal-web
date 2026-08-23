@@ -1,9 +1,10 @@
 import { site } from "@/data/content";
+import Reveal from "@/components/Reveal";
 
 export default function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-6xl px-6 py-20">
-      <div className="flex flex-col gap-10 rounded-3xl border border-border p-10 sm:p-16">
+      <Reveal className="flex flex-col gap-10 rounded-3xl border border-border p-10 sm:p-16">
         <div>
           <h2 className="text-4xl font-semibold tracking-tight sm:text-5xl">
             聊一聊。
@@ -16,21 +17,21 @@ export default function Contact() {
           <input
             type="text"
             placeholder="你的名字"
-            className="rounded-xl border border-border bg-transparent px-4 py-3 outline-none focus:border-foreground"
+            className="rounded-xl border border-border bg-transparent px-4 py-3 outline-none transition-colors focus:border-foreground"
           />
           <input
             type="email"
             placeholder="你的邮箱"
-            className="rounded-xl border border-border bg-transparent px-4 py-3 outline-none focus:border-foreground"
+            className="rounded-xl border border-border bg-transparent px-4 py-3 outline-none transition-colors focus:border-foreground"
           />
           <textarea
             placeholder="项目信息"
             rows={5}
-            className="col-span-1 rounded-xl border border-border bg-transparent px-4 py-3 outline-none focus:border-foreground sm:col-span-2"
+            className="col-span-1 rounded-xl border border-border bg-transparent px-4 py-3 outline-none transition-colors focus:border-foreground sm:col-span-2"
           />
           <button
             type="submit"
-            className="col-span-1 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 sm:col-span-2 sm:w-fit"
+            className="col-span-1 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-white transition-transform duration-300 hover:-translate-y-0.5 hover:opacity-90 sm:col-span-2 sm:w-fit"
           >
             发送消息
           </button>
@@ -41,7 +42,7 @@ export default function Contact() {
             {site.email}
           </a>
         </p>
-      </div>
+      </Reveal>
     </section>
   );
 }

@@ -22,16 +22,17 @@ export default function Navbar() {
             <li key={item.href}>
               <a
                 href={item.href}
-                className="transition-colors hover:text-foreground"
+                className="group relative py-1 transition-colors hover:text-foreground"
               >
                 {item.label}
+                <span className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-foreground transition-transform duration-300 group-hover:scale-x-100" />
               </a>
             </li>
           ))}
         </ul>
         <a
           href="#contact"
-          className="rounded-full border border-foreground px-4 py-2 text-sm font-medium transition-colors hover:bg-foreground hover:text-white"
+          className="rounded-full border border-foreground px-4 py-2 text-sm font-medium transition-colors duration-300 hover:bg-foreground hover:text-white"
         >
           联系我
         </a>
