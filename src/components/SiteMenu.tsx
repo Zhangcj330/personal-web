@@ -25,8 +25,8 @@ export default function SiteMenu() {
       menuButtonColor="#111111"
       openMenuButtonColor="#111111"
       changeMenuColorOnOpen
-      accentColor="#111111"
-      colors={["#f4f4f5", "#e5e5e5"]}
+      accentColor="#ff6b6b"
+      colors={["#B497CF", "#5227FF"]}
     />
   );
 }
