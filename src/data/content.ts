@@ -2,14 +2,14 @@
 // without touching component/layout code.
 
 export const site = {
-  name: "Your Name",
+  name: "Choosie Zhang",
   eyebrow: "AI Systems Portfolio",
   eyebrowSecondary: "Financial Services",
   headline: "I build AI systems that work in the real world.",
   intro:
     "Hands-on engineering, agentic AI, and 0→1 product thinking — from ambiguous problem to production system.",
   tags: ["Hands-on Engineering", "Agentic AI", "Founder Mindset", "Financial Services"],
-  email: "you@example.com",
+  email: "choosiezhang@gmail.com",
 };
 
 export const focusAreas = [
