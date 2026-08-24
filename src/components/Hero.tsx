@@ -8,6 +8,10 @@ export default function Hero() {
       className="mx-auto flex max-w-6xl flex-col gap-6 px-6 pb-16 pt-20 sm:pt-28"
     >
       <Reveal className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-muted">
+        <span className="font-semibold text-foreground">{site.name}</span>
+        <span className="text-border">·</span>
+        <span>{site.role}</span>
+        <span className="text-border">·</span>
         <span>{site.eyebrow}</span>
         <span className="text-border">·</span>
         <span>{site.eyebrowSecondary}</span>

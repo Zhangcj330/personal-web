@@ -5,6 +5,7 @@ export const site = {
   name: "Choosie Zhang",
   eyebrow: "AI Systems Portfolio",
   eyebrowSecondary: "Financial Services",
+  role: "AI Engineer",
   headline: "I build AI systems that work in the real world.",
   intro:
     "Hands-on engineering, agentic AI, and 0→1 product thinking — from ambiguous problem to production system.",
