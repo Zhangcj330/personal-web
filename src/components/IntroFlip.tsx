@@ -3,7 +3,7 @@
 import Image from "next/image";
 import PixelSwap from "@/components/PixelSwap";
 import Reveal from "@/components/Reveal";
-import { caseStudies, site } from "@/data/content";
+import { caseStudies, iagWork, site } from "@/data/content";
 
 const brickAi = caseStudies.find((study) => study.key === "brickAi")!;
 
@@ -12,7 +12,7 @@ export default function IntroFlip() {
     <section className="mx-auto max-w-6xl px-6 pb-16">
       <Reveal>
         {/* Full-width hover card: front is the day-job intro, back reveals
-            the founder side. Photo lives at public/photos/choosie.jpg. */}
+            the founder side. Photo lives at public/photos/choosie-brickai.jpg. */}
         <div className="h-[640px] sm:h-[480px] lg:h-[420px]">
           <PixelSwap
             className="h-full rounded-3xl border border-border"
@@ -27,7 +27,7 @@ export default function IntroFlip() {
                 <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start lg:pt-1">
                   <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-foreground">
                     <Image
-                      src="/photos/choosie.jpg"
+                      src="/photos/choosie-brickai.jpg"
                       alt={site.name}
                       fill
                       sizes="96px"
@@ -38,19 +38,24 @@ export default function IntroFlip() {
                     Hover to see the other side →
                   </span>
                 </div>
-                <div className="flex max-w-2xl flex-col gap-4">
+                <div className="flex max-w-2xl flex-col gap-4 overflow-y-auto">
                   <span className="text-xs font-semibold uppercase tracking-widest text-muted">
                     By day
                   </span>
                   <h3 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                    {site.name} — {site.role} at IAG
+                    {iagWork.heading}
                   </h3>
-                  <p className="text-base text-muted sm:text-lg">
-                    {site.intro} I work across production APIs, cloud data
-                    pipelines and agentic AI workflows inside a large
-                    financial services organisation — from incident
-                    remediation agents to real-time risk intelligence.
-                  </p>
+                  <p className="text-base text-muted sm:text-lg">{iagWork.lead}</p>
+                  <div className="flex flex-col gap-3">
+                    {iagWork.items.map((item) => (
+                      <div key={item.title}>
+                        <h4 className="text-sm font-semibold text-foreground">
+                          {item.title}
+                        </h4>
+                        <p className="text-sm text-muted">{item.description}</p>
+                      </div>
+                    ))}
+                  </div>
                   <div className="flex flex-wrap gap-2 pt-1">
                     {site.tags.map((tag) => (
                       <span
@@ -69,7 +74,7 @@ export default function IntroFlip() {
                 <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start lg:pt-1">
                   <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-white">
                     <Image
-                      src="/photos/choosie.jpg"
+                      src="/photos/choosie-brickai.jpg"
                       alt={site.name}
                       fill
                       sizes="96px"

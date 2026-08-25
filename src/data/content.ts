@@ -13,6 +13,29 @@ export const site = {
   email: "choosiezhang@gmail.com",
 };
 
+// Day-job content shown on the front face of the IntroFlip card.
+export const iagWork = {
+  heading: "AI/Data Engineer at IAG",
+  lead: "Building property intelligence for insurers and customers.",
+  items: [
+    {
+      title: "Home Health Check",
+      description:
+        "Led the backend and API architecture powering AI-driven property insights and recommendations for 200,000+ customers, helping homeowners better understand and manage their property risks.",
+    },
+    {
+      title: "Situational Awareness Map",
+      description:
+        "Built real-time geospatial intelligence that helps claims teams identify properties impacted by major weather events and respond faster.",
+    },
+    {
+      title: "AI Automation",
+      description:
+        "Transformed a half-day manual location-fix workflow into an AI-agent-driven process.",
+    },
+  ],
+};
+
 // Logos referenced here should be dropped into public/logos/ (see filename
 // in each `logo` field). LogoLoop falls back to a text badge with the
 // company name until the real file exists at that path.
