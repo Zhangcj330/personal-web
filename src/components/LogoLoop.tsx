@@ -176,9 +176,17 @@ export default function LogoLoop({ items }: { items: LogoLoopItem[] }) {
   const updateDimensions = useCallback(() => {
     const containerWidth = containerRef.current?.clientWidth ?? 0;
     const sequenceWidth = seqRef.current?.getBoundingClientRect?.().width ?? 0;
+    // The track's own flex `gap` only applies *between* the repeated
+    // sequence copies (not within one), so the true loop period is the
+    // sequence width plus that gap - otherwise the last item of one copy
+    // and the first item of the next would end up touching with no space.
+    const trackGap = trackRef.current
+      ? parseFloat(getComputedStyle(trackRef.current).columnGap || "0") || 0
+      : 0;
     if (sequenceWidth > 0) {
-      setSeqWidth(Math.ceil(sequenceWidth));
-      const copiesNeeded = Math.ceil(containerWidth / sequenceWidth) + ANIMATION_CONFIG.COPY_HEADROOM;
+      const period = sequenceWidth + trackGap;
+      setSeqWidth(Math.ceil(period));
+      const copiesNeeded = Math.ceil(containerWidth / period) + ANIMATION_CONFIG.COPY_HEADROOM;
       setCopyCount(Math.max(ANIMATION_CONFIG.MIN_COPIES, copiesNeeded));
     }
   }, []);

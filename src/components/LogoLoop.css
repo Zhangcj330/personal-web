@@ -23,6 +23,11 @@
 .logo-loop__track {
   display: flex;
   width: max-content;
+  /* Matches .logo-loop__sequence's internal gap so the last item of one
+     copy and the first item of the next copy are spaced the same as any
+     other pair of neighboring logos (the track's own flex gap doesn't
+     otherwise apply between the separate <ul> sequence copies). */
+  gap: 4rem;
   will-change: transform;
 }
 
