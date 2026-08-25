@@ -32,7 +32,7 @@ export default function IntroFlip() {
                       className="object-cover"
                     />
                   </span>
-                  <span className="text-sm font-medium text-muted">
+                  <span className="flex h-10 items-center text-sm font-medium text-muted">
                     Hover to see the other side →
                   </span>
                 </div>
@@ -79,7 +79,7 @@ export default function IntroFlip() {
                       className="object-cover"
                     />
                   </span>
-                  <span className="text-sm font-medium text-white/60">
+                  <span className="flex h-10 items-center text-sm font-medium text-white/60">
                     Also a founder
                   </span>
                 </div>

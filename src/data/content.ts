@@ -72,7 +72,7 @@ export const companies = [
   { name: "NewsCorp", logo: "/logos/News-Corp-650x350.webp" },
   { name: "Servian", logo: "/logos/servian.png" },
   { name: "Suncorp", logo: "/logos/suncorp.webp" },
-  { name: "Brick AI", logo: "/logos/brick-ai.svg" },
+  { name: "Brick AI", logo: "/logos/brickai.svg" },
 ];
 
 
