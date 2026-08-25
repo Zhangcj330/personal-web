@@ -3,16 +3,20 @@
 import { site } from "@/data/content";
 import StaggeredMenu from "@/components/StaggeredMenu";
 
-const menuItems = [
-  { label: "Focus", ariaLabel: "Go to focus areas", link: "#focus" },
-  { label: "Case Studies", ariaLabel: "Go to case studies", link: "#case-studies" },
-  { label: "How I Build", ariaLabel: "Go to how I build", link: "#process" },
-  { label: "Contact", ariaLabel: "Go to contact", link: "#contact" },
-];
-
 const socialItems = [{ label: "Email", link: `mailto:${site.email}` }];
 
-export default function SiteMenu() {
+// `homeAnchors`: when true (default, used on the homepage) the menu links
+// to same-page anchors like "#focus". Work detail pages aren't on "/", so
+// those anchors need to point back to the homepage first (e.g. "/#focus").
+export default function SiteMenu({ homeAnchors = true }: { homeAnchors?: boolean }) {
+  const prefix = homeAnchors ? "" : "/";
+  const menuItems = [
+    { label: "Focus", ariaLabel: "Go to focus areas", link: `${prefix}#focus` },
+    { label: "Case Studies", ariaLabel: "Go to case studies", link: `${prefix}#case-studies` },
+    { label: "How I Build", ariaLabel: "Go to how I build", link: `${prefix}#process` },
+    { label: "Contact", ariaLabel: "Go to contact", link: `${prefix}#contact` },
+  ];
+
   return (
     <StaggeredMenu
       position="right"
