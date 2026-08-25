@@ -67,11 +67,11 @@ export const iagWork = {
 // in each `logo` field). LogoLoop falls back to a text badge with the
 // company name until the real file exists at that path.
 export const companies = [
-  { name: "IAG", logo: "/logos/iag.svg" },
-  { name: "Westpac", logo: "/logos/westpac.svg" },
-  { name: "NewsCorp", logo: "/logos/newscorp.svg" },
-  { name: "Servian", logo: "/logos/servian.svg" },
-  { name: "Suncorp", logo: "/logos/suncorp.svg" },
+  { name: "IAG", logo: "/logos/IAG.png" },
+  { name: "Westpac", logo: "/logos/Wpc.png" },
+  { name: "NewsCorp", logo: "/logos/News-Corp-650x350.webp" },
+  { name: "Servian", logo: "/logos/servian.png" },
+  { name: "Suncorp", logo: "/logos/suncorp.webp" },
   { name: "Brick AI", logo: "/logos/brick-ai.svg" },
 ];
 
