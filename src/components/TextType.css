@@ -5,7 +5,7 @@
 
 .text-type__cursor {
   margin-left: 0.25rem;
-  display: inline-block;
+  display: inline;
   opacity: 1;
 }
 

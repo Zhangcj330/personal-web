@@ -12,7 +12,7 @@ export default function Hero() {
         <span className="font-semibold text-foreground">{site.name}</span>
       </Reveal>
       <Reveal delay={0.1}>
-        <h1 className="max-w-4xl font-display text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
+        <h1 className="max-w-5xl font-display text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
           Choosie is building{" "}
           <TextType
             as="span"
