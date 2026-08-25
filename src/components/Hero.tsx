@@ -9,17 +9,11 @@ export default function Hero() {
     >
       <Reveal className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-muted">
         <span className="font-semibold text-foreground">{site.name}</span>
-        <span className="text-border">·</span>
-        <span>{site.role}</span>
-        <span className="text-border">·</span>
-        <span>{site.eyebrow}</span>
-        <span className="text-border">·</span>
-        <span>{site.eyebrowSecondary}</span>
       </Reveal>
       <Reveal delay={0.1}>
         <h1 className="max-w-4xl font-display text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
-          Choosie is making{" "}
-          <span className="underline decoration-4 underline-offset-8">
+          Choosie is building{" "}
+          <span className="underline decoration-4 decoration-gray-300 underline-offset-8">
             Brick AI
           </span>
         </h1>
