@@ -17,16 +17,22 @@
   );
 }
 
+/* Positioned by JS via translate3d on every animation frame (see
+   LogoLoop.tsx's useAnimationLoop) rather than a CSS @keyframes loop, so
+   the offset always matches the real measured sequence width. */
 .logo-loop__track {
   display: flex;
   width: max-content;
-  align-items: center;
-  gap: 4rem;
-  animation: logo-loop-scroll 24s linear infinite;
+  will-change: transform;
 }
 
-.logo-loop:hover .logo-loop__track {
-  animation-play-state: paused;
+.logo-loop__sequence {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .logo-loop__item {
@@ -41,6 +47,8 @@
   height: 100%;
   width: auto;
   object-fit: contain;
+  pointer-events: none;
+  -webkit-user-drag: none;
 }
 
 /* The Brick AI mark is a full-bleed square icon (no built-in whitespace
@@ -51,25 +59,8 @@
   padding: 0.6rem 0;
 }
 
-.logo-loop__fallback {
-  white-space: nowrap;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--muted);
-  letter-spacing: 0.02em;
-}
-
-@keyframes logo-loop-scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .logo-loop__track {
-    animation: none;
+    transform: none !important;
   }
 }
