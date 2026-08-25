@@ -34,19 +34,21 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  height: 2.25rem;
+  height: 3.5rem;
 }
 
 .logo-loop__logo {
   height: 100%;
   width: auto;
   object-fit: contain;
-  filter: grayscale(1) opacity(0.6);
-  transition: filter 0.3s ease;
 }
 
-.logo-loop__item:hover .logo-loop__logo {
-  filter: grayscale(0) opacity(1);
+/* The Brick AI mark is a full-bleed square icon (no built-in whitespace
+   like the other wordmark/logo files), so give it some breathing room to
+   match the visual weight of the rest of the strip. */
+.logo-loop__item--brick-ai {
+  box-sizing: border-box;
+  padding: 0.6rem 0;
 }
 
 .logo-loop__fallback {

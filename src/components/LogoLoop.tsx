@@ -31,9 +31,11 @@ function LogoItem({ name, logo }: LogoItemProps) {
     };
   }, [logo]);
 
+  const slug = name.toLowerCase().replace(/\s+/g, "-");
+
   if (status === "ok") {
     return (
-      <div className="logo-loop__item">
+      <div className={`logo-loop__item logo-loop__item--${slug}`}>
         {/* eslint-disable-next-line @next/next/no-img-element -- decorative
             logo strip; a plain <img> avoids next/image's fixed sizing
             requirements for a variable-width marquee. */}
