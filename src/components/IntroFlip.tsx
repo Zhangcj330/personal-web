@@ -1,15 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import PixelSwap from "@/components/PixelSwap";
 import Reveal from "@/components/Reveal";
 import { caseStudies, site } from "@/data/content";
-
-const initials = site.name
-  .split(" ")
-  .map((part) => part[0])
-  .join("")
-  .slice(0, 2)
-  .toUpperCase();
 
 const brickAi = caseStudies.find((study) => study.key === "brickAi")!;
 
@@ -18,8 +12,7 @@ export default function IntroFlip() {
     <section className="mx-auto max-w-6xl px-6 pb-16">
       <Reveal>
         {/* Full-width hover card: front is the day-job intro, back reveals
-            the founder side. Swap the initials avatar below for a real
-            photo once one is available. */}
+            the founder side. Photo lives at public/photos/choosie.jpg. */}
         <div className="h-[640px] sm:h-[480px] lg:h-[420px]">
           <PixelSwap
             className="h-full rounded-3xl border border-border"
@@ -32,8 +25,14 @@ export default function IntroFlip() {
             firstContent={
               <div className="flex h-full w-full flex-col justify-center gap-6 bg-zinc-50 p-8 sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
                 <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start lg:pt-1">
-                  <span className="flex h-24 w-24 items-center justify-center rounded-full bg-foreground text-3xl font-semibold text-white">
-                    {initials}
+                  <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-foreground">
+                    <Image
+                      src="/photos/choosie.jpg"
+                      alt={site.name}
+                      fill
+                      sizes="96px"
+                      className="object-cover"
+                    />
                   </span>
                   <span className="text-sm font-medium text-muted">
                     Hover to see the other side →
@@ -68,8 +67,14 @@ export default function IntroFlip() {
             secondContent={
               <div className="flex h-full w-full flex-col justify-center gap-6 bg-foreground p-8 text-white sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
                 <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start lg:pt-1">
-                  <span className="flex h-24 w-24 items-center justify-center rounded-full bg-white text-3xl font-semibold text-foreground">
-                    {initials}
+                  <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-white">
+                    <Image
+                      src="/photos/choosie.jpg"
+                      alt={site.name}
+                      fill
+                      sizes="96px"
+                      className="object-cover"
+                    />
                   </span>
                   <span className="text-sm font-medium text-white/60">
                     Also a founder
