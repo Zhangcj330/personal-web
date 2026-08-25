@@ -22,13 +22,13 @@ export default function IntroFlip() {
             trigger="hover"
             firstContent={
               <div className="flex h-full w-full flex-col justify-center gap-6 bg-zinc-50 p-8 sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
-                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40">
-                  <span className="relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-foreground">
+                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-48 lg:self-center">
+                  <span className="relative flex h-40 w-40 items-center justify-center overflow-hidden rounded-full bg-foreground">
                     <Image
                       src="/photos/choosie-brickai.jpg"
                       alt={site.name}
                       fill
-                      sizes="128px"
+                      sizes="160px"
                       className="object-cover"
                     />
                   </span>
@@ -69,13 +69,13 @@ export default function IntroFlip() {
             }
             secondContent={
               <div className="flex h-full w-full flex-col justify-center gap-6 bg-foreground p-8 text-white sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
-                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40">
-                  <span className="relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-white">
+                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-48 lg:self-center">
+                  <span className="relative flex h-40 w-40 items-center justify-center overflow-hidden rounded-full bg-white">
                     <Image
                       src="/photos/choosie-brickai.jpg"
                       alt={site.name}
                       fill
-                      sizes="128px"
+                      sizes="160px"
                       className="object-cover"
                     />
                   </span>
