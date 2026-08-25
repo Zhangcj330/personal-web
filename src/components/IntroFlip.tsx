@@ -30,8 +30,8 @@ export default function IntroFlip() {
             pattern="random"
             trigger="hover"
             firstContent={
-              <div className="flex h-full w-full flex-col justify-center gap-6 bg-zinc-50 p-8 sm:p-12 lg:flex-row lg:items-start lg:gap-12">
-                <div className="flex shrink-0 flex-col items-center gap-3 lg:items-start lg:pt-1">
+              <div className="flex h-full w-full flex-col justify-center gap-6 bg-zinc-50 p-8 sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
+                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start lg:pt-1">
                   <span className="flex h-24 w-24 items-center justify-center rounded-full bg-foreground text-3xl font-semibold text-white">
                     {initials}
                   </span>
@@ -66,8 +66,8 @@ export default function IntroFlip() {
               </div>
             }
             secondContent={
-              <div className="flex h-full w-full flex-col justify-center gap-6 bg-foreground p-8 text-white sm:p-12 lg:flex-row lg:items-start lg:gap-12">
-                <div className="flex shrink-0 flex-col items-center gap-3 lg:items-start lg:pt-1">
+              <div className="flex h-full w-full flex-col justify-center gap-6 bg-foreground p-8 text-white sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
+                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start lg:pt-1">
                   <span className="flex h-24 w-24 items-center justify-center rounded-full bg-white text-3xl font-semibold text-foreground">
                     {initials}
                   </span>
