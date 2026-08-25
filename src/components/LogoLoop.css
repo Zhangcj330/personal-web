@@ -25,6 +25,10 @@
   animation: logo-loop-scroll 24s linear infinite;
 }
 
+.logo-loop:hover .logo-loop__track {
+  animation-play-state: paused;
+}
+
 .logo-loop__item {
   display: flex;
   flex-shrink: 0;
