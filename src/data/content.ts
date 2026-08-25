@@ -13,6 +13,19 @@ export const site = {
   email: "choosiezhang@gmail.com",
 };
 
+// Logos referenced here should be dropped into public/logos/ (see filename
+// in each `logo` field). LogoLoop falls back to a text badge with the
+// company name until the real file exists at that path.
+export const companies = [
+  { name: "IAG", logo: "/logos/iag.svg" },
+  { name: "Westpac", logo: "/logos/westpac.svg" },
+  { name: "NewsCorp", logo: "/logos/newscorp.svg" },
+  { name: "Servian", logo: "/logos/servian.svg" },
+  { name: "Suncorp", logo: "/logos/suncorp.svg" },
+  { name: "Brick AI", logo: "/logos/brick-ai.svg" },
+];
+
+
 export const focusAreas = [
   {
     number: "01",

@@ -1,6 +1,7 @@
 import SiteMenu from "@/components/SiteMenu";
 import Hero from "@/components/Hero";
 import IntroFlip from "@/components/IntroFlip";
+import CompanyLogos from "@/components/CompanyLogos";
 import Focus from "@/components/Focus";
 import CaseStudies from "@/components/CaseStudies";
 import Process from "@/components/Process";
@@ -15,6 +16,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <IntroFlip />
+        <CompanyLogos />
         <Focus />
         <CaseStudies />
         <Process />
