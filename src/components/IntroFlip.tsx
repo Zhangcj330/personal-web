@@ -3,9 +3,7 @@
 import Image from "next/image";
 import PixelSwap from "@/components/PixelSwap";
 import Reveal from "@/components/Reveal";
-import { caseStudies, founderWork, iagWork, site } from "@/data/content";
-
-const brickAi = caseStudies.find((study) => study.key === "brickAi")!;
+import { founderWork, iagWork, site } from "@/data/content";
 
 export default function IntroFlip() {
   return (
@@ -23,14 +21,14 @@ export default function IntroFlip() {
             pattern="random"
             trigger="hover"
             firstContent={
-              <div className="flex h-full w-full flex-col justify-center gap-6 bg-zinc-50 p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-start lg:gap-12">
-                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start">
-                  <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-foreground">
+              <div className="flex h-full w-full flex-col justify-center gap-6 bg-zinc-50 p-8 sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
+                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40">
+                  <span className="relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-foreground">
                     <Image
                       src="/photos/choosie-brickai.jpg"
                       alt={site.name}
                       fill
-                      sizes="96px"
+                      sizes="128px"
                       className="object-cover"
                     />
                   </span>
@@ -48,7 +46,7 @@ export default function IntroFlip() {
                   <p className="text-base text-muted sm:text-lg">{iagWork.lead}</p>
                   <div className="flex flex-col gap-3">
                     {iagWork.items.map((item) => (
-                      <div key={item.title}>
+                      <div key={item.title} className="min-h-[84px]">
                         <h4 className="text-sm font-semibold text-foreground">
                           {item.title}
                         </h4>
@@ -57,7 +55,7 @@ export default function IntroFlip() {
                     ))}
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
-                    {site.tags.map((tag) => (
+                    {iagWork.tags.map((tag) => (
                       <span
                         key={tag}
                         className="rounded-full border border-border bg-white px-3 py-1 text-xs text-muted"
@@ -70,14 +68,14 @@ export default function IntroFlip() {
               </div>
             }
             secondContent={
-              <div className="flex h-full w-full flex-col justify-center gap-6 bg-foreground p-8 text-white sm:p-12 lg:flex-row lg:items-center lg:justify-start lg:gap-12">
-                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start">
-                  <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-white">
+              <div className="flex h-full w-full flex-col justify-center gap-6 bg-foreground p-8 text-white sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
+                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40">
+                  <span className="relative flex h-32 w-32 items-center justify-center overflow-hidden rounded-full bg-white">
                     <Image
                       src="/photos/choosie-brickai.jpg"
                       alt={site.name}
                       fill
-                      sizes="96px"
+                      sizes="128px"
                       className="object-cover"
                     />
                   </span>
@@ -95,7 +93,7 @@ export default function IntroFlip() {
                   <p className="text-base text-white/80 sm:text-lg">{founderWork.lead}</p>
                   <div className="flex flex-col gap-3">
                     {founderWork.items.map((item) => (
-                      <div key={item.title}>
+                      <div key={item.title} className="min-h-[84px]">
                         <h4 className="text-sm font-semibold text-white">
                           {item.title}
                         </h4>
@@ -119,7 +117,7 @@ export default function IntroFlip() {
                     ))}
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
-                    {brickAi.tags.map((tag) => (
+                    {founderWork.tags.map((tag) => (
                       <span
                         key={tag}
                         className="rounded-full border border-white/30 px-3 py-1 text-xs text-white/80"

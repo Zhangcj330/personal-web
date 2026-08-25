@@ -19,6 +19,7 @@ export const founderWork = {
   label: "FOUNDER / BUILDER",
   heading: "Founder / Builder at Brick AI",
   lead: "Turning ideas into products with AI.",
+  tags: ["Founder Mindset", "Product Discovery"],
   items: [
     {
       title: "Brick AI",
@@ -42,6 +43,7 @@ export const founderWork = {
 export const iagWork = {
   heading: "AI/Data Engineer at IAG",
   lead: "Building property intelligence for insurers and customers.",
+  tags: ["Hands-on Engineering", "AI Native"],
   items: [
     {
       title: "Home Health Check",
