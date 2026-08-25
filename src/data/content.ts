@@ -17,6 +17,7 @@ export const site = {
 // Founder-side content shown on the back face of the IntroFlip card.
 export const founderWork = {
   label: "FOUNDER / BUILDER",
+  heading: "Founder / Builder at Brick AI",
   lead: "Turning ideas into products with AI.",
   items: [
     {

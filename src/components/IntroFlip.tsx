@@ -13,7 +13,7 @@ export default function IntroFlip() {
       <Reveal>
         {/* Full-width hover card: front is the day-job intro, back reveals
             the founder side. Photo lives at public/photos/choosie-brickai.jpg. */}
-        <div className="h-[640px] sm:h-[480px] lg:h-[420px]">
+        <div className="h-[820px] sm:h-[640px] lg:h-[560px]">
           <PixelSwap
             className="h-full rounded-3xl border border-border"
             pixelSize={28}
@@ -23,8 +23,8 @@ export default function IntroFlip() {
             pattern="random"
             trigger="hover"
             firstContent={
-              <div className="flex h-full w-full flex-col justify-center gap-6 bg-zinc-50 p-8 sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
-                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start lg:pt-1">
+              <div className="flex h-full w-full flex-col justify-center gap-6 bg-zinc-50 p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-start lg:gap-12">
+                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start">
                   <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-foreground">
                     <Image
                       src="/photos/choosie-brickai.jpg"
@@ -70,8 +70,8 @@ export default function IntroFlip() {
               </div>
             }
             secondContent={
-              <div className="flex h-full w-full flex-col justify-center gap-6 bg-foreground p-8 text-white sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
-                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start lg:pt-1">
+              <div className="flex h-full w-full flex-col justify-center gap-6 bg-foreground p-8 text-white sm:p-12 lg:flex-row lg:items-center lg:justify-start lg:gap-12">
+                <div className="flex shrink-0 flex-col items-center gap-3 lg:w-40 lg:items-start">
                   <span className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-full bg-white">
                     <Image
                       src="/photos/choosie-brickai.jpg"
@@ -87,8 +87,11 @@ export default function IntroFlip() {
                 </div>
                 <div className="flex max-w-2xl flex-col gap-4 overflow-y-auto">
                   <span className="text-xs font-semibold uppercase tracking-widest text-white/60">
-                    {founderWork.label}
+                    By night
                   </span>
+                  <h3 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
+                    {founderWork.heading}
+                  </h3>
                   <p className="text-base text-white/80 sm:text-lg">{founderWork.lead}</p>
                   <div className="flex flex-col gap-3">
                     {founderWork.items.map((item) => (
