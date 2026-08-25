@@ -6,7 +6,7 @@ export const site = {
   eyebrow: "AI Systems Portfolio",
   eyebrowSecondary: "Financial Services",
   role: "AI Engineer",
-  headline: "I build AI systems that work in the real world.",
+  headline: "Choosie is making Brick AI",
   intro:
     "Hands-on engineering, agentic AI, and 0→1 product thinking — from ambiguous problem to production system.",
   tags: ["Hands-on Engineering", "Agentic AI", "Founder Mindset", "Financial Services"],

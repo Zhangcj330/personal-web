@@ -17,8 +17,11 @@ export default function Hero() {
         <span>{site.eyebrowSecondary}</span>
       </Reveal>
       <Reveal delay={0.1}>
-        <h1 className="max-w-4xl font-display text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
-          {site.headline}
+        <h1 className="max-w-4xl font-display text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
+          Choosie is making{" "}
+          <span className="underline decoration-4 underline-offset-8">
+            Brick AI
+          </span>
         </h1>
       </Reveal>
     </section>
