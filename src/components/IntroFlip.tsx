@@ -3,7 +3,7 @@
 import Image from "next/image";
 import PixelSwap from "@/components/PixelSwap";
 import Reveal from "@/components/Reveal";
-import { caseStudies, iagWork, site } from "@/data/content";
+import { caseStudies, founderWork, iagWork, site } from "@/data/content";
 
 const brickAi = caseStudies.find((study) => study.key === "brickAi")!;
 
@@ -85,16 +85,36 @@ export default function IntroFlip() {
                     Also a founder
                   </span>
                 </div>
-                <div className="flex max-w-2xl flex-col gap-4">
+                <div className="flex max-w-2xl flex-col gap-4 overflow-y-auto">
                   <span className="text-xs font-semibold uppercase tracking-widest text-white/60">
-                    By night
+                    {founderWork.label}
                   </span>
-                  <h3 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                    Founder of Brick AI
-                  </h3>
-                  <p className="text-base text-white/80 sm:text-lg">
-                    {brickAi.description} {brickAi.note}
-                  </p>
+                  <p className="text-base text-white/80 sm:text-lg">{founderWork.lead}</p>
+                  <div className="flex flex-col gap-3">
+                    {founderWork.items.map((item) => (
+                      <div key={item.title}>
+                        <h4 className="text-sm font-semibold text-white">
+                          {item.title}
+                        </h4>
+                        <p className="text-sm text-white/80">
+                          {item.highlight
+                            ? item.description
+                                .split(item.highlight)
+                                .flatMap((part, i, arr) =>
+                                  i < arr.length - 1
+                                    ? [
+                                        part,
+                                        <strong key={item.title} className="text-white">
+                                          {item.highlight}
+                                        </strong>,
+                                      ]
+                                    : [part]
+                                )
+                            : item.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                   <div className="flex flex-wrap gap-2 pt-1">
                     {brickAi.tags.map((tag) => (
                       <span

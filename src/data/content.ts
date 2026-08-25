@@ -14,6 +14,30 @@ export const site = {
 };
 
 // Day-job content shown on the front face of the IntroFlip card.
+// Founder-side content shown on the back face of the IntroFlip card.
+export const founderWork = {
+  label: "FOUNDER / BUILDER",
+  lead: "Turning ideas into products with AI.",
+  items: [
+    {
+      title: "Brick AI",
+      description:
+        "Building an AI-powered property platform that helps people discover, understand and evaluate homes through conversation — built end-to-end from product and UX to data, maps, backend and AI.",
+      highlight: "discover, understand and evaluate homes through conversation",
+    },
+    {
+      title: "Multi Agents",
+      description:
+        "Building a multi-agent system that turn multi-step research and operational workflows into automated systems.",
+    },
+    {
+      title: "Experiments",
+      description:
+        "Rapidly turning ideas into working products — designing, coding, testing and shipping them myself.",
+    },
+  ],
+};
+
 export const iagWork = {
   heading: "AI/Data Engineer at IAG",
   lead: "Building property intelligence for insurers and customers.",
