@@ -97,71 +97,46 @@ export const focusAreas = [
   },
 ];
 
-export const caseStudies = [
+// Real screenshots + case-study links shown in the homepage "Case
+// Studies" section, styled as a 2x2 "Featured Projects" grid. Each
+// `slug` maps to a full case-study detail page at /work/[slug]
+// (see src/data/caseStudyPages.ts and src/app/work/[slug]/page.tsx).
+export const featuredProjects = [
   {
-    key: "remediation",
+    slug: "home-health-check",
     index: "01",
-    category: "Agentic AI",
-    title: "AI Remediation Agent",
-    description:
-      "Turning a multi-system manual investigation process into a guided agentic workflow with tool use, classification, validation and human review.",
-    flowLabel: "Incident → context → decision → action",
-    impactLabel: "Impact",
-    impactValue: "0.5 day → <1 hr",
-    note: "Designed the workflow around four remediation pathways, combining context retrieval, reasoning, deterministic checks and human oversight for ambiguous cases.",
-    tags: ["Tool Use", "Agent Workflow", "Evaluation", "Human-in-the-loop"],
-  },
-  {
-    key: "homeHealth",
-    index: "02",
-    category: "Production Engineering",
     title: "Home Health Check",
-    description:
-      "Shipping a customer-facing property intelligence capability across cloud services, vendor systems and enterprise security boundaries.",
-    flowLabel: "Production path",
-    impactLabel: "Scale",
-    impactValue: "50,000 customers",
-    note: "Built for customer-facing delivery with async processing, rate limiting, retries, signed URLs and gateway controls.",
-    tags: ["Cloud Run", "Cloud Tasks", "API Gateway", "HMAC", "Nearmap / Vexcel"],
+    category: "AI Property Risk Platform · IAG / NRMA",
+    image: "/projects/work/home-health-check/hero.png",
+    imageWidth: 738,
+    imageHeight: 794,
   },
   {
-    key: "situational",
-    index: "03",
-    category: "Real-time Intelligence",
+    slug: "situational-awareness-map",
+    index: "02",
     title: "Situational Awareness Map",
-    description:
-      "Combining catastrophe observations and forecasts with property and policy exposure to support operational decisions during major events.",
-    flowLabel: "Cyclone / Flood / Hail — forecast + observed → exposure",
-    impactLabel: "Question",
-    impactValue: "What is impacted — now and next?",
-    note: "Built around near-real-time event data, geospatial processing, observation-vs-forecast logic and exposure matching across internal and external datasets.",
-    tags: ["Geospatial", "Catastrophe", "Near Real-time", "Decision Support"],
+    category: "Geospatial Risk Intelligence · IAG",
+    image: "/projects/work/situational-awareness-map/hero.png",
+    imageWidth: 1160,
+    imageHeight: 800,
   },
   {
-    key: "brickAi",
+    slug: "location-fix-agent",
+    index: "03",
+    title: "Location Fix Agent",
+    category: "AI Agent · Geospatial Data Ops · IAG",
+    image: "/projects/work/location-fix-agent/hero.png",
+    imageWidth: 1600,
+    imageHeight: 1000,
+  },
+  {
+    slug: "brick-ai",
     index: "04",
-    category: "Founder Mindset",
     title: "Brick AI",
-    description:
-      "A 0→1 AI property intelligence product built across user discovery, product design, data quality, conversational AI and deployment.",
-    flowLabel: "Founder Journey",
-    impactLabel: "Founder Journey",
-    impactValue: "0 → 1",
-    note: "No predefined ticket. No fixed spec. I owned the problem, product hypothesis, architecture, implementation, evaluation and iteration.",
-    tags: ["LLM Product", "Property Data", "Evaluation", "Product Discovery"],
-  },
-  {
-    key: "newsRec",
-    index: "05",
-    category: "Production ML",
-    title: "News Recommendation",
-    description:
-      "Earlier production ML work connecting recommendation logic, data pipelines and cloud services — showing continuity from ML systems into GenAI.",
-    flowLabel: "Personalised news feed",
-    impactLabel: "Why it matters",
-    impactValue: "ML → GenAI",
-    note: "Production recommendation experience provides the foundation: data quality, serving, product feedback loops and real-world system constraints.",
-    tags: ["Recommendation", "ML Pipelines", "Cloud", "Production"],
+    category: "AI PropTech · Founder & Full-Stack Engineer",
+    image: "/projects/work/brick-ai/hero.png",
+    imageWidth: 1160,
+    imageHeight: 800,
   },
 ];
 

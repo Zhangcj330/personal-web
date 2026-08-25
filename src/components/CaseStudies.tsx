@@ -1,19 +1,12 @@
-import { caseStudies } from "@/data/content";
+import Image from "next/image";
+import Link from "next/link";
+import { featuredProjects } from "@/data/content";
 import Reveal from "@/components/Reveal";
-import RemediationDiagram from "@/components/diagrams/RemediationDiagram";
-import HomeHealthDiagram from "@/components/diagrams/HomeHealthDiagram";
-import SituationalDiagram from "@/components/diagrams/SituationalDiagram";
-import BrickAiDiagram from "@/components/diagrams/BrickAiDiagram";
-import NewsRecDiagram from "@/components/diagrams/NewsRecDiagram";
 
-const diagrams: Record<string, React.ComponentType> = {
-  remediation: RemediationDiagram,
-  homeHealth: HomeHealthDiagram,
-  situational: SituationalDiagram,
-  brickAi: BrickAiDiagram,
-  newsRec: NewsRecDiagram,
-};
-
+// A 2x2 "Featured Projects" grid using real product/report screenshots,
+// styled after the reference site's work grid: a big rounded-corner
+// image on top, title and category caption below. Each card links to
+// its full case-study detail page at /work/[slug].
 export default function CaseStudies() {
   return (
     <section id="case-studies" className="mx-auto max-w-6xl px-6 py-20">
@@ -21,50 +14,30 @@ export default function CaseStudies() {
         <h2 className="mb-10 text-sm font-medium uppercase tracking-widest text-muted">
           Case Studies
         </h2>
-        <div className="flex flex-col gap-16">
-          {caseStudies.map((study) => {
-            const Diagram = diagrams[study.key];
-            return (
-              <Reveal key={study.key}>
-                <article className="grid grid-cols-1 gap-8 rounded-2xl border border-border p-6 sm:p-10 lg:grid-cols-2">
-                  <div className="flex flex-col gap-4">
-                    <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-muted">
-                      <span>Case Study {study.index}</span>
-                      <span className="text-border">·</span>
-                      <span>{study.category}</span>
-                    </div>
-                    <h3 className="font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                      {study.title}
-                    </h3>
-                    <p className="text-muted">{study.description}</p>
-                    <p className="text-sm text-muted">{study.flowLabel}</p>
-                    <div className="rounded-xl border border-border bg-zinc-50 px-4 py-3">
-                      <div className="text-xs uppercase tracking-widest text-muted">
-                        {study.impactLabel}
-                      </div>
-                      <div className="font-display text-lg font-semibold">
-                        {study.impactValue}
-                      </div>
-                    </div>
-                    <p className="text-sm leading-relaxed text-muted">{study.note}</p>
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {study.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-border px-3 py-1 text-xs text-muted"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <Diagram />
-                  </div>
-                </article>
-              </Reveal>
-            );
-          })}
+        <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2">
+          {featuredProjects.map((project, i) => (
+            <Reveal key={project.slug} delay={0.05 * i}>
+              <Link href={`/work/${project.slug}`} className="group block">
+                <div className="overflow-hidden rounded-2xl border border-border shadow-lg shadow-black/5 transition-shadow group-hover:shadow-xl group-hover:shadow-black/10">
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    width={project.imageWidth}
+                    height={project.imageHeight}
+                    sizes="(min-width: 640px) 552px, 100vw"
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  />
+                </div>
+                <div className="mt-5 flex items-baseline justify-between gap-4">
+                  <h3 className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
+                    {project.title}
+                  </h3>
+                  <span className="text-xs font-medium text-muted">{project.index}</span>
+                </div>
+                <p className="mt-1 text-sm text-muted">{project.category}</p>
+              </Link>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
