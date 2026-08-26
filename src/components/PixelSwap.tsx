@@ -1,13 +1,7 @@
 "use client";
 
-// Adapted from React Bits (https://reactbits.dev) — PixelTransition,
-// MIT licensed. The official technique is simple: plain solid-color
-// squares stagger on to fully cover the content, the content is swapped
-// once while hidden, then the squares stagger back off. This file used
-// to reimplement it by deep-cloning the entire card into every pixel and
-// animating scale/rotation per clone, which was needlessly expensive
-// (200+ full DOM clones and WAAPI animations on every hover) and caused
-// jank/flicker elsewhere on the page. Kept simple on purpose.
+// Adapted from React Bits (https://reactbits.dev) — PixelSwap, JavaScript +
+// CSS variant, MIT licensed. Converted to TypeScript for this project.
 import {
   useCallback,
   useEffect,
@@ -19,7 +13,8 @@ import {
 } from "react";
 import "./PixelSwap.css";
 
-const MAX_PIXELS = 140;
+const MAX_PIXELS = 220;
+const KEYFRAME_STEPS = 14;
 
 type PatternName =
   | "random"
@@ -48,11 +43,52 @@ const PATTERNS: Record<PatternName, (x: number, y: number) => number | null> = {
   },
 };
 
+const EASINGS: Record<string, number[]> = {
+  linear: [0, 0, 1, 1],
+  ease: [0.25, 0.1, 0.25, 1],
+  "ease-in": [0.42, 0, 1, 1],
+  "ease-out": [0, 0, 0.58, 1],
+  "ease-in-out": [0.42, 0, 0.58, 1],
+};
+
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 const noise = (seed: number) => {
   const value = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
   return value - Math.floor(value);
+};
+
+const makeEasing = (value: string): ((progress: number) => number) => {
+  const match = /cubic-bezier\(([^)]+)\)/.exec(value);
+  const points = match ? match[1].split(",").map(Number) : EASINGS[value];
+  if (!points || points.length !== 4 || points.some((n) => Number.isNaN(n))) return makeEasing("ease");
+
+  const [x1, y1, x2, y2] = points;
+  if (x1 === y1 && x2 === y2) return (progress) => progress;
+
+  const cx = 3 * x1;
+  const bx = 3 * (x2 - x1) - cx;
+  const ax = 1 - cx - bx;
+  const cy = 3 * y1;
+  const by = 3 * (y2 - y1) - cy;
+  const ay = 1 - cy - by;
+
+  return (progress) => {
+    let t = progress;
+    for (let i = 0; i < 5; i += 1) {
+      const slope = (3 * ax * t + 2 * bx) * t + cx;
+      if (!slope) break;
+      t -= (((ax * t + bx) * t + cx) * t - progress) / slope;
+    }
+    t = clamp(t, 0, 1);
+    return ((ay * t + by) * t + cy) * t;
+  };
+};
+
+const coverScale = (size: number, gap: number, radius: number) => {
+  const p = clamp(radius, 0, 50) / 100;
+  const corner = Math.SQRT1_2 / (Math.SQRT2 * (0.5 - p) + p);
+  return ((size + gap) / size) * Math.max(1, corner);
 };
 
 interface Pixel {
@@ -66,6 +102,8 @@ interface Grid {
   pixels: Pixel[];
   size: number;
   gap: number;
+  width: number;
+  height: number;
 }
 
 const buildGrid = ({
@@ -117,7 +155,43 @@ const buildGrid = ({
     }
   }
 
-  return { pixels, size, gap };
+  return { pixels, size, gap, width, height };
+};
+
+const buildKeyframes = ({
+  ease,
+  startScale,
+  endScale,
+  spin,
+  fade,
+}: {
+  ease: (progress: number) => number;
+  startScale: number;
+  endScale: number;
+  spin: number;
+  fade: boolean;
+}) => {
+  const windowFrames: Keyframe[] = [];
+  const content: Keyframe[] = [];
+
+  for (let step = 0; step <= KEYFRAME_STEPS; step += 1) {
+    const progress = step / KEYFRAME_STEPS;
+    const eased = ease(progress);
+    const scale = startScale + (endScale - startScale) * eased;
+    const angle = spin * (1 - eased);
+
+    windowFrames.push({
+      offset: progress,
+      opacity: fade ? Math.min(1, eased * 1.6) : 1,
+      transform: `rotate(${angle}deg) scale(${scale})`,
+    });
+    content.push({
+      offset: progress,
+      transform: `scale(${1 / scale}) rotate(${-angle}deg)`,
+    });
+  }
+
+  return { window: windowFrames, content };
 };
 
 export interface PixelSwapProps {
@@ -125,11 +199,15 @@ export interface PixelSwapProps {
   secondContent: ReactNode;
   pixelSize?: number;
   gap?: number;
-  pixelColor?: string;
+  pixelRadius?: number;
+  pixelSpin?: number;
+  pixelScale?: number;
+  fade?: boolean;
   duration?: number;
   pixelDuration?: number;
   pattern?: PatternName;
   randomness?: number;
+  easing?: string;
   trigger?: "hover" | "click" | "manual";
   initialActive?: boolean;
   active?: boolean;
@@ -145,11 +223,15 @@ function PixelSwap({
   secondContent,
   pixelSize = 64,
   gap = 0,
-  pixelColor = "currentColor",
-  duration = 1100,
-  pixelDuration = 350,
+  pixelRadius = 0,
+  pixelSpin = 0,
+  pixelScale = 0.35,
+  fade = true,
+  duration = 1400,
+  pixelDuration = 450,
   pattern = "random",
   randomness = 0,
+  easing = "cubic-bezier(0.22, 1, 0.36, 1)",
   trigger = "hover",
   initialActive = false,
   active,
@@ -161,16 +243,18 @@ function PixelSwap({
 }: PixelSwapProps) {
   const [internalActive, setInternalActive] = useState(initialActive);
   const [shownActive, setShownActive] = useState(active ?? initialActive);
-  const [transitioning, setTransitioning] = useState(false);
+  const [transition, setTransition] = useState<{ to: boolean; grid: Grid } | null>(null);
   const [box, setBox] = useState({ width: 0, height: 0 });
 
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const layerRefs = useRef<(HTMLDivElement | null)[]>([]);
   const pixelRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const timersRef = useRef<number[]>([]);
+  const animationsRef = useRef<Animation[]>([]);
+  const timerRef = useRef(0);
   const leaveTimerRef = useRef(0);
-  const transitionToRef = useRef<boolean | null>(null);
 
   const desiredActive = active ?? internalActive;
+  const incomingIndex = transition?.to ? 1 : 0;
 
   const grid = useMemo(
     () =>
@@ -185,7 +269,7 @@ function PixelSwap({
     [box.width, box.height, pixelSize, gap, pattern, randomness]
   );
 
-  const config = { duration, pixelDuration, onComplete };
+  const config = { duration, pixelDuration, pixelSpin, pixelScale, pixelRadius, fade, easing, onComplete };
   const configRef = useRef(config);
   const gridRef = useRef(grid);
 
@@ -211,82 +295,104 @@ function PixelSwap({
     return () => observer.disconnect();
   }, []);
 
-  const clearTimers = useCallback(() => {
-    timersRef.current.forEach((id) => window.clearTimeout(id));
-    timersRef.current = [];
-  }, []);
-
   useEffect(
     () => () => {
-      clearTimers();
       if (leaveTimerRef.current) window.clearTimeout(leaveTimerRef.current);
     },
-    [clearTimers]
+    []
   );
 
-  const runTransition = useCallback((to: boolean) => {
-    clearTimers();
-    transitionToRef.current = to;
-    setTransitioning(true);
+  const stopAnimations = useCallback(() => {
+    animationsRef.current.forEach((animation) => animation.cancel());
+    animationsRef.current = [];
+    pixelRefs.current.forEach((pixel) => pixel?.replaceChildren());
+    if (timerRef.current) window.clearTimeout(timerRef.current);
+    timerRef.current = 0;
+  }, []);
 
+  useEffect(() => stopAnimations, [stopAnimations]);
+
+  useEffect(() => {
+    if (desiredActive === shownActive) return;
+    // If a transition is already in flight but heading the wrong way (the
+    // user hovered back before it finished), interrupt it immediately and
+    // start the reverse transition right away instead of queueing it to
+    // run after the current one completes. Without this, quick in/out
+    // hovering over a large card piles up full-length dissolve animations
+    // back-to-back, which reads as constant flicker.
+    if (transition && transition.to === desiredActive) return;
+    setTransition({ to: desiredActive, grid: gridRef.current });
+  }, [desiredActive, shownActive, transition]);
+
+  useEffect(() => {
+    if (!transition) return;
     const settings = configRef.current;
-    const currentGrid = gridRef.current;
-    const pixels = currentGrid.pixels;
+    const { grid: frozenGrid, to } = transition;
 
     const finish = () => {
-      if (transitionToRef.current !== to) return; // superseded by a newer transition
-      setTransitioning(false);
-      configRef.current.onComplete?.(to);
+      stopAnimations();
+      setShownActive(to);
+      setTransition(null);
+      settings.onComplete?.(to);
     };
 
-    if (!pixels.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setShownActive(to);
+    const source = layerRefs.current[to ? 1 : 0];
+    if (
+      !source ||
+      !frozenGrid.pixels.length ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
       finish();
       return;
     }
 
     const total = Math.max(200, settings.duration);
-    const half = total / 2;
-    const pixelMs = clamp(settings.pixelDuration, 60, half);
-    const spread = Math.max(0, half - pixelMs);
-
-    // Cover: stagger the pixels on in pattern order.
-    pixels.forEach((pixel, index) => {
-      const id = window.setTimeout(() => {
-        const el = pixelRefs.current[index];
-        if (el) el.style.opacity = "1";
-      }, pixel.offset * spread);
-      timersRef.current.push(id);
+    const pixelMs = clamp(settings.pixelDuration, 60, total);
+    const spread = Math.max(0, total - pixelMs);
+    const endScale = coverScale(frozenGrid.size, frozenGrid.gap, settings.pixelRadius);
+    const keyframes = buildKeyframes({
+      ease: makeEasing(settings.easing),
+      startScale: clamp(settings.pixelScale, 0.05, 1) * endScale,
+      endScale,
+      spin: settings.pixelSpin,
+      fade: settings.fade,
     });
 
-    // Swap the actual content once fully covered, then uncover.
-    const swapId = window.setTimeout(() => {
-      setShownActive(to);
-      pixels.forEach((pixel, index) => {
-        const id = window.setTimeout(() => {
-          const el = pixelRefs.current[index];
-          if (el) el.style.opacity = "0";
-        }, pixel.offset * spread);
-        timersRef.current.push(id);
-      });
-    }, half);
-    timersRef.current.push(swapId);
+    frozenGrid.pixels.forEach((pixel, index) => {
+      const pixelElement = pixelRefs.current[index];
+      if (!pixelElement) return;
 
-    const finishId = window.setTimeout(finish, total);
-    timersRef.current.push(finishId);
-  }, [clearTimers]);
+      const content = document.createElement("div");
+      content.className = "pixel-swap__pixel-content";
+      content.style.left = `${-pixel.left}px`;
+      content.style.top = `${-pixel.top}px`;
+      content.style.width = `${frozenGrid.width}px`;
+      content.style.height = `${frozenGrid.height}px`;
+      const originX = pixel.left + frozenGrid.size / 2;
+      const originY = pixel.top + frozenGrid.size / 2;
+      content.style.transformOrigin = `${originX}px ${originY}px`;
 
-  useEffect(() => {
-    if (desiredActive === shownActive) return;
-    if (transitioning && transitionToRef.current === desiredActive) return;
-    runTransition(desiredActive);
-    // Interrupting an in-flight transition mid-way and starting the
-    // reverse one right away (instead of queuing it behind the current
-    // ~1s dissolve) is what actually stops the flicker: a large card
-    // means ordinary mouse movement crosses its edge often, and without
-    // this, reversed hovers would pile up full-length animations back
-    // to back.
-  }, [desiredActive, shownActive, transitioning, runTransition]);
+      const clone = source.cloneNode(true) as HTMLElement;
+      clone.dataset.visible = "true";
+      clone.removeAttribute("aria-hidden");
+      content.appendChild(clone);
+      pixelElement.replaceChildren(content);
+
+      const timing: KeyframeAnimationOptions = {
+        duration: pixelMs,
+        delay: pixel.offset * spread,
+        easing: "linear",
+        fill: "both",
+      };
+      animationsRef.current.push(
+        pixelElement.animate(keyframes.window, timing),
+        content.animate(keyframes.content, timing)
+      );
+    });
+
+    timerRef.current = window.setTimeout(finish, total);
+    return stopAnimations;
+  }, [stopAnimations, transition]);
 
   const requestActive = useCallback(
     (next: boolean) => {
@@ -309,10 +415,11 @@ function PixelSwap({
           clearLeaveTimer();
           requestActive(true);
         },
-        // Debounce leaving: a mouse crossing the card's edge while moving
-        // up/down can fire enter/leave rapidly. Waiting briefly lets a
-        // quick re-entry cancel the pending deactivation instead of
-        // restarting the transition.
+        // Debounce the deactivation: a mouse crossing the card's edge while
+        // moving up/down can fire enter/leave rapidly, re-triggering the
+        // pixel-dissolve transition back and forth and causing visible
+        // flicker. Waiting briefly before leaving lets quick re-entries
+        // cancel the pending deactivation instead of restarting it.
         onMouseLeave: () => {
           clearLeaveTimer();
           leaveTimerRef.current = window.setTimeout(() => {
@@ -351,8 +458,11 @@ function PixelSwap({
     return (
       <div
         key={index}
+        ref={(element) => {
+          layerRefs.current[index] = element;
+        }}
         className="pixel-swap__layer"
-        data-visible={isShown}
+        data-visible={isShown && !(transition && index === incomingIndex)}
         style={{ zIndex: isShown ? 2 : 1 }}
         aria-hidden={!isShown}
       >
@@ -365,17 +475,17 @@ function PixelSwap({
     <div
       ref={containerRef}
       className={`pixel-swap ${className}`.trim()}
-      style={{ aspectRatio, color: pixelColor, ...style }}
+      style={{ aspectRatio, ...style }}
       data-active={shownActive}
-      data-transitioning={transitioning}
+      data-transitioning={!!transition}
       {...interactionProps}
     >
       {renderLayer(firstContent, 0)}
       {renderLayer(secondContent, 1)}
 
-      {transitioning && (
+      {transition && (
         <div className="pixel-swap__grid" aria-hidden="true">
-          {grid.pixels.map((pixel, index) => (
+          {transition.grid.pixels.map((pixel, index) => (
             <div
               key={pixel.id}
               ref={(element) => {
@@ -385,9 +495,9 @@ function PixelSwap({
               style={{
                 left: pixel.left,
                 top: pixel.top,
-                width: grid.size,
-                height: grid.size,
-                transitionDuration: `${clamp(pixelDuration, 60, duration / 2)}ms`,
+                width: transition.grid.size,
+                height: transition.grid.size,
+                borderRadius: `${clamp(pixelRadius, 0, 50)}%`,
               }}
             />
           ))}

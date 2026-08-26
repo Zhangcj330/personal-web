@@ -12,13 +12,11 @@ export default function IntroFlip() {
         {/* Full-width hover card: front is the day-job intro, back reveals
             the founder side. Photo lives at public/photos/choosie-brickai.jpg. */}
         <div className="h-[820px] sm:h-[640px] lg:h-[560px]">
+          {/* Default PixelSwap config (pixelSize 64, duration 1400,
+              pixelDuration 450, pattern "random", trigger "hover") — no
+              per-instance overrides needed here. */}
           <PixelSwap
             className="h-full rounded-3xl border border-border"
-            pixelSize={28}
-            duration={1100}
-            pixelDuration={380}
-            pattern="random"
-            trigger="hover"
             firstContent={
               <div className="flex h-full w-full flex-col justify-center gap-6 bg-zinc-50 p-8 sm:p-12 lg:flex-row lg:items-start lg:justify-start lg:gap-12">
                 <div className="flex shrink-0 flex-col items-center gap-3 lg:w-48 lg:self-center">
