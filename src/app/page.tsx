@@ -4,7 +4,7 @@ import IntroFlip from "@/components/IntroFlip";
 import CompanyLogos from "@/components/CompanyLogos";
 import Focus from "@/components/Focus";
 import CaseStudies from "@/components/CaseStudies";
-import Process from "@/components/Process";
+import Impact from "@/components/Impact";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -18,7 +18,7 @@ export default function Home() {
         <CompanyLogos />
         <Focus />
         <CaseStudies />
-        <Process />
+        <Impact />
         <Contact />
       </main>
       <Footer />

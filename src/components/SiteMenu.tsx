@@ -13,7 +13,7 @@ export default function SiteMenu({ homeAnchors = true }: { homeAnchors?: boolean
   const menuItems = [
     { label: "Focus", ariaLabel: "Go to focus areas", link: `${prefix}#focus` },
     { label: "Case Studies", ariaLabel: "Go to case studies", link: `${prefix}#case-studies` },
-    { label: "How I Build", ariaLabel: "Go to how I build", link: `${prefix}#process` },
+    { label: "Impact", ariaLabel: "Go to impact", link: `${prefix}#impact` },
     { label: "Contact", ariaLabel: "Go to contact", link: `${prefix}#contact` },
   ];
 

@@ -156,11 +156,49 @@ export const featuredProjects = [
   },
 ];
 
-export const process = [
-  { number: "01", title: "Discover", description: "Find the real business problem." },
-  { number: "02", title: "Prototype", description: "Build the smallest useful solution." },
-  { number: "03", title: "Integrate", description: "Connect APIs, data and systems." },
-  { number: "04", title: "Evaluate", description: "Accuracy, safety, latency, value." },
-  { number: "05", title: "Productionise", description: "Security, reliability, observability." },
-  { number: "06", title: "Scale", description: "Turn patterns into reusable capability." },
-];
+export const impact = {
+  eyebrow: "Impact",
+  heading: "Proof, not promises.",
+  stats: [
+    {
+      value: "50+",
+      label: "Customer Conversations",
+      description:
+        "Talked directly with 50+ potential customers while shaping Brick AI — understanding how people search, evaluate and make property decisions.",
+    },
+    {
+      value: "½ Day → <1 Hour",
+      description:
+        "Turned a manual operational workflow into an AI-assisted process, freeing people to focus on higher-value work.",
+    },
+    {
+      value: "200K+",
+      label: "Customers",
+      description: "Built customer-facing property intelligence at enterprise scale.",
+    },
+    {
+      value: "0 → 1",
+      label: "Founder",
+      description: "Took Brick AI from an idea to a working AI-native product.",
+    },
+  ],
+  stories: [
+    {
+      eyebrow: "Selected",
+      title: "USYD Startup Program",
+      description:
+        "Brick AI was selected for a University of Sydney startup program, validating the idea beyond my own desk.",
+    },
+    {
+      title: "A First for IAG",
+      description:
+        "Helped bring property intelligence directly to customers for the first time — helping people understand the condition of their home and the risks around it.",
+    },
+    {
+      eyebrow: "When It Mattered",
+      title: "Major Event Operations",
+      description:
+        "Built situational intelligence used during a major event to support time-critical operational and workforce decisions.",
+    },
+  ],
+};
