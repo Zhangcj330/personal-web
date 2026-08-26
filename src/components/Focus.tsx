@@ -33,16 +33,6 @@ export default function Focus() {
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
                 {area.description}
               </p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {area.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full border border-border px-3 py-1.5 text-[13px] font-medium text-muted"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
             </Reveal>
           ))}
         </div>
