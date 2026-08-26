@@ -24,13 +24,12 @@
   pointer-events: none;
 }
 
+/* Plain solid-color squares that stagger in to cover the content, then
+   stagger back out — no per-pixel content cloning. */
 .pixel-swap__pixel {
   position: absolute;
-  overflow: hidden;
   opacity: 0;
-  contain: paint;
-}
-
-.pixel-swap__pixel-content {
-  position: absolute;
+  background: currentColor;
+  transition-property: opacity;
+  transition-timing-function: linear;
 }

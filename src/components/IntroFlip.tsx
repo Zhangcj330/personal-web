@@ -15,7 +15,6 @@ export default function IntroFlip() {
           <PixelSwap
             className="h-full rounded-3xl border border-border"
             pixelSize={28}
-            pixelScale={0.3}
             duration={1100}
             pixelDuration={380}
             pattern="random"
