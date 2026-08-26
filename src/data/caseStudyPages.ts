@@ -111,8 +111,8 @@ export const caseStudyPages: CaseStudyPage[] = [
           {
             src: "/projects/work/home-health-check/issues.png",
             alt: "Detected issues flagged on aerial imagery",
-            width: 649,
-            height: 559,
+            width: 2880,
+            height: 1051,
           },
           {
             src: "/projects/work/home-health-check/findings.png",
@@ -140,53 +140,44 @@ export const caseStudyPages: CaseStudyPage[] = [
           {
             src: "/projects/work/home-health-check/surge.png",
             alt: "Extreme weather risk severity chart",
-            width: 848,
-            height: 615,
+            width: 2880,
+            height: 1228,
           },
           {
             src: "/projects/work/home-health-check/weather.png",
             alt: "Extreme weather risks with per-peril guidance",
-            width: 688,
-            height: 612,
+            width: 2880,
+            height: 1418,
           },
         ],
         galleryCaption:
           "Real screens — the extreme-weather severity scale and per-peril preparation guidance.",
       },
       {
-        heading: ["Structured for Delivery"],
-        paragraphs: [
-          "As SVA/P first point of contact, I designed a single API contract that let several squads — Online Account & Mobile front-ends, the loyalty/rewards BFF, and data teams — ship the same experience across web and mobile.",
-          "One reliable interface meant faster delivery, less rework, and a consistent experience for every customer.",
-        ],
-      },
-      {
         heading: ["My Role"],
         paragraphs: [
-          "I designed and built the Home Health Check API — the core service behind every report and action plan — and acted as the bridge between platform, product and delivery teams.",
-          "I also drove the data-provider integrations with Nearmap and Vexcel, including vendor analysis and the API decisions that shaped how imagery findings flow into the report.",
+          "I drove the service through to launch readiness for NRMA's centenary. I designed and built a production-grade architecture and API — the core service behind every report and action plan, integrating multiple external data providers — and acted as the bridge between platform, product and delivery teams.",
+          "As first point of contact, I facilitated several squads — Online Account & Mobile front-ends and the loyalty/rewards BFF — to ship the same experience across web and mobile, for faster delivery and a consistent experience for every customer.",
         ],
       },
       {
         heading: ["Engineered for Scale"],
         paragraphs: [
-          "The service is built in Python with an AI-native workflow, running on Google Cloud Run with Firestore and Cloud Tasks for reliable, asynchronous report generation — able to regenerate stale reports and scale with demand.",
-          "Every component is designed to evolve: adding new perils, data sources or channels without losing integrity.",
+          "Under the hood, the service runs on Python with an AI-native workflow, deployed on Google Cloud Run. Firestore and Cloud Tasks handle report generation asynchronously, so nothing blocks the user — and stale reports refresh automatically as conditions change.",
+          "The architecture is built to grow: new perils, data sources or delivery channels can be added without reworking the core.",
         ],
         techStack: [
           "Python",
           "Google Cloud Run",
           "Firestore",
           "Cloud Tasks",
-          "Nearmap API",
-          "Vexcel API",
         ],
       },
     ],
     closing: {
       heading: ["Impact that Scales"],
       paragraph:
-        "Home Health Check brings together design, data and engineering into a system that helps homeowners act with confidence — and gives NRMA a trusted, proactive way to strengthen customer relationships at scale.",
+        "Home Health Check turns design, data and engineering into one system: homeowners get clear, confident guidance on protecting their homes, and NRMA gains a scalable, trusted way to stay close to every customer.",
     },
     footer: {
       headline: ["Protecting Homes,", "at Scale."],
