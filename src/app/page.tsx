@@ -5,7 +5,6 @@ import CompanyLogos from "@/components/CompanyLogos";
 import Focus from "@/components/Focus";
 import CaseStudies from "@/components/CaseStudies";
 import Process from "@/components/Process";
-import Closing from "@/components/Closing";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -20,7 +19,6 @@ export default function Home() {
         <Focus />
         <CaseStudies />
         <Process />
-        <Closing />
         <Contact />
       </main>
       <Footer />
