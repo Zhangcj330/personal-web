@@ -252,6 +252,7 @@ function PixelSwap({
   const animationsRef = useRef<Animation[]>([]);
   const timerRef = useRef(0);
   const leaveTimerRef = useRef(0);
+  const batchTokenRef = useRef(0);
 
   const desiredActive = active ?? internalActive;
   const incomingIndex = transition?.to ? 1 : 0;
@@ -303,6 +304,7 @@ function PixelSwap({
   );
 
   const stopAnimations = useCallback(() => {
+    batchTokenRef.current += 1; // invalidate any pending batched pixel creation
     animationsRef.current.forEach((animation) => animation.cancel());
     animationsRef.current = [];
     pixelRefs.current.forEach((pixel) => pixel?.replaceChildren());
@@ -358,37 +360,55 @@ function PixelSwap({
       fade: settings.fade,
     });
 
-    frozenGrid.pixels.forEach((pixel, index) => {
-      const pixelElement = pixelRefs.current[index];
-      if (!pixelElement) return;
+    // Creating ~150+ deep clones and starting their WAAPI animations is
+    // expensive enough (each clone carries the full rich card content) that
+    // doing it all synchronously in one pass can block the main thread past
+    // a frame budget and drop a frame right as the transition starts — that
+    // stall is what reads as a flicker. Spreading the work across a few
+    // animation frames keeps each frame cheap without changing the visual
+    // pixel count, duration, or content.
+    const token = ++batchTokenRef.current;
+    const BATCH_SIZE = 16;
+    let cursor = 0;
 
-      const content = document.createElement("div");
-      content.className = "pixel-swap__pixel-content";
-      content.style.left = `${-pixel.left}px`;
-      content.style.top = `${-pixel.top}px`;
-      content.style.width = `${frozenGrid.width}px`;
-      content.style.height = `${frozenGrid.height}px`;
-      const originX = pixel.left + frozenGrid.size / 2;
-      const originY = pixel.top + frozenGrid.size / 2;
-      content.style.transformOrigin = `${originX}px ${originY}px`;
+    const runBatch = () => {
+      if (batchTokenRef.current !== token) return;
+      const end = Math.min(cursor + BATCH_SIZE, frozenGrid.pixels.length);
+      for (; cursor < end; cursor += 1) {
+        const pixel = frozenGrid.pixels[cursor];
+        const pixelElement = pixelRefs.current[cursor];
+        if (!pixelElement) continue;
 
-      const clone = source.cloneNode(true) as HTMLElement;
-      clone.dataset.visible = "true";
-      clone.removeAttribute("aria-hidden");
-      content.appendChild(clone);
-      pixelElement.replaceChildren(content);
+        const content = document.createElement("div");
+        content.className = "pixel-swap__pixel-content";
+        content.style.left = `${-pixel.left}px`;
+        content.style.top = `${-pixel.top}px`;
+        content.style.width = `${frozenGrid.width}px`;
+        content.style.height = `${frozenGrid.height}px`;
+        const originX = pixel.left + frozenGrid.size / 2;
+        const originY = pixel.top + frozenGrid.size / 2;
+        content.style.transformOrigin = `${originX}px ${originY}px`;
 
-      const timing: KeyframeAnimationOptions = {
-        duration: pixelMs,
-        delay: pixel.offset * spread,
-        easing: "linear",
-        fill: "both",
-      };
-      animationsRef.current.push(
-        pixelElement.animate(keyframes.window, timing),
-        content.animate(keyframes.content, timing)
-      );
-    });
+        const clone = source.cloneNode(true) as HTMLElement;
+        clone.dataset.visible = "true";
+        clone.removeAttribute("aria-hidden");
+        content.appendChild(clone);
+        pixelElement.replaceChildren(content);
+
+        const timing: KeyframeAnimationOptions = {
+          duration: pixelMs,
+          delay: pixel.offset * spread,
+          easing: "linear",
+          fill: "both",
+        };
+        animationsRef.current.push(
+          pixelElement.animate(keyframes.window, timing),
+          content.animate(keyframes.content, timing)
+        );
+      }
+      if (cursor < frozenGrid.pixels.length) requestAnimationFrame(runBatch);
+    };
+    runBatch();
 
     timerRef.current = window.setTimeout(finish, total);
     return stopAnimations;
