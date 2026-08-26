@@ -30,7 +30,9 @@ export default function Focus() {
               <h3 className="mt-4 font-display text-2xl font-semibold tracking-tight sm:text-3xl">
                 {area.title}
               </h3>
-              <p className="mt-4 max-w-lg text-lg text-muted">{area.lead}</p>
+              <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
+                {area.description}
+              </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 {area.tags.map((tag) => (
                   <span

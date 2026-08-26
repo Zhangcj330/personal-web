@@ -86,25 +86,29 @@ export const focusAreas = [
   {
     number: "01",
     title: "FIND THE RIGHT PROBLEM",
-    lead: "I start with people, not technology.",
+    description:
+      "Talk to customers. Understand workflows. Research the domain. Find pain points. Separate the real problem from the symptoms.",
     tags: ["Customer Research", "Domain Research", "Problem Discovery"],
   },
   {
     number: "02",
     title: "TURN AMBIGUITY INTO A PRODUCT",
-    lead: "I turn messy problems into something buildable.",
+    description:
+      "Define the opportunity. Form hypotheses. Explore solutions. Make trade-offs. Turn an unclear problem into a clear product direction.",
     tags: ["Product Thinking", "UX", "Prototyping", "Prioritisation"],
   },
   {
     number: "03",
     title: "BUILD ACROSS THE STACK",
-    lead: "I don't stop at a technical boundary.",
+    description:
+      "AI, data, maps, APIs, backend, cloud — I can move across disciplines and connect the pieces needed to make the product work.",
     tags: ["AI", "Data", "Geospatial", "Backend", "APIs", "Cloud"],
   },
   {
     number: "04",
     title: "SHIP, LEARN, ITERATE",
-    lead: "A working prototype isn't the finish line.",
+    description:
+      "Get it into users' hands. Work through integration and production constraints. Learn from real usage and feedback. Make the next version better.",
     tags: ["Delivery", "Production", "Feedback", "Iteration"],
   },
 ];
