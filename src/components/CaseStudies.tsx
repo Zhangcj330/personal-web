@@ -25,6 +25,7 @@ export default function CaseStudies() {
                     width={project.imageWidth}
                     height={project.imageHeight}
                     sizes="(min-width: 640px) 552px, 100vw"
+                    quality={90}
                     className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   />
                 </div>

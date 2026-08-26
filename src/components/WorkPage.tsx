@@ -55,16 +55,22 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
           </div>
         </Reveal>
         <Reveal delay={0.15}>
-          <div className="relative mt-10 overflow-hidden rounded-3xl shadow-2xl shadow-black/10">
-            <Image
-              src={page.heroImage.src}
-              alt={page.heroImage.alt}
-              width={page.heroImage.width}
-              height={page.heroImage.height}
-              sizes="(min-width: 1024px) 1152px, 100vw"
-              className="w-full"
-              priority
-            />
+          <div
+            className="mt-10 rounded-[2.5rem] p-4 sm:p-8"
+            style={{ backgroundColor: page.accentBg }}
+          >
+            <div className="overflow-hidden rounded-3xl shadow-2xl shadow-black/10">
+              <Image
+                src={page.heroImage.src}
+                alt={page.heroImage.alt}
+                width={page.heroImage.width}
+                height={page.heroImage.height}
+                sizes="(min-width: 1024px) 1152px, 100vw"
+                quality={90}
+                className="w-full"
+                priority
+              />
+            </div>
           </div>
         </Reveal>
       </header>
@@ -174,6 +180,7 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
                         width={img.width}
                         height={img.height}
                         sizes="(min-width: 640px) 552px, 100vw"
+                        quality={90}
                         className="w-full"
                       />
                     </div>
@@ -250,6 +257,7 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
                       width={other.heroImage.width}
                       height={other.heroImage.height}
                       sizes="(min-width: 640px) 552px, 100vw"
+                      quality={90}
                       className="aspect-[16/11] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                   </div>

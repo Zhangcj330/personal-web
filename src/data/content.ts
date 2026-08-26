@@ -123,8 +123,8 @@ export const featuredProjects = [
     title: "Home Health Check",
     category: "AI Property Risk Platform · IAG / NRMA",
     image: "/projects/work/home-health-check/hero.png",
-    imageWidth: 738,
-    imageHeight: 794,
+    imageWidth: 2880,
+    imageHeight: 1986,
   },
   {
     slug: "situational-awareness-map",
