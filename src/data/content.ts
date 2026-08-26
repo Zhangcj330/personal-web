@@ -79,7 +79,6 @@ export const companies = [
 export const focus = {
   eyebrow: "What I Bring",
   heading: ["From customer problems", "to working products."],
-  lead: "I work across the full 0→1 journey — understanding users, finding the real problem, shaping the solution, and building what it takes to ship.",
 };
 
 export const focusAreas = [

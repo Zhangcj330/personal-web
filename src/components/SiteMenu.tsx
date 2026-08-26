@@ -25,7 +25,6 @@ export default function SiteMenu({ homeAnchors = true }: { homeAnchors?: boolean
       socialItems={socialItems}
       displaySocials
       displayItemNumbering
-      logoText={site.name}
       menuButtonColor="#111111"
       openMenuButtonColor="#111111"
       changeMenuColorOnOpen

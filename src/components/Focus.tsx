@@ -14,7 +14,6 @@ export default function Focus() {
             <br />
             {focus.heading[1]}
           </p>
-          <p className="mt-4 max-w-xl text-muted">{focus.lead}</p>
         </Reveal>
         <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
           {focusAreas.map((area, i) => (
