@@ -76,24 +76,44 @@ export const companies = [
 ];
 
 
+export const focus = {
+  eyebrow: "What I Bring",
+  heading: ["From customer problems", "to working products."],
+  lead: "I work across the full 0→1 journey — understanding users, finding the real problem, shaping the solution, and building what it takes to ship.",
+};
+
 export const focusAreas = [
   {
     number: "01",
-    title: "BUILD",
+    title: "FIND THE RIGHT PROBLEM",
+    lead: "I start with people, not technology.",
     description:
-      "Production APIs, cloud systems, data pipelines, security and enterprise integration.",
+      "Talk to customers. Understand workflows. Research the domain. Find pain points. Separate the real problem from the symptoms.",
+    tags: ["Customer Research", "Domain Research", "Problem Discovery"],
   },
   {
     number: "02",
-    title: "AGENT",
+    title: "TURN AMBIGUITY INTO A PRODUCT",
+    lead: "I turn messy problems into something buildable.",
     description:
-      "Tool use, orchestration, evaluation, guardrails and human-in-the-loop workflows.",
+      "Define the opportunity. Form hypotheses. Explore solutions. Make trade-offs. Turn an unclear problem into a clear product direction.",
+    tags: ["Product Thinking", "UX", "Prototyping", "Prioritisation"],
   },
   {
     number: "03",
-    title: "CREATE",
+    title: "BUILD ACROSS THE STACK",
+    lead: "I don't stop when the problem crosses a technical boundary.",
     description:
-      "0→1 product discovery, rapid prototyping, architecture, deployment and iteration.",
+      "AI, data, maps, APIs, backend, cloud — I can move across disciplines and connect the pieces needed to make the product work.",
+    tags: ["AI", "Data", "Geospatial", "Backend", "APIs", "Cloud"],
+  },
+  {
+    number: "04",
+    title: "SHIP, LEARN, ITERATE",
+    lead: "A working prototype isn't the finish line.",
+    description:
+      "Get it into users' hands. Work through integration and production constraints. Learn from real usage and feedback. Make the next version better.",
+    tags: ["Delivery", "Production", "Feedback", "Iteration"],
   },
 ];
 

@@ -209,8 +209,8 @@ export const caseStudyPages: CaseStudyPage[] = [
     heroImage: {
       src: "/projects/work/location-fix-agent/hero.png",
       alt: "Move LatLong panel map with old and new coordinate markers",
-      width: 1600,
-      height: 1000,
+      width: 1113,
+      height: 696,
     },
     sections: [
       {
