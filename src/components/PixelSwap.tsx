@@ -251,6 +251,7 @@ function PixelSwap({
   const pixelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const animationsRef = useRef<Animation[]>([]);
   const timerRef = useRef(0);
+  const leaveTimerRef = useRef(0);
 
   const desiredActive = active ?? internalActive;
   const incomingIndex = transition?.to ? 1 : 0;
@@ -294,6 +295,13 @@ function PixelSwap({
     return () => observer.disconnect();
   }, []);
 
+  useEffect(
+    () => () => {
+      if (leaveTimerRef.current) window.clearTimeout(leaveTimerRef.current);
+    },
+    []
+  );
+
   const stopAnimations = useCallback(() => {
     animationsRef.current.forEach((animation) => animation.cancel());
     animationsRef.current = [];
@@ -305,7 +313,14 @@ function PixelSwap({
   useEffect(() => stopAnimations, [stopAnimations]);
 
   useEffect(() => {
-    if (transition || desiredActive === shownActive) return;
+    if (desiredActive === shownActive) return;
+    // If a transition is already in flight but heading the wrong way (the
+    // user hovered back before it finished), interrupt it immediately and
+    // start the reverse transition right away instead of queueing it to
+    // run after the current one completes. Without this, quick in/out
+    // hovering over a large card piles up full-length dissolve animations
+    // back-to-back, which reads as constant flicker.
+    if (transition && transition.to === desiredActive) return;
     setTransition({ to: desiredActive, grid: gridRef.current });
   }, [desiredActive, shownActive, transition]);
 
@@ -389,10 +404,33 @@ function PixelSwap({
 
   const interactionProps = useMemo(() => {
     if (trigger === "hover") {
+      const clearLeaveTimer = () => {
+        if (leaveTimerRef.current) {
+          window.clearTimeout(leaveTimerRef.current);
+          leaveTimerRef.current = 0;
+        }
+      };
       return {
-        onMouseEnter: () => requestActive(true),
-        onMouseLeave: () => requestActive(false),
-        onFocus: () => requestActive(true),
+        onMouseEnter: () => {
+          clearLeaveTimer();
+          requestActive(true);
+        },
+        // Debounce the deactivation: a mouse crossing the card's edge while
+        // moving up/down can fire enter/leave rapidly, re-triggering the
+        // pixel-dissolve transition back and forth and causing visible
+        // flicker. Waiting briefly before leaving lets quick re-entries
+        // cancel the pending deactivation instead of restarting it.
+        onMouseLeave: () => {
+          clearLeaveTimer();
+          leaveTimerRef.current = window.setTimeout(() => {
+            requestActive(false);
+            leaveTimerRef.current = 0;
+          }, 180);
+        },
+        onFocus: () => {
+          clearLeaveTimer();
+          requestActive(true);
+        },
         onBlur: () => requestActive(false),
         tabIndex: 0,
       };
