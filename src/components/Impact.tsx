@@ -9,9 +9,6 @@ export default function Impact() {
           <h2 className="text-sm font-medium uppercase tracking-widest text-muted">
             {impact.eyebrow}
           </h2>
-          <p className="mt-2 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            {impact.heading}
-          </p>
         </Reveal>
 
         <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

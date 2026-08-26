@@ -158,7 +158,6 @@ export const featuredProjects = [
 
 export const impact = {
   eyebrow: "Impact",
-  heading: "Proof, not promises.",
   stats: [
     {
       value: "50+",
