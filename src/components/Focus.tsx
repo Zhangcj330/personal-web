@@ -21,6 +21,7 @@ export default function Focus() {
             <Reveal key={area.title} delay={i * 0.06} className="flex flex-col gap-2">
               <span className="font-display text-sm text-muted">{area.number}</span>
               <h3 className="text-lg font-semibold">{area.title}</h3>
+              <p className="font-medium">{area.lead}</p>
               <p className="text-muted">{area.description}</p>
             </Reveal>
           ))}
