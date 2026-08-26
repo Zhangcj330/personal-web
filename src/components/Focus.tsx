@@ -3,7 +3,7 @@ import Reveal from "@/components/Reveal";
 
 export default function Focus() {
   return (
-    <section id="focus" className="mx-auto max-w-4xl px-6 py-24">
+    <section id="focus" className="mx-auto max-w-6xl px-6 py-20">
       <div className="border-t border-border pt-12">
         <Reveal>
           <h2 className="text-sm font-medium uppercase tracking-widest text-muted">
@@ -16,23 +16,12 @@ export default function Focus() {
           </p>
           <p className="mt-4 max-w-xl text-muted">{focus.lead}</p>
         </Reveal>
-
-        <div className="mt-16 flex flex-col">
+        <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
           {focusAreas.map((area, i) => (
-            <Reveal
-              key={area.title}
-              delay={i * 0.08}
-              className="border-t border-border py-12 first:pt-0 last:pb-0"
-            >
-              <span className="font-mono text-xs font-semibold text-muted">
-                {area.number}
-              </span>
-              <h3 className="mt-4 font-display text-2xl font-semibold tracking-tight sm:text-3xl">
-                {area.title}
-              </h3>
-              <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted">
-                {area.description}
-              </p>
+            <Reveal key={area.title} delay={i * 0.06} className="flex flex-col gap-2">
+              <span className="font-display text-sm text-muted">{area.number}</span>
+              <h3 className="text-lg font-semibold">{area.title}</h3>
+              <p className="text-muted">{area.description}</p>
             </Reveal>
           ))}
         </div>
