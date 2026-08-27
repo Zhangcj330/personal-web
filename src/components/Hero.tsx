@@ -9,9 +9,7 @@ export default function Hero() {
       id="hero"
       className="mx-auto flex max-w-6xl flex-col gap-6 px-6 pb-16 pt-20 sm:pt-28"
     >
-      <Reveal className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-widest text-muted">
-        <span className="font-semibold text-foreground">{site.name}</span>
-      </Reveal>
+      <div className="h-4" aria-hidden="true" />
       <Reveal delay={0.1}>
         <h1 className="max-w-5xl font-display text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
           Choosie is building{" "}
