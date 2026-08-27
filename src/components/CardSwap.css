@@ -18,7 +18,7 @@
   transform-style: preserve-3d;
   backface-visibility: hidden;
   box-shadow: 0 24px 70px rgb(0 0 0 / 22%);
-  cursor: default;
+  cursor: pointer;
   will-change: transform;
   -webkit-backface-visibility: hidden;
 }
