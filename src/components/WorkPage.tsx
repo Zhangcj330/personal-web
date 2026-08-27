@@ -1,9 +1,87 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { CSSProperties, ReactNode } from "react";
+import BrickAiChat from "@/components/BrickAiChat";
+import BrickAiInterfaceShowcase from "@/components/BrickAiInterfaceShowcase";
+import BrickAiSuburbInsights from "@/components/BrickAiSuburbInsights";
 import Reveal from "@/components/Reveal";
 import ProjectCardVisual from "@/components/ProjectCardVisual";
-import type { CaseStudyPage } from "@/data/caseStudyPages";
+import type { CaseStudyImage, CaseStudyPage } from "@/data/caseStudyPages";
 import { featuredProjects } from "@/data/content";
+import "./WorkPage.css";
+
+type FeaturedProject = (typeof featuredProjects)[number];
+
+function AtmosphericGalleryFrame({
+  backgroundImage,
+  project,
+  children,
+}: {
+  backgroundImage: string;
+  project: FeaturedProject;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className="case-study-gallery-card relative isolate flex items-center justify-center overflow-hidden rounded-2xl"
+      style={{ background: project.imageBackground }}
+    >
+      <Image
+        src={backgroundImage}
+        alt=""
+        fill
+        sizes="(min-width: 640px) 552px, 100vw"
+        quality={45}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 scale-[1.25] object-cover opacity-20 saturate-[1.6] brightness-75"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-65"
+        style={{ background: project.imageBackground }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-75 mix-blend-screen"
+        style={{ background: project.imageGlow }}
+      />
+      {"imageTexture" in project && project.imageTexture === "satin" && (
+        <div
+          className="pointer-events-none absolute -inset-[15%] z-0 opacity-90 mix-blend-screen blur-xl"
+          style={{
+            background:
+              "linear-gradient(116deg, transparent 12%, rgba(255,255,255,0.92) 29%, transparent 42%, rgba(255,218,132,0.72) 53%, transparent 67%, rgba(255,248,218,0.68) 78%, transparent 88%)",
+          }}
+        />
+      )}
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(0,0,0,0.3)_100%)]" />
+      {children}
+    </div>
+  );
+}
+
+function GalleryImage({
+  image,
+  className = "",
+  sizes = "(min-width: 640px) 552px, 100vw",
+  unoptimized = false,
+}: {
+  image: CaseStudyImage;
+  className?: string;
+  sizes?: string;
+  unoptimized?: boolean;
+}) {
+  return (
+    <Image
+      src={image.src}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      sizes={sizes}
+      quality={90}
+      unoptimized={unoptimized}
+      className={className}
+    />
+  );
+}
 
 // Detail page for a single project, styled after the reference site's
 // individual work page (majd-portfolio.framer.website/work/damas): a big
@@ -60,7 +138,7 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
         </Reveal>
         <Reveal delay={0.15}>
           <div
-            className="relative isolate mt-10 overflow-hidden rounded-[2.5rem] p-4 sm:p-8"
+            className="relative isolate mt-10 overflow-hidden rounded-[2.5rem] py-[6%]"
             style={{ background: featuredProject?.imageBackground ?? page.accentBg }}
           >
             {featuredProject && (
@@ -72,7 +150,12 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
                   sizes="(min-width: 1024px) 1152px, 100vw"
                   quality={45}
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 z-0 scale-[1.25] object-cover opacity-60 blur-[40px] saturate-[1.6] brightness-75"
+                  className={`pointer-events-none absolute inset-0 z-0 scale-[1.25] object-cover saturate-[1.6] brightness-75 ${
+                    "imageTexture" in featuredProject &&
+                    featuredProject.imageTexture === "satin"
+                      ? "opacity-20 blur-none"
+                      : "opacity-60 blur-[40px]"
+                  }`}
                 />
                 <div
                   className="pointer-events-none absolute inset-0 z-0 opacity-65"
@@ -82,10 +165,29 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
                   className="pointer-events-none absolute inset-0 z-0 opacity-75 mix-blend-screen"
                   style={{ background: featuredProject.imageGlow }}
                 />
+                {"imageTexture" in featuredProject &&
+                  featuredProject.imageTexture === "satin" && (
+                    <>
+                      <div
+                        className="pointer-events-none absolute -inset-[15%] z-0 opacity-90 mix-blend-screen blur-xl"
+                        style={{
+                          background:
+                            "linear-gradient(116deg, transparent 12%, rgba(255,255,255,0.92) 29%, transparent 42%, rgba(255,218,132,0.72) 53%, transparent 67%, rgba(255,248,218,0.68) 78%, transparent 88%)",
+                        }}
+                      />
+                      <div
+                        className="pointer-events-none absolute inset-0 z-0 opacity-35 mix-blend-soft-light"
+                        style={{
+                          background:
+                            "repeating-linear-gradient(108deg, rgba(255,255,255,0.22) 0 1px, transparent 1px 5px)",
+                        }}
+                      />
+                    </>
+                  )}
                 <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(0,0,0,0.38)_100%)]" />
               </>
             )}
-            <div className="relative z-10 overflow-hidden rounded-3xl shadow-2xl shadow-black/20">
+            <div className="relative z-10 mx-auto w-[88%] overflow-hidden rounded-3xl shadow-2xl shadow-black/20">
               <Image
                 src={page.heroImage.src}
                 alt={page.heroImage.alt}
@@ -107,7 +209,7 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
           <section key={i} className="border-t border-border py-14 sm:py-16">
             <div
               className={
-                section.sideImage
+                section.sideImage || section.sideVisual
                   ? "grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14"
                   : undefined
               }
@@ -141,21 +243,46 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
 
               {section.sideImage && (
                 <Reveal delay={0.1}>
-                  <div
-                    className="rounded-[2rem] p-4 sm:p-6"
-                    style={{ backgroundColor: page.accentBg }}
-                  >
-                    <div className="mx-auto max-w-[420px] overflow-hidden rounded-2xl shadow-xl shadow-black/10">
-                      <Image
-                        src={section.sideImage.src}
-                        alt={section.sideImage.alt}
-                        width={section.sideImage.width}
-                        height={section.sideImage.height}
-                        unoptimized={section.sideImage.src.endsWith(".gif")}
-                        className="w-full"
-                      />
+                  {section.sideImageBare ? (
+                    <Image
+                      src={section.sideImage.src}
+                      alt={section.sideImage.alt}
+                      width={section.sideImage.width}
+                      height={section.sideImage.height}
+                      unoptimized={section.sideImage.src.endsWith(".gif")}
+                      className="block h-auto w-full"
+                    />
+                  ) : (
+                    <div
+                      className="rounded-[2rem] p-4 sm:p-6"
+                      style={{ backgroundColor: page.accentBg }}
+                    >
+                      <div className="mx-auto max-w-[420px] overflow-hidden rounded-2xl shadow-xl shadow-black/10">
+                        <Image
+                          src={section.sideImage.src}
+                          alt={section.sideImage.alt}
+                          width={section.sideImage.width}
+                          height={section.sideImage.height}
+                          unoptimized={section.sideImage.src.endsWith(".gif")}
+                          className="w-full"
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
+                  {section.sideImageCaption && (
+                    <p className="mt-4 text-center text-[13px] text-muted">
+                      {section.sideImageCaption}
+                    </p>
+                  )}
+                </Reveal>
+              )}
+              {section.sideVisual && (
+                <Reveal delay={0.1}>
+                  {section.sideVisual === "brick-ai-chat" ? (
+                    <BrickAiChat />
+                  ) : (
+                    <BrickAiSuburbInsights />
+                  )}
                   {section.sideImageCaption && (
                     <p className="mt-4 text-center text-[13px] text-muted">
                       {section.sideImageCaption}
@@ -237,31 +364,110 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
               </Reveal>
             )}
 
+            {section.interactiveShowcase === "brick-ai-interfaces" && (
+              <Reveal delay={0.05}>
+                <BrickAiInterfaceShowcase />
+              </Reveal>
+            )}
+
             {section.gallery && (
               <Reveal delay={0.05}>
-                <div className="mt-9 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {section.gallery.map((img) => (
-                    <div
-                      key={img.src}
-                      className={`overflow-hidden rounded-2xl border border-border shadow-lg shadow-black/5 ${
-                        section.gallery!.length === 1 ? "sm:col-span-2" : ""
-                      }`}
-                    >
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        width={img.width}
-                        height={img.height}
-                        sizes={
-                          section.gallery!.length === 1
-                            ? "(min-width: 640px) 1128px, 100vw"
-                            : "(min-width: 640px) 552px, 100vw"
-                        }
-                        quality={90}
-                        className="w-full"
-                      />
-                    </div>
-                  ))}
+                <div
+                  className={`case-study-gallery mt-9 grid gap-6 ${
+                    section.galleryPrimary
+                      ? "case-study-gallery--primary"
+                      : section.galleryAtmosphere && section.gallery.length > 1
+                        ? "case-study-gallery--balanced"
+                        : ""
+                  } ${
+                    section.galleryStackedSecondary
+                      ? "case-study-gallery--stacked-secondary"
+                      : ""
+                  }`}
+                  style={
+                    section.galleryAtmosphere
+                      ? ({
+                          "--gallery-columns": section.gallery
+                            .map((image) => `${image.width / image.height}fr`)
+                            .join(" "),
+                          "--gallery-height": `${section.galleryHeight ?? 360}px`,
+                        } as CSSProperties)
+                      : undefined
+                  }
+                >
+                  {section.galleryStackedSecondary && featuredProject ? (
+                    <>
+                      <AtmosphericGalleryFrame
+                        backgroundImage={section.gallery[0].src}
+                        project={featuredProject}
+                      >
+                        <div className="relative z-10 flex h-[95%] w-[95%] items-center justify-center">
+                          <GalleryImage
+                            image={section.gallery[0]}
+                            unoptimized
+                            className="h-auto max-h-full w-auto max-w-full rounded-xl shadow-xl shadow-black/15"
+                          />
+                        </div>
+                      </AtmosphericGalleryFrame>
+                      <AtmosphericGalleryFrame
+                        backgroundImage={section.gallery[1].src}
+                        project={featuredProject}
+                      >
+                        <div className="relative z-10 flex h-[95%] w-[95%] flex-col justify-center gap-2">
+                          {section.gallery.slice(1).map((image) => (
+                            <div
+                              key={image.src}
+                              className="flex min-h-0 flex-1 items-center justify-center"
+                            >
+                              <GalleryImage
+                                image={image}
+                                unoptimized
+                                className="h-auto max-h-full w-full rounded-lg object-contain shadow-lg shadow-black/10"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </AtmosphericGalleryFrame>
+                    </>
+                  ) : (
+                    section.gallery.map((img) =>
+                      section.galleryAtmosphere && featuredProject ? (
+                        <AtmosphericGalleryFrame
+                          key={img.src}
+                          backgroundImage={img.src}
+                          project={featuredProject}
+                        >
+                          <div className="relative z-10 flex h-[95%] w-[95%] items-center justify-center">
+                            <GalleryImage
+                              image={img}
+                              unoptimized
+                              className="h-auto max-h-full w-auto max-w-full rounded-xl shadow-xl shadow-black/15"
+                            />
+                          </div>
+                        </AtmosphericGalleryFrame>
+                      ) : (
+                        <div
+                          key={img.src}
+                          className={
+                            section.galleryBare
+                              ? ""
+                              : "overflow-hidden rounded-2xl border border-border shadow-lg shadow-black/5"
+                          }
+                        >
+                          <GalleryImage
+                            image={img}
+                            sizes={
+                              section.gallery!.length === 1
+                                ? "(min-width: 640px) 1128px, 100vw"
+                                : "(min-width: 640px) 552px, 100vw"
+                            }
+                            unoptimized={section.galleryBare}
+                            className="w-full"
+                          />
+                        </div>
+                      ),
+                    )
+                  )}
                 </div>
               </Reveal>
             )}

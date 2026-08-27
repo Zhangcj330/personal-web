@@ -1,0 +1,63 @@
+.card-swap-container {
+  position: absolute;
+  right: -8%;
+  bottom: 14%;
+  transform: translate(0, 0);
+  transform-origin: bottom right;
+  perspective: 900px;
+  overflow: visible;
+}
+
+.card-swap-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 18px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  box-shadow: 0 24px 70px rgb(0 0 0 / 22%);
+  cursor: default;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+}
+
+.impact-swap-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 85% 10%, rgb(255 255 255 / 14%), transparent 35%),
+    #111;
+}
+
+.impact-swap-card:nth-child(even) {
+  color: #111;
+  border-color: rgb(17 17 17 / 10%);
+  background:
+    radial-gradient(circle at 14% 10%, rgb(255 255 255 / 85%), transparent 38%),
+    linear-gradient(135deg, #f7f3ea, #e8e0d2);
+}
+
+@media (max-width: 768px) {
+  .card-swap-container {
+    right: 50%;
+    bottom: 8%;
+    transform: translate(50%, 8%) scale(0.78);
+  }
+}
+
+@media (max-width: 480px) {
+  .card-swap-container {
+    transform: translate(50%, 8%) scale(0.68);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-swap-card {
+    will-change: auto;
+  }
+}

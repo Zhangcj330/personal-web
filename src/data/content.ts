@@ -118,21 +118,35 @@ export const focusAreas = [
 // (see src/data/caseStudyPages.ts and src/app/work/[slug]/page.tsx).
 export const featuredProjects = [
   {
-    slug: "home-health-check",
+    slug: "brick-ai",
     index: "01",
+    title: "Brick AI",
+    category: "AI PropTech · Founder & Full-Stack Engineer",
+    image: "/projects/work/brick-ai/hero-v3.png",
+    imageWidth: 1160,
+    imageHeight: 800,
+    imageBackground:
+      "radial-gradient(circle at 18% 16%, #ffffff 0%, transparent 36%), radial-gradient(circle at 82% 14%, #d9e3ec 0%, transparent 40%), radial-gradient(circle at 76% 92%, #8d99a6 0%, transparent 42%), linear-gradient(135deg, #f7f8f9 0%, #dfe4e8 46%, #b5bec7 74%, #7c8792 100%)",
+    imageGlow:
+      "radial-gradient(circle at 18% 20%, #f7fbff 0%, transparent 38%), radial-gradient(circle at 82% 76%, #66bfff 0%, transparent 44%)",
+  },
+  {
+    slug: "home-health-check",
+    index: "02",
     title: "Home Health Check",
     category: "AI Property Risk Platform · IAG / NRMA",
-    image: "/projects/work/home-health-check/hero.png",
+    image: "/projects/work/home-health-check/hero-v2.png",
     imageWidth: 2880,
     imageHeight: 1986,
     imageBackground:
-      "radial-gradient(circle at 16% 18%, #f7dfbd 0%, transparent 38%), radial-gradient(circle at 76% 20%, #fff0d2 0%, transparent 42%), radial-gradient(circle at 82% 88%, #a97845 0%, transparent 40%), linear-gradient(135deg, #c99d6c 0%, #ead0aa 44%, #d8b282 72%, #8d6745 100%)",
+      "linear-gradient(118deg, transparent 8%, rgba(255,244,203,0.82) 24%, transparent 39%), linear-gradient(62deg, transparent 40%, rgba(255,224,151,0.58) 54%, transparent 68%), radial-gradient(ellipse at 76% 18%, #fff0bd 0%, transparent 38%), radial-gradient(ellipse at 14% 84%, #8e541d 0%, transparent 42%), linear-gradient(135deg, #9b5e1d 0%, #d89b3e 38%, #f0ce83 64%, #a76725 100%)",
     imageGlow:
-      "radial-gradient(circle at 20% 18%, #ffe7bd 0%, transparent 42%), radial-gradient(circle at 82% 76%, #e6b36f 0%, transparent 44%)",
+      "linear-gradient(112deg, transparent 12%, rgba(255,249,221,0.9) 30%, transparent 43%), radial-gradient(ellipse at 72% 20%, #ffe8a3 0%, transparent 40%), radial-gradient(ellipse at 84% 82%, #d9973b 0%, transparent 46%)",
+    imageTexture: "satin",
   },
   {
     slug: "situational-awareness-map",
-    index: "02",
+    index: "03",
     title: "Situational Awareness Map",
     category: "Geospatial Risk Intelligence · IAG",
     image: "/projects/work/situational-awareness-map/hero-v2.png",
@@ -145,7 +159,7 @@ export const featuredProjects = [
   },
   {
     slug: "location-fix-agent",
-    index: "03",
+    index: "04",
     title: "Location Fix Agent",
     category: "AI Agent · Geospatial Data Ops · IAG",
     image: "/projects/work/location-fix-agent/hero.png",
@@ -156,19 +170,6 @@ export const featuredProjects = [
     imageGlow:
       "radial-gradient(circle at 30% 12%, #fff7c8 0%, transparent 36%), radial-gradient(circle at 78% 72%, #8de3c8 0%, transparent 44%)",
     imageFrame: "browser",
-  },
-  {
-    slug: "brick-ai",
-    index: "04",
-    title: "Brick AI",
-    category: "AI PropTech · Founder & Full-Stack Engineer",
-    image: "/projects/work/brick-ai/hero-v3.png",
-    imageWidth: 1160,
-    imageHeight: 800,
-    imageBackground:
-      "radial-gradient(circle at 18% 16%, #ffffff 0%, transparent 36%), radial-gradient(circle at 82% 14%, #d9e3ec 0%, transparent 40%), radial-gradient(circle at 76% 92%, #8d99a6 0%, transparent 42%), linear-gradient(135deg, #f7f8f9 0%, #dfe4e8 46%, #b5bec7 74%, #7c8792 100%)",
-    imageGlow:
-      "radial-gradient(circle at 18% 20%, #f7fbff 0%, transparent 38%), radial-gradient(circle at 82% 76%, #66bfff 0%, transparent 44%)",
   },
 ];
 

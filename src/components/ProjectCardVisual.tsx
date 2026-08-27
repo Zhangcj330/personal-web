@@ -13,7 +13,7 @@ export default function ProjectCardVisual({
   return (
     <div className="overflow-hidden rounded-2xl border border-border shadow-lg shadow-black/5 transition-shadow group-hover:shadow-xl group-hover:shadow-black/10">
       <div
-        className="relative isolate flex aspect-[4/3] items-center justify-center overflow-hidden p-5 sm:p-8"
+        className="relative isolate flex aspect-[4/3] items-center justify-center overflow-hidden"
         style={{ background: project.imageBackground }}
       >
         <Image
@@ -23,7 +23,11 @@ export default function ProjectCardVisual({
           sizes={sizes}
           quality={45}
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-0 scale-[1.25] object-cover opacity-60 blur-[32px] saturate-[1.6] brightness-75"
+          className={`pointer-events-none absolute inset-0 z-0 scale-[1.25] object-cover saturate-[1.6] brightness-75 ${
+            "imageTexture" in project && project.imageTexture === "satin"
+              ? "opacity-20 blur-none"
+              : "opacity-60 blur-[32px]"
+          }`}
         />
         <div
           className="pointer-events-none absolute inset-0 z-0 opacity-65"
@@ -33,10 +37,28 @@ export default function ProjectCardVisual({
           className="pointer-events-none absolute inset-0 z-0 opacity-75 mix-blend-screen"
           style={{ background: project.imageGlow }}
         />
+        {"imageTexture" in project && project.imageTexture === "satin" && (
+          <>
+            <div
+              className="pointer-events-none absolute -inset-[15%] z-0 opacity-90 mix-blend-screen blur-xl"
+              style={{
+                background:
+                  "linear-gradient(116deg, transparent 12%, rgba(255,255,255,0.92) 29%, transparent 42%, rgba(255,218,132,0.72) 53%, transparent 67%, rgba(255,248,218,0.68) 78%, transparent 88%)",
+              }}
+            />
+            <div
+              className="pointer-events-none absolute inset-0 z-0 opacity-35 mix-blend-soft-light"
+              style={{
+                background:
+                  "repeating-linear-gradient(108deg, rgba(255,255,255,0.22) 0 1px, transparent 1px 5px)",
+              }}
+            />
+          </>
+        )}
         <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(0,0,0,0.38)_100%)]" />
 
         {"imageFrame" in project && project.imageFrame === "browser" ? (
-          <div className="relative z-10 w-full overflow-hidden rounded-xl border border-black/15 bg-white shadow-xl shadow-black/20 transition-transform duration-500 group-hover:scale-[1.02]">
+          <div className="relative z-10 w-[88%] overflow-hidden rounded-xl border border-black/15 bg-white shadow-xl shadow-black/20 transition-transform duration-500 group-hover:scale-[1.02]">
             <div className="flex h-6 items-center gap-1.5 border-b border-black/10 bg-[#f2f3f4] px-2.5">
               <div className="flex shrink-0 gap-1">
                 <span className="h-2 w-2 rounded-full border border-black/10 bg-[#ff5f57]" />
@@ -114,7 +136,7 @@ export default function ProjectCardVisual({
             height={project.imageHeight}
             sizes={sizes}
             quality={90}
-            className="relative z-10 w-full rounded-xl shadow-xl shadow-black/15 transition-transform duration-500 group-hover:scale-[1.02]"
+            className="relative z-10 w-[88%] rounded-xl shadow-xl shadow-black/15 transition-transform duration-500 group-hover:scale-[1.02]"
           />
         )}
       </div>

@@ -9,7 +9,7 @@ import Reveal from "@/components/Reveal";
 // its full case-study detail page at /work/[slug].
 export default function CaseStudies() {
   return (
-    <section id="case-studies" className="mx-auto max-w-6xl px-6 py-20">
+    <section id="case-studies" className="mx-auto max-w-6xl px-6 pt-20 pb-12">
       <div className="border-t border-border pt-12">
         <h2 className="mb-10 text-sm font-medium uppercase tracking-widest text-muted">
           Featured Projects

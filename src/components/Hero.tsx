@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { site } from "@/data/content";
 import Reveal from "@/components/Reveal";
 import TextType from "@/components/TextType";
@@ -14,17 +15,19 @@ export default function Hero() {
       <Reveal delay={0.1}>
         <h1 className="max-w-5xl font-display text-5xl font-semibold leading-tight tracking-tight sm:text-7xl">
           Choosie is building{" "}
-          <TextType
-            as="span"
-            text={["Brick AI"]}
-            typingSpeed={90}
-            initialDelay={300}
-            loop={false}
-            showCursor
-            cursorCharacter="_"
-            className="underline decoration-4 decoration-gray-300 underline-offset-8"
-            style={{ display: "inline" }}
-          />
+          <Link href="/work/brick-ai" className="transition-opacity hover:opacity-60">
+            <TextType
+              as="span"
+              text={["Brick AI"]}
+              typingSpeed={90}
+              initialDelay={300}
+              loop={false}
+              showCursor
+              cursorCharacter="_"
+              className="hero-brick-link"
+              style={{ display: "inline" }}
+            />
+          </Link>
         </h1>
       </Reveal>
     </section>

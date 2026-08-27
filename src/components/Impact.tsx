@@ -1,123 +1,122 @@
-import { impact } from "@/data/content";
+import Image from "next/image";
+import CardSwap, { Card } from "@/components/CardSwap";
 import Reveal from "@/components/Reveal";
+import { impact } from "@/data/content";
 
-function EmphasizedTitle({
-  title,
-  emphasis,
-}: {
-  title: string;
-  emphasis?: string;
-}) {
-  if (!emphasis) return title;
+const companyLogos: Record<string, { src: string; alt: string }> = {
+  "IAG · NRMA": {
+    src: "/logos/IAG.png",
+    alt: "IAG",
+  },
+  "Brick AI": {
+    src: "/logos/brickai.svg",
+    alt: "Brick AI",
+  },
+};
 
-  const emphasisIndex = title.indexOf(emphasis);
-  if (emphasisIndex === -1) return title;
-
-  return (
-    <>
-      {title.slice(0, emphasisIndex)}
-      <span className="font-bold italic">{emphasis}</span>
-      {title.slice(emphasisIndex + emphasis.length)}
-    </>
-  );
-}
+const impactCards = impact.groups.flatMap((group) => [
+  ...group.stats.map((stat) => ({
+    company: group.company,
+    value: stat.value,
+    label: stat.label,
+    description: stat.description,
+    eyebrow: undefined,
+  })),
+  ...group.stories.map((story) => ({
+    company: group.company,
+    value: "metric" in story ? story.metric : undefined,
+    label: story.title,
+    description: story.description,
+    eyebrow: "eyebrow" in story ? story.eyebrow : undefined,
+  })),
+]);
 
 export default function Impact() {
   return (
-    <section id="impact" className="mx-auto max-w-6xl overflow-hidden px-6 py-20">
-      <div>
-        <Reveal>
-          <h2 className="text-sm font-medium uppercase tracking-widest text-muted">
-            {impact.eyebrow}
-          </h2>
-          <p className="mt-2 max-w-3xl font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            Outcomes that moved forward.
-          </p>
-        </Reveal>
+    <section
+      id="impact"
+      className="mx-auto max-w-6xl overflow-hidden px-6 pt-20 pb-12"
+    >
+      <div className="border-t border-border pt-12">
+        <div className="grid items-center gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:gap-10">
+          <Reveal className="relative z-10 lg:pb-8">
+            <h2 className="text-sm font-medium uppercase tracking-widest text-muted">
+              {impact.eyebrow}
+            </h2>
+            <p className="mt-2 max-w-md font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+              Outcomes that moved forward.
+            </p>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-muted">
+              Product outcomes across customer experience, operations, AI, and
+              geospatial intelligence.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-2">
+              {impact.groups.map((group) => (
+                <span
+                  key={group.company}
+                  className="rounded-full border border-border px-3 py-1.5 text-xs font-semibold"
+                >
+                  {group.company}
+                </span>
+              ))}
+            </div>
+          </Reveal>
 
-        <div className="mt-14 flex flex-col gap-20 sm:mt-16 sm:gap-24">
-          {impact.groups.map((group, gi) => (
-            <div key={group.company} className="relative">
-              <Reveal delay={gi * 0.05}>
-                <div className="mb-8 flex items-baseline justify-between border-b border-border pb-3">
-                  <h3 className="font-display text-lg font-semibold tracking-tight sm:text-xl">
-                    {group.company}
-                  </h3>
-                  <span className="text-xs font-semibold tabular-nums text-muted">
-                    0{gi + 1}
-                  </span>
-                </div>
-              </Reveal>
+          <Reveal
+            delay={0.08}
+            className="relative h-[500px] sm:h-[540px] lg:h-[500px]"
+          >
+            <CardSwap
+              width="min(88vw, 480px)"
+              height={320}
+              cardDistance={22}
+              verticalDistance={30}
+              delay={3000}
+              pauseOnHover
+              skewAmount={4}
+              easing="elastic"
+            >
+              {impactCards.map((card, index) => (
+                <Card key={`${card.company}-${card.label}`} customClass="impact-swap-card">
+                  <div className="flex items-center justify-between gap-4">
+                    <Image
+                      src={companyLogos[card.company].src}
+                      alt={companyLogos[card.company].alt}
+                      width={32}
+                      height={32}
+                      className="h-8 w-8 rounded-lg object-contain"
+                    />
+                    <span className="text-[11px] font-semibold tabular-nums opacity-45">
+                      0{index + 1}
+                    </span>
+                  </div>
 
-              <div className="grid grid-cols-1 gap-x-12 gap-y-14 sm:grid-cols-2">
-                {group.stats.map((stat, i) => (
-                  <Reveal
-                    key={stat.value}
-                    delay={gi * 0.05 + i * 0.06}
-                    className={i % 2 === 1 ? "sm:pt-20" : ""}
-                  >
-                    <div className="font-display text-[clamp(3rem,5.5vw,5rem)] font-bold leading-[0.9] tracking-[-0.05em]">
-                      {stat.value}
-                    </div>
-                    <div className="mt-5 max-w-md">
-                      {stat.label && (
-                        <div className="text-xs font-semibold uppercase tracking-[0.18em]">
-                          {stat.label}
-                        </div>
-                      )}
-                      <p
-                        className={`text-sm leading-relaxed text-muted ${
-                          stat.label ? "mt-2" : ""
-                        }`}
-                      >
-                        {stat.description}
-                      </p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-
-              <div
-                className={`mt-12 grid grid-cols-1 gap-x-12 gap-y-10 sm:mt-16 ${
-                  group.stories.length > 1 ? "sm:grid-cols-2" : ""
-                }`}
-              >
-                {group.stories.map((story, i) => (
-                  <Reveal
-                    key={story.title}
-                    delay={gi * 0.05 + 0.12 + i * 0.06}
-                    className="flex max-w-xl flex-col border-l-2 border-foreground pl-5 sm:pl-7"
-                  >
-                    {"eyebrow" in story && story.eyebrow && (
-                      <span className="mb-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-muted">
-                        {story.eyebrow}
-                      </span>
-                    )}
-                    {"metric" in story && story.metric && (
-                      <div className="mb-4 font-display text-4xl font-bold leading-none tracking-[-0.04em] sm:text-5xl">
-                        {story.metric}
+                  <div>
+                    {card.eyebrow && (
+                      <div className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] opacity-60">
+                        {card.eyebrow}
                       </div>
                     )}
-                    <h4
-                      className={`whitespace-pre-line font-display font-semibold ${
-                        "metric" in story && story.metric
-                          ? "text-sm uppercase leading-snug tracking-[0.16em]"
-                          : "text-xl leading-tight tracking-tight sm:text-2xl"
+                    {card.value && (
+                      <div className="font-display text-5xl font-bold leading-none tracking-[-0.05em] sm:text-6xl">
+                        {card.value}
+                      </div>
+                    )}
+                    <h3
+                      className={`whitespace-pre-line font-display font-semibold leading-tight tracking-tight ${
+                        card.value ? "mt-4 text-xl" : "text-3xl"
                       }`}
                     >
-                      <EmphasizedTitle
-                        title={story.title}
-                        emphasis={"emphasis" in story ? story.emphasis : undefined}
-                      />
-                    </h4>
-                    <p className="mt-3 text-sm leading-relaxed text-muted">
-                      {story.description}
+                      {card.label}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed opacity-65">
+                      {card.description}
                     </p>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
-          ))}
+                  </div>
+                </Card>
+              ))}
+            </CardSwap>
+          </Reveal>
         </div>
       </div>
     </section>

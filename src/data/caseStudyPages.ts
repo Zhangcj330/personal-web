@@ -43,10 +43,18 @@ export interface CaseStudySection {
   features?: CaseStudyFeature[];
   gallery?: CaseStudyImage[];
   galleryCaption?: string;
+  galleryBare?: boolean;
+  galleryAtmosphere?: boolean;
+  galleryHeight?: number;
+  galleryPrimary?: boolean;
+  galleryStackedSecondary?: boolean;
   techStack?: string[];
   // single visual (photo or GIF) shown beside the text in a colored panel
   sideImage?: CaseStudyImage;
   sideImageCaption?: string;
+  sideImageBare?: boolean;
+  sideVisual?: "brick-ai-chat" | "brick-ai-suburb-insights";
+  interactiveShowcase?: "brick-ai-interfaces";
 }
 
 export interface CaseStudyPage {
@@ -78,7 +86,7 @@ export const caseStudyPages: CaseStudyPage[] = [
     ],
     lead: "An AI-powered tool that helps NRMA customers proactively protect their homes — turning trusted risk data into simple, ongoing actions.",
     heroImage: {
-      src: "/projects/work/home-health-check/hero.png",
+      src: "/projects/work/home-health-check/hero-v2.png",
       alt: "Home Health Check report with an all-clear result and aerial property imagery — NRMA / IAG",
       width: 2880,
       height: 1986,
@@ -98,14 +106,24 @@ export const caseStudyPages: CaseStudyPage[] = [
         ],
         gallery: [
           {
-            src: "/projects/work/home-health-check/findings.png",
-            alt: "Risk findings and aerial imagery",
-            width: 584,
-            height: 213,
+            src: "/projects/work/home-health-check/issues-v4.png",
+            alt: "Detected property issues and aerial evidence",
+            width: 2304,
+            height: 1100,
+          },
+          {
+            src: "/projects/work/home-health-check/missing-roof.png",
+            alt: "Missing roof material finding with customer guidance and recommended next steps",
+            width: 1616,
+            height: 1778,
           },
         ],
+        galleryAtmosphere: true,
+        galleryBare: true,
+        galleryHeight: 420,
+        galleryPrimary: true,
         galleryCaption:
-          "Real Home Health Check screen — the \"all clear\" result with the aerial image and full issue checklist.",
+          "Real Home Health Check screens — detected issues, aerial evidence, and clear guidance on what customers can do next.",
       },
       {
         heading: ["Scan · Assess · Act"],
@@ -126,7 +144,30 @@ export const caseStudyPages: CaseStudyPage[] = [
             width: 2880,
             height: 1418,
           },
+          {
+            src: "/projects/work/home-health-check/bushfire.png",
+            alt: "Bushfire risk details and preparation guidance",
+            width: 1488,
+            height: 594,
+          },
+          {
+            src: "/projects/work/home-health-check/flood.png",
+            alt: "Flood risk preparation guidance",
+            width: 1488,
+            height: 558,
+          },
+          {
+            src: "/projects/work/home-health-check/cyclone.png",
+            alt: "Cyclone risk preparation guidance",
+            width: 1488,
+            height: 558,
+          },
         ],
+        galleryAtmosphere: true,
+        galleryBare: true,
+        galleryHeight: 410,
+        galleryPrimary: true,
+        galleryStackedSecondary: true,
         galleryCaption:
           "Real screen — the extreme-weather severity scale across bushfire, flood, cyclone, storm/hail and storm surge.",
       },
@@ -319,13 +360,7 @@ export const caseStudyPages: CaseStudyPage[] = [
           "Instead of endless filters, Brick understands intent. It replies with generative UI — rich, interactive cards rendered live in the chat: suburb stats, grant eligibility, comparable sales, affordability, risk and an interactive map.",
           "The answer is the interface — data shaped around the exact question a buyer just asked.",
         ],
-        sideImage: {
-          src: "/projects/work/brick-ai/gen-ui-loop.gif",
-          alt: "Generative UI widgets — property card and suburb stats — rendered live in the chat",
-          width: 440,
-          height: 1018,
-        },
-        sideImageCaption: "Real gen-UI widgets rendered live in the chat.",
+        sideVisual: "brick-ai-chat",
       },
       {
         heading: ["How it works"],
@@ -360,38 +395,7 @@ export const caseStudyPages: CaseStudyPage[] = [
         paragraphs: [
           "Every reply can render a purpose-built component — the AI decides which data matters and shapes the UI around it.",
         ],
-        features: [
-          {
-            icon: "📊",
-            title: "Suburb intelligence",
-            body: "Medians, clearance rates, days-on-market and trend signals for any suburb.",
-          },
-          {
-            icon: "🏷️",
-            title: "Grant eligibility",
-            body: "Stamp-duty relief, FHOG and First Home Guarantee — matched to the buyer's situation.",
-          },
-          {
-            icon: "🧮",
-            title: "True affordability",
-            body: "Models stamp duty, LMI and council rates so there are no surprises at settlement.",
-          },
-          {
-            icon: "🏠",
-            title: "Listing analysis",
-            body: "Comparable sales, flood zones, school ratings and price history in one view.",
-          },
-          {
-            icon: "🗺️",
-            title: "Interactive map",
-            body: "Live property markers and street view, powered by Leaflet, right inside the chat.",
-          },
-          {
-            icon: "⚖️",
-            title: "Negotiation strategy",
-            body: "Comparable-driven ceiling price and an offer plan for inspections and auctions.",
-          },
-        ],
+        interactiveShowcase: "brick-ai-interfaces",
       },
       {
         heading: ["My Role"],

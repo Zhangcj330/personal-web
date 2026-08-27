@@ -1,0 +1,25 @@
+.case-study-gallery {
+  grid-template-columns: 1fr;
+}
+
+.case-study-gallery-card {
+  height: 320px;
+}
+
+@media (min-width: 640px) {
+  .case-study-gallery--balanced {
+    grid-template-columns: var(--gallery-columns);
+  }
+
+  .case-study-gallery--primary {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  }
+
+  .case-study-gallery--stacked-secondary {
+    grid-template-columns: minmax(0, 2.5fr) minmax(0, 1fr);
+  }
+
+  .case-study-gallery-card {
+    height: var(--gallery-height, 360px);
+  }
+}

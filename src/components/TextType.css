@@ -12,3 +12,10 @@
 .text-type__cursor--hidden {
   display: none;
 }
+
+.hero-brick-link .text-type__content {
+  text-decoration-line: underline;
+  text-decoration-color: #d1d5db;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 8px;
+}

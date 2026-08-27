@@ -22,7 +22,7 @@ export default function IntroFlip() {
                 <div className="flex shrink-0 flex-col items-center gap-3 lg:w-48 lg:self-center">
                   <span className="relative flex h-40 w-40 items-center justify-center overflow-hidden rounded-full bg-foreground">
                     <Image
-                      src="/photos/choosie-brickai.jpg"
+                      src="/photos/profile-square.jpeg"
                       alt={site.name}
                       fill
                       sizes="160px"
