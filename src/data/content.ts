@@ -85,21 +85,21 @@ export const focusAreas = [
   {
     number: "01",
     title: "FIND THE RIGHT PROBLEM",
-    lead: "I start with people, not technology.",
+    lead: "I start with the problem, not technology.",
     description:
       "Talk to customers. Understand workflows. Research the domain. Find pain points. Separate the real problem from the symptoms.",
   },
   {
     number: "02",
     title: "TURN AMBIGUITY INTO A PRODUCT",
-    lead: "I turn messy problems into something buildable.",
+    lead: "I turn problems into something buildable.",
     description:
       "Define the opportunity. Form hypotheses. Explore solutions. Make trade-offs. Turn an unclear problem into a clear product direction.",
   },
   {
     number: "03",
     title: "BUILD ACROSS THE STACK",
-    lead: "I don't stop when the problem crosses a technical boundary.",
+    lead: "I build whatever the problem requires.",
     description:
       "AI, data, maps, APIs, backend, cloud — I can move across disciplines and connect the pieces needed to make the product work.",
   },
@@ -125,15 +125,23 @@ export const featuredProjects = [
     image: "/projects/work/home-health-check/hero.png",
     imageWidth: 2880,
     imageHeight: 1986,
+    imageBackground:
+      "radial-gradient(circle at 16% 18%, #f7dfbd 0%, transparent 38%), radial-gradient(circle at 76% 20%, #fff0d2 0%, transparent 42%), radial-gradient(circle at 82% 88%, #a97845 0%, transparent 40%), linear-gradient(135deg, #c99d6c 0%, #ead0aa 44%, #d8b282 72%, #8d6745 100%)",
+    imageGlow:
+      "radial-gradient(circle at 20% 18%, #ffe7bd 0%, transparent 42%), radial-gradient(circle at 82% 76%, #e6b36f 0%, transparent 44%)",
   },
   {
     slug: "situational-awareness-map",
     index: "02",
     title: "Situational Awareness Map",
     category: "Geospatial Risk Intelligence · IAG",
-    image: "/projects/work/situational-awareness-map/hero.png",
+    image: "/projects/work/situational-awareness-map/hero-v2.png",
     imageWidth: 1160,
     imageHeight: 800,
+    imageBackground:
+      "radial-gradient(circle at 28% 8%, #df70ed 0%, transparent 34%), radial-gradient(circle at 72% 18%, #7652d8 0%, transparent 40%), radial-gradient(circle at 92% 88%, #e66bd2 0%, transparent 42%), linear-gradient(140deg, #24145c 0%, #452483 42%, #6040a5 70%, #271852 100%)",
+    imageGlow:
+      "radial-gradient(circle at 28% 10%, #f08cff 0%, transparent 38%), radial-gradient(circle at 90% 82%, #ff87df 0%, transparent 44%)",
   },
   {
     slug: "location-fix-agent",
@@ -143,60 +151,85 @@ export const featuredProjects = [
     image: "/projects/work/location-fix-agent/hero.png",
     imageWidth: 1600,
     imageHeight: 1000,
+    imageBackground:
+      "radial-gradient(circle at 28% 10%, #f1efbf 0%, transparent 32%), radial-gradient(circle at 72% 24%, #b9e3ce 0%, transparent 38%), radial-gradient(circle at 12% 88%, #1596a3 0%, transparent 42%), linear-gradient(135deg, #07594f 0%, #08766f 40%, #319488 68%, #133f38 100%)",
+    imageGlow:
+      "radial-gradient(circle at 30% 12%, #fff7c8 0%, transparent 36%), radial-gradient(circle at 78% 72%, #8de3c8 0%, transparent 44%)",
+    imageFrame: "browser",
   },
   {
     slug: "brick-ai",
     index: "04",
     title: "Brick AI",
     category: "AI PropTech · Founder & Full-Stack Engineer",
-    image: "/projects/work/brick-ai/hero.png",
+    image: "/projects/work/brick-ai/hero-v3.png",
     imageWidth: 1160,
     imageHeight: 800,
+    imageBackground:
+      "radial-gradient(circle at 18% 16%, #ffffff 0%, transparent 36%), radial-gradient(circle at 82% 14%, #d9e3ec 0%, transparent 40%), radial-gradient(circle at 76% 92%, #8d99a6 0%, transparent 42%), linear-gradient(135deg, #f7f8f9 0%, #dfe4e8 46%, #b5bec7 74%, #7c8792 100%)",
+    imageGlow:
+      "radial-gradient(circle at 18% 20%, #f7fbff 0%, transparent 38%), radial-gradient(circle at 82% 76%, #66bfff 0%, transparent 44%)",
   },
 ];
 
 export const impact = {
   eyebrow: "Impact",
-  stats: [
+  groups: [
     {
-      value: "50+",
-      label: "Customer Conversations",
-      description:
-        "Talked directly with 50+ potential customers while shaping Brick AI — understanding how people search, evaluate and make property decisions.",
+      company: "IAG · NRMA",
+      stats: [
+        {
+          value: "200K+",
+          label: "Customers",
+          description:
+            "First rollout of Home Health Check, bringing property intelligence to 200K+ customers.",
+        },
+        {
+          value: "8×",
+          label: "Faster",
+          description:
+            "Reduced a half-day operational workflow to ~30 minutes with an AI-assisted process.",
+        },
+      ],
+      stories: [
+        {
+          title: "A First\nFor IAG",
+          emphasis: "First",
+          description:
+            "Brought property condition and risk insights directly to customers for the first time — helping them understand what's happening with their home, the risks around it, and what they can do about it.",
+        },
+        {
+          metric: "15+",
+          title: "Major Events in 12 Months",
+          description:
+            "Provided situational intelligence for bushfires, floods, hail and cyclones — supporting time-critical operational and workforce decisions in the command centre.",
+        },
+      ],
     },
     {
-      value: "½ Day → <1 Hour",
-      description:
-        "Turned a manual operational workflow into an AI-assisted process, freeing people to focus on higher-value work.",
-    },
-    {
-      value: "200K+",
-      label: "Customers",
-      description: "Built customer-facing property intelligence at enterprise scale.",
-    },
-    {
-      value: "0 → 1",
-      label: "Founder",
-      description: "Took Brick AI from an idea to a working AI-native product.",
-    },
-  ],
-  stories: [
-    {
-      eyebrow: "Selected",
-      title: "USYD Startup Program",
-      description:
-        "Brick AI was selected for a University of Sydney startup program, validating the idea beyond my own desk.",
-    },
-    {
-      title: "A First for IAG",
-      description:
-        "Helped bring property intelligence directly to customers for the first time — helping people understand the condition of their home and the risks around it.",
-    },
-    {
-      eyebrow: "When It Mattered",
-      title: "Major Event Operations",
-      description:
-        "Built situational intelligence used during a major event to support time-critical operational and workforce decisions.",
+      company: "Brick AI",
+      stats: [
+        {
+          value: "50+",
+          label: "Customer Conversations",
+          description:
+            "Spoke directly with 50+ home buyers and property investors while shaping Brick AI — learning how people search, evaluate properties and make buying decisions.",
+        },
+        {
+          value: "0 → 1",
+          label: "Founder-Built",
+          description:
+            "Took Brick AI from customer research and an early idea to a working AI-native property product.",
+        },
+      ],
+      stories: [
+        {
+          eyebrow: "Selected",
+          title: "USYD Startup Program",
+          description:
+            "Brick AI was selected for a University of Sydney startup program — external validation for an idea I'd taken from research to product.",
+        },
+      ],
     },
   ],
 };

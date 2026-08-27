@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import ProjectCardVisual from "@/components/ProjectCardVisual";
 import type { CaseStudyPage } from "@/data/caseStudyPages";
-import { caseStudyPages } from "@/data/caseStudyPages";
+import { featuredProjects } from "@/data/content";
 
 // Detail page for a single project, styled after the reference site's
 // individual work page (majd-portfolio.framer.website/work/damas): a big
@@ -12,7 +13,10 @@ import { caseStudyPages } from "@/data/caseStudyPages";
 // gallery / tech-stack chip list), a closing statement, and a "more
 // projects" style footer linking back to the other 3 case studies.
 export default function WorkPage({ page }: { page: CaseStudyPage }) {
-  const otherPages = caseStudyPages.filter((p) => p.slug !== page.slug);
+  const otherProjects = featuredProjects
+    .filter((project) => project.slug !== page.slug)
+    .slice(0, 2);
+  const featuredProject = featuredProjects.find((project) => project.slug === page.slug);
 
   return (
     <article>
@@ -56,10 +60,32 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
         </Reveal>
         <Reveal delay={0.15}>
           <div
-            className="mt-10 rounded-[2.5rem] p-4 sm:p-8"
-            style={{ backgroundColor: page.accentBg }}
+            className="relative isolate mt-10 overflow-hidden rounded-[2.5rem] p-4 sm:p-8"
+            style={{ background: featuredProject?.imageBackground ?? page.accentBg }}
           >
-            <div className="overflow-hidden rounded-3xl shadow-2xl shadow-black/10">
+            {featuredProject && (
+              <>
+                <Image
+                  src={page.heroImage.src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 1152px, 100vw"
+                  quality={45}
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 z-0 scale-[1.25] object-cover opacity-60 blur-[40px] saturate-[1.6] brightness-75"
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 z-0 opacity-65"
+                  style={{ background: featuredProject.imageBackground }}
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 z-0 opacity-75 mix-blend-screen"
+                  style={{ background: featuredProject.imageGlow }}
+                />
+                <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_34%,rgba(0,0,0,0.38)_100%)]" />
+              </>
+            )}
+            <div className="relative z-10 overflow-hidden rounded-3xl shadow-2xl shadow-black/20">
               <Image
                 src={page.heroImage.src}
                 alt={page.heroImage.alt}
@@ -79,32 +105,65 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
       <div className="mx-auto max-w-6xl px-6">
         {page.sections.map((section, i) => (
           <section key={i} className="border-t border-border py-14 sm:py-16">
-            <Reveal>
-              <div className="max-w-2xl">
-                <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-                  {section.heading.map((line, j) => (
-                    <span key={j} className="block">
-                      {line}
-                    </span>
-                  ))}
-                </h2>
-                {section.subheading && (
-                  <p
-                    className="mt-2 font-mono text-xs font-semibold uppercase tracking-widest"
-                    style={{ color: page.accent }}
-                  >
-                    {section.subheading}
-                  </p>
-                )}
-                <div className="mt-5 space-y-4">
-                  {section.paragraphs.map((p, k) => (
-                    <p key={k} className="text-[15.5px] leading-relaxed text-muted">
-                      {p}
+            <div
+              className={
+                section.sideImage
+                  ? "grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14"
+                  : undefined
+              }
+            >
+              <Reveal>
+                <div className="max-w-2xl">
+                  <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+                    {section.heading.map((line, j) => (
+                      <span key={j} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </h2>
+                  {section.subheading && (
+                    <p
+                      className="mt-2 font-mono text-xs font-semibold uppercase tracking-widest"
+                      style={{ color: page.accent }}
+                    >
+                      {section.subheading}
                     </p>
-                  ))}
+                  )}
+                  <div className="mt-5 space-y-4">
+                    {section.paragraphs.map((p, k) => (
+                      <p key={k} className="text-[15.5px] leading-relaxed text-muted">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </Reveal>
+              </Reveal>
+
+              {section.sideImage && (
+                <Reveal delay={0.1}>
+                  <div
+                    className="rounded-[2rem] p-4 sm:p-6"
+                    style={{ backgroundColor: page.accentBg }}
+                  >
+                    <div className="mx-auto max-w-[420px] overflow-hidden rounded-2xl shadow-xl shadow-black/10">
+                      <Image
+                        src={section.sideImage.src}
+                        alt={section.sideImage.alt}
+                        width={section.sideImage.width}
+                        height={section.sideImage.height}
+                        unoptimized={section.sideImage.src.endsWith(".gif")}
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                  {section.sideImageCaption && (
+                    <p className="mt-4 text-center text-[13px] text-muted">
+                      {section.sideImageCaption}
+                    </p>
+                  )}
+                </Reveal>
+              )}
+            </div>
 
             {section.stats && (
               <Reveal delay={0.05}>
@@ -225,12 +284,6 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
             {(section.galleryCaption) && (
               <p className="mt-4 text-[13px] text-muted">{section.galleryCaption}</p>
             )}
-
-            {page.chatMock && section.heading[0] === "A conversation," && (
-              <Reveal delay={0.1}>
-                <ChatMock page={page} />
-              </Reveal>
-            )}
           </section>
         ))}
 
@@ -264,31 +317,17 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
             </h2>
           </Reveal>
           <div className="mt-9 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
-            {otherPages.slice(0, 2).map((other, i) => (
-              <Reveal delay={0.05 * (i + 1)} key={other.slug}>
-                <Link href={`/work/${other.slug}`} className="group block">
-                  <div
-                    className="overflow-hidden rounded-2xl p-4 sm:p-5"
-                    style={{ backgroundColor: other.accentBg }}
-                  >
-                    <div className="overflow-hidden rounded-xl">
-                      <Image
-                        src={other.heroImage.src}
-                        alt={other.heroImage.alt}
-                        width={other.heroImage.width}
-                        height={other.heroImage.height}
-                        sizes="(min-width: 640px) 552px, 100vw"
-                        quality={90}
-                        className="aspect-[16/11] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                      />
+            {otherProjects.map((project, i) => (
+              <Reveal delay={0.05 * (i + 1)} key={project.slug}>
+                <Link href={`/work/${project.slug}`} className="group block">
+                  <ProjectCardVisual project={project} />
+                  <div className="mt-5 flex items-baseline justify-between gap-4">
+                    <div className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
+                      {project.title}
                     </div>
+                    <span className="text-xs font-medium text-muted">{project.index}</span>
                   </div>
-                  <div className="mt-5">
-                    <div className="text-lg font-semibold tracking-tight">
-                      {other.title.join(" ")}
-                    </div>
-                    <div className="mt-1 text-sm text-muted">{other.tagline}</div>
-                  </div>
+                  <div className="mt-1 text-sm text-muted">{project.category}</div>
                 </Link>
               </Reveal>
             ))}
@@ -358,84 +397,5 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
         </div>
       </footer>
     </article>
-  );
-}
-
-function ChatMock({ page }: { page: CaseStudyPage }) {
-  if (!page.chatMock) return null;
-  const { messages, cards } = page.chatMock;
-
-  return (
-    <div className="mt-9 max-w-md overflow-hidden rounded-[22px] border border-border shadow-xl shadow-black/10">
-      <div className="flex items-center gap-2 border-b border-border px-4 py-3">
-        <span
-          className="h-2 w-2 rounded-full"
-          style={{ backgroundColor: page.accent }}
-        />
-        <b className="text-xs font-bold">Brick AI</b>
-        <span className="ml-auto text-[10px] text-muted">Online</span>
-      </div>
-      <div className="flex flex-col gap-3 p-4">
-        <Bubble from={messages[0].from} text={messages[0].text} />
-        <Bubble from={messages[1].from} text={messages[1].text} />
-        <Bubble from={messages[2].from} text={messages[2].text} />
-        <MiniCard rows={cards[0]} accentBg={page.accentBg} accent={page.accent} />
-        <Bubble from="user" text="What grants am I eligible for?" />
-        <MiniCard rows={cards[1]} accentBg={page.accentBg} accent={page.accent} />
-        <div className="mt-0.5 flex items-center gap-2">
-          <span className="flex-1 rounded-full bg-[#f4f4f3] px-3.5 py-2 text-xs text-[#afafaf]">
-            Ask about suburbs, budgets, grants…
-          </span>
-          <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#111111] text-xs text-white">
-            →
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Bubble({ from, text }: { from: "ai" | "user"; text: string }) {
-  return (
-    <div
-      className={
-        from === "ai"
-          ? "max-w-[86%] self-start rounded-2xl rounded-tl-[5px] bg-[#f4f4f3] px-3 py-2.5 text-[13px] leading-snug text-[#111111]"
-          : "max-w-[86%] self-end rounded-2xl rounded-tr-[5px] bg-[#111111] px-3 py-2.5 text-[13px] leading-snug text-white"
-      }
-    >
-      {text}
-    </div>
-  );
-}
-
-function MiniCard({
-  rows,
-  accentBg,
-  accent,
-}: {
-  rows: { label: string; value: string; badge?: string }[];
-  accentBg: string;
-  accent: string;
-}) {
-  return (
-    <div className="flex flex-col gap-2 self-start rounded-xl border border-border p-3">
-      {rows.map((row) => (
-        <div key={row.label} className="flex items-center justify-between text-xs">
-          <span className="text-muted">{row.label}</span>
-          <span className="flex items-center gap-2">
-            <span className="font-bold">{row.value}</span>
-            {row.badge && (
-              <span
-                className="rounded-full px-2 py-0.5 text-[10px] font-bold"
-                style={{ backgroundColor: accentBg, color: accent }}
-              >
-                {row.badge}
-              </span>
-            )}
-          </span>
-        </div>
-      ))}
-    </div>
   );
 }

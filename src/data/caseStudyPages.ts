@@ -44,17 +44,9 @@ export interface CaseStudySection {
   gallery?: CaseStudyImage[];
   galleryCaption?: string;
   techStack?: string[];
-}
-
-export interface ChatMessage {
-  from: "ai" | "user";
-  text: string;
-}
-
-export interface ChatCardRow {
-  label: string;
-  value: string;
-  badge?: string;
+  // single visual (photo or GIF) shown beside the text in a colored panel
+  sideImage?: CaseStudyImage;
+  sideImageCaption?: string;
 }
 
 export interface CaseStudyPage {
@@ -67,10 +59,6 @@ export interface CaseStudyPage {
   lead: string;
   heroImage: CaseStudyImage;
   sections: CaseStudySection[];
-  chatMock?: {
-    messages: ChatMessage[];
-    cards: ChatCardRow[][];
-  };
   closing?: { heading: string[]; paragraph: string };
   footer: { headline: string[]; meta: string; liveUrl?: string };
 }
@@ -312,10 +300,10 @@ export const caseStudyPages: CaseStudyPage[] = [
     ],
     lead: "Australia's AI buyer's agent for first-home buyers — giving buyers the clarity, data and negotiation edge to buy right, without the guesswork.",
     heroImage: {
-      src: "/projects/work/brick-ai/hero.png",
+      src: "/projects/work/brick-ai/hero-v3.png",
       alt: "Brick AI — AI buyer's agent, live product",
-      width: 1160,
-      height: 800,
+      width: 2320,
+      height: 1588,
     },
     sections: [
       {
@@ -331,6 +319,13 @@ export const caseStudyPages: CaseStudyPage[] = [
           "Instead of endless filters, Brick understands intent. It replies with generative UI — rich, interactive cards rendered live in the chat: suburb stats, grant eligibility, comparable sales, affordability, risk and an interactive map.",
           "The answer is the interface — data shaped around the exact question a buyer just asked.",
         ],
+        sideImage: {
+          src: "/projects/work/brick-ai/gen-ui-loop.gif",
+          alt: "Generative UI widgets — property card and suburb stats — rendered live in the chat",
+          width: 440,
+          height: 1018,
+        },
+        sideImageCaption: "Real gen-UI widgets rendered live in the chat.",
       },
       {
         heading: ["How it works"],
@@ -406,28 +401,6 @@ export const caseStudyPages: CaseStudyPage[] = [
         ],
       },
     ],
-    chatMock: {
-      messages: [
-        { from: "ai", text: "Hi! I'm Brick. What home are you looking for?" },
-        { from: "user", text: "3 bed in Dee Why, budget $2M" },
-        {
-          from: "ai",
-          text: "Found 8 matches in Dee Why. Median $1.94M — you're right at market. Clearance rate 74%.",
-        },
-      ],
-      cards: [
-        [
-          { label: "Suburb median", value: "$1.94M" },
-          { label: "Clearance rate", value: "74%", badge: "🔥 Active" },
-          { label: "Your budget", value: "$2.0M" },
-        ],
-        [
-          { label: "First Home Buyer Assist", value: "$0 duty", badge: "✓ Eligible" },
-          { label: "FHOG (new builds)", value: "$10,000" },
-          { label: "First Home Guarantee", value: "5% deposit" },
-        ],
-      ],
-    },
     closing: {
       heading: ["Buying a home,", "with confidence"],
       paragraph:
@@ -453,7 +426,7 @@ export const caseStudyPages: CaseStudyPage[] = [
     ],
     lead: "One live map connecting active natural perils with insurance exposure — so IAG can see who's affected, protect customers, and deploy the right people and support where they're needed most.",
     heroImage: {
-      src: "/projects/work/situational-awareness-map/hero.png",
+      src: "/projects/work/situational-awareness-map/hero-v2.png",
       alt: "Situational Awareness Map — live cyclone map with AI agent",
       width: 1160,
       height: 800,
