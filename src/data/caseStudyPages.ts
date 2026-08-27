@@ -80,7 +80,7 @@ export const caseStudyPages: CaseStudyPage[] = [
     accentBg: "#e7f6ec",
     facts: [
       { label: "Category", value: "Property Risk Platform" },
-      { label: "Role", value: "API & Integration Lead" },
+      { label: "Role", value: "Backend & Integration Lead" },
       { label: "Year", value: "2026" },
       { label: "Company", value: "IAG · NRMA" },
     ],
