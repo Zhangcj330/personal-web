@@ -116,6 +116,7 @@ export default function CardSwap({
   const intervalRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const hoveredRef = useRef(false);
+  const visibleRef = useRef(false);
 
   useEffect(() => {
     const total = refs.length;
@@ -211,6 +212,7 @@ export default function CardSwap({
 
     const startSwapInterval = () => {
       clearSwapInterval();
+      if (!visibleRef.current) return;
       intervalRef.current = window.setInterval(swap, delay);
     };
 
@@ -227,7 +229,7 @@ export default function CardSwap({
       const timeline = gsap.timeline({
         onComplete: () => {
           order.current = nextOrder;
-          if (!hoveredRef.current) startSwapInterval();
+          if (!hoveredRef.current && visibleRef.current) startSwapInterval();
         },
       });
       timelineRef.current = timeline;
@@ -256,10 +258,28 @@ export default function CardSwap({
       });
     };
 
-    swap();
-    startSwapInterval();
-
     const container = containerRef.current;
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        const nextVisible = entry.isIntersecting;
+        if (visibleRef.current === nextVisible) return;
+        visibleRef.current = nextVisible;
+
+        if (nextVisible) {
+          timelineRef.current?.play();
+          if (!hoveredRef.current) {
+            swap();
+            startSwapInterval();
+          }
+        } else {
+          timelineRef.current?.pause();
+          clearSwapInterval();
+        }
+      },
+      { threshold: 0.1 },
+    );
+    if (container) visibilityObserver.observe(container);
+
     const getCardIndex = (target: EventTarget | null) => {
       const card = (target as HTMLElement | null)?.closest<HTMLElement>(
         "[data-card-swap-index]",
@@ -288,7 +308,7 @@ export default function CardSwap({
     const resume = () => {
       hoveredRef.current = false;
       timelineRef.current?.play();
-      startSwapInterval();
+      if (visibleRef.current) startSwapInterval();
     };
 
     if (pauseOnHover && container) {
@@ -301,6 +321,7 @@ export default function CardSwap({
     return () => {
       clearSwapInterval();
       timelineRef.current?.kill();
+      visibilityObserver.disconnect();
       if (pauseOnHover && container) {
         container.removeEventListener("mouseenter", pause);
         container.removeEventListener("mouseleave", resume);
