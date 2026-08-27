@@ -84,8 +84,8 @@ export default function Impact() {
                       alt={companyLogos[card.company].alt}
                       width={40}
                       height={40}
-                      className={`h-10 w-10 rounded-lg object-contain ${
-                        card.company === "IAG · NRMA" ? "bg-white p-1.5" : ""
+                      className={`h-10 w-10 object-contain ${
+                        card.company === "IAG · NRMA" ? "rounded-full bg-white" : "rounded-lg"
                       }`}
                     />
                     <span className="text-[11px] font-semibold tabular-nums opacity-45">
