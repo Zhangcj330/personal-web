@@ -5,6 +5,7 @@
 import {
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -172,8 +173,6 @@ const buildKeyframes = ({
   fade: boolean;
 }) => {
   const windowFrames: Keyframe[] = [];
-  const content: Keyframe[] = [];
-
   for (let step = 0; step <= KEYFRAME_STEPS; step += 1) {
     const progress = step / KEYFRAME_STEPS;
     const eased = ease(progress);
@@ -185,13 +184,9 @@ const buildKeyframes = ({
       opacity: fade ? Math.min(1, eased * 1.6) : 1,
       transform: `rotate(${angle}deg) scale(${scale})`,
     });
-    content.push({
-      offset: progress,
-      transform: `scale(${1 / scale}) rotate(${-angle}deg)`,
-    });
   }
 
-  return { window: windowFrames, content };
+  return windowFrames;
 };
 
 export interface PixelSwapProps {
@@ -248,11 +243,11 @@ function PixelSwap({
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const layerRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const pixelRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const pixelRefs = useRef<(SVGRectElement | null)[]>([]);
   const animationsRef = useRef<Animation[]>([]);
   const timerRef = useRef(0);
   const leaveTimerRef = useRef(0);
-  const batchTokenRef = useRef(0);
+  const maskId = `pixel-swap-mask-${useId().replaceAll(":", "")}`;
 
   const desiredActive = active ?? internalActive;
   const incomingIndex = transition?.to ? 1 : 0;
@@ -304,10 +299,8 @@ function PixelSwap({
   );
 
   const stopAnimations = useCallback(() => {
-    batchTokenRef.current += 1; // invalidate any pending batched pixel creation
     animationsRef.current.forEach((animation) => animation.cancel());
     animationsRef.current = [];
-    pixelRefs.current.forEach((pixel) => pixel?.replaceChildren());
     if (timerRef.current) window.clearTimeout(timerRef.current);
     timerRef.current = 0;
   }, []);
@@ -338,9 +331,8 @@ function PixelSwap({
       settings.onComplete?.(to);
     };
 
-    const source = layerRefs.current[to ? 1 : 0];
     if (
-      !source ||
+      !layerRefs.current[to ? 1 : 0] ||
       !frozenGrid.pixels.length ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
@@ -360,55 +352,19 @@ function PixelSwap({
       fade: settings.fade,
     });
 
-    // Creating ~150+ deep clones and starting their WAAPI animations is
-    // expensive enough (each clone carries the full rich card content) that
-    // doing it all synchronously in one pass can block the main thread past
-    // a frame budget and drop a frame right as the transition starts — that
-    // stall is what reads as a flicker. Spreading the work across a few
-    // animation frames keeps each frame cheap without changing the visual
-    // pixel count, duration, or content.
-    const token = ++batchTokenRef.current;
-    const BATCH_SIZE = 16;
-    let cursor = 0;
+    frozenGrid.pixels.forEach((pixel, index) => {
+      const pixelElement = pixelRefs.current[index];
+      if (!pixelElement) return;
 
-    const runBatch = () => {
-      if (batchTokenRef.current !== token) return;
-      const end = Math.min(cursor + BATCH_SIZE, frozenGrid.pixels.length);
-      for (; cursor < end; cursor += 1) {
-        const pixel = frozenGrid.pixels[cursor];
-        const pixelElement = pixelRefs.current[cursor];
-        if (!pixelElement) continue;
-
-        const content = document.createElement("div");
-        content.className = "pixel-swap__pixel-content";
-        content.style.left = `${-pixel.left}px`;
-        content.style.top = `${-pixel.top}px`;
-        content.style.width = `${frozenGrid.width}px`;
-        content.style.height = `${frozenGrid.height}px`;
-        const originX = pixel.left + frozenGrid.size / 2;
-        const originY = pixel.top + frozenGrid.size / 2;
-        content.style.transformOrigin = `${originX}px ${originY}px`;
-
-        const clone = source.cloneNode(true) as HTMLElement;
-        clone.dataset.visible = "true";
-        clone.removeAttribute("aria-hidden");
-        content.appendChild(clone);
-        pixelElement.replaceChildren(content);
-
-        const timing: KeyframeAnimationOptions = {
+      animationsRef.current.push(
+        pixelElement.animate(keyframes, {
           duration: pixelMs,
           delay: pixel.offset * spread,
           easing: "linear",
           fill: "both",
-        };
-        animationsRef.current.push(
-          pixelElement.animate(keyframes.window, timing),
-          content.animate(keyframes.content, timing)
-        );
-      }
-      if (cursor < frozenGrid.pixels.length) requestAnimationFrame(runBatch);
-    };
-    runBatch();
+        }),
+      );
+    });
 
     timerRef.current = window.setTimeout(finish, total);
     return stopAnimations;
@@ -475,6 +431,7 @@ function PixelSwap({
 
   const renderLayer = (content: ReactNode, index: number) => {
     const isShown = index === (shownActive ? 1 : 0);
+    const isIncoming = !!transition && index === incomingIndex;
     return (
       <div
         key={index}
@@ -482,8 +439,17 @@ function PixelSwap({
           layerRefs.current[index] = element;
         }}
         className="pixel-swap__layer"
-        data-visible={isShown && !(transition && index === incomingIndex)}
-        style={{ zIndex: isShown ? 2 : 1 }}
+        data-visible={isShown || isIncoming}
+        data-masked={isIncoming || undefined}
+        style={{
+          zIndex: isIncoming ? 3 : isShown ? 2 : 1,
+          ...(isIncoming
+            ? {
+                maskImage: `url(#${maskId})`,
+                WebkitMaskImage: `url(#${maskId})`,
+              }
+            : {}),
+        }}
         aria-hidden={!isShown}
       >
         {content}
@@ -500,29 +466,56 @@ function PixelSwap({
       data-transitioning={!!transition}
       {...interactionProps}
     >
+      {transition && (
+        <svg
+          className="pixel-swap__mask-defs"
+          width="0"
+          height="0"
+          aria-hidden="true"
+        >
+          <defs>
+            <mask
+              id={maskId}
+              maskUnits="userSpaceOnUse"
+              maskContentUnits="userSpaceOnUse"
+              x="0"
+              y="0"
+              width={transition.grid.width}
+              height={transition.grid.height}
+              style={{ maskType: "alpha" }}
+            >
+              {transition.grid.pixels.map((pixel, index) => {
+                const radius =
+                  transition.grid.size * (clamp(pixelRadius, 0, 50) / 100);
+                return (
+                  <rect
+                    key={pixel.id}
+                    ref={(element) => {
+                      pixelRefs.current[index] = element;
+                    }}
+                    x={pixel.left}
+                    y={pixel.top}
+                    width={transition.grid.size}
+                    height={transition.grid.size}
+                    rx={radius}
+                    ry={radius}
+                    fill="white"
+                    style={{
+                      opacity: 0,
+                      transform: "scale(0)",
+                      transformBox: "fill-box",
+                      transformOrigin: "center",
+                    }}
+                  />
+                );
+              })}
+            </mask>
+          </defs>
+        </svg>
+      )}
+
       {renderLayer(firstContent, 0)}
       {renderLayer(secondContent, 1)}
-
-      {transition && (
-        <div className="pixel-swap__grid" aria-hidden="true">
-          {transition.grid.pixels.map((pixel, index) => (
-            <div
-              key={pixel.id}
-              ref={(element) => {
-                pixelRefs.current[index] = element;
-              }}
-              className="pixel-swap__pixel"
-              style={{
-                left: pixel.left,
-                top: pixel.top,
-                width: transition.grid.size,
-                height: transition.grid.size,
-                borderRadius: `${clamp(pixelRadius, 0, 50)}%`,
-              }}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

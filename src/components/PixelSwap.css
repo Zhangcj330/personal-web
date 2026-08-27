@@ -17,20 +17,14 @@
   visibility: hidden;
 }
 
-.pixel-swap__grid {
+.pixel-swap__mask-defs {
   position: absolute;
-  inset: 0;
-  z-index: 3;
+  width: 0;
+  height: 0;
+  overflow: hidden;
   pointer-events: none;
 }
 
-.pixel-swap__pixel {
-  position: absolute;
-  overflow: hidden;
-  opacity: 0;
-  contain: paint;
-}
-
-.pixel-swap__pixel-content {
-  position: absolute;
+.pixel-swap__layer[data-masked] {
+  will-change: mask-image;
 }
