@@ -19,7 +19,6 @@ import "./CardSwap.css";
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   customClass?: string;
-  "data-card-swap-index"?: number;
 };
 
 type CardElementProps = CardProps & RefAttributes<HTMLDivElement>;
@@ -216,48 +215,6 @@ export default function CardSwap({
       intervalRef.current = window.setInterval(swap, delay);
     };
 
-    const selectCard = (index: number) => {
-      if (order.current[0] === index) return;
-
-      clearSwapInterval();
-      timelineRef.current?.kill();
-
-      const nextOrder = [
-        index,
-        ...order.current.filter((cardIndex) => cardIndex !== index),
-      ];
-      const timeline = gsap.timeline({
-        onComplete: () => {
-          order.current = nextOrder;
-          if (!hoveredRef.current && visibleRef.current) startSwapInterval();
-        },
-      });
-      timelineRef.current = timeline;
-
-      nextOrder.forEach((cardIndex, slotIndex) => {
-        const element = refs[cardIndex].current;
-        if (!element) return;
-        const slot = makeSlot(
-          slotIndex,
-          cardDistance,
-          verticalDistance,
-          refs.length,
-        );
-        timeline.set(element, { zIndex: slot.zIndex }, 0);
-        timeline.to(
-          element,
-          {
-            x: slot.x,
-            y: slot.y,
-            z: slot.z,
-            duration: 0.65,
-            ease: "power2.out",
-          },
-          0,
-        );
-      });
-    };
-
     const container = containerRef.current;
     const visibilityObserver = new IntersectionObserver(
       ([entry]) => {
@@ -280,26 +237,6 @@ export default function CardSwap({
     );
     if (container) visibilityObserver.observe(container);
 
-    const getCardIndex = (target: EventTarget | null) => {
-      const card = (target as HTMLElement | null)?.closest<HTMLElement>(
-        "[data-card-swap-index]",
-      );
-      return card ? Number(card.dataset.cardSwapIndex) : null;
-    };
-    const handleCardClick = (event: MouseEvent) => {
-      const index = getCardIndex(event.target);
-      if (index === null) return;
-      selectCard(index);
-      onCardClick?.(index);
-    };
-    const handleCardKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Enter" && event.key !== " ") return;
-      const index = getCardIndex(event.target);
-      if (index === null) return;
-      event.preventDefault();
-      selectCard(index);
-      onCardClick?.(index);
-    };
     const pause = () => {
       hoveredRef.current = true;
       timelineRef.current?.pause();
@@ -315,9 +252,6 @@ export default function CardSwap({
       container.addEventListener("mouseenter", pause);
       container.addEventListener("mouseleave", resume);
     }
-    container?.addEventListener("click", handleCardClick);
-    container?.addEventListener("keydown", handleCardKeyDown);
-
     return () => {
       clearSwapInterval();
       timelineRef.current?.kill();
@@ -326,8 +260,6 @@ export default function CardSwap({
         container.removeEventListener("mouseenter", pause);
         container.removeEventListener("mouseleave", resume);
       }
-      container?.removeEventListener("click", handleCardClick);
-      container?.removeEventListener("keydown", handleCardKeyDown);
     };
   }, [
     cardDistance,
@@ -347,16 +279,17 @@ export default function CardSwap({
       key: i,
       ref: refs[i],
       style: { width, height, ...child.props.style },
-      "data-card-swap-index": i,
-      role: child.props.role ?? "button",
-      tabIndex: child.props.tabIndex ?? 0,
+      onClick: (event) => {
+        child.props.onClick?.(event);
+        onCardClick?.(i);
+      },
     });
   });
 
   return (
     <div
       ref={containerRef}
-      className="card-swap-container"
+      className={`card-swap-container${onCardClick ? " is-clickable" : ""}`}
       style={{ width, height }}
     >
       {rendered}
