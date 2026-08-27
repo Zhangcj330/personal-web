@@ -24,7 +24,3 @@
   overflow: hidden;
   pointer-events: none;
 }
-
-.pixel-swap__layer[data-masked] {
-  will-change: mask-image;
-}

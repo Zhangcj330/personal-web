@@ -16,6 +16,7 @@ import "./PixelSwap.css";
 
 const MAX_PIXELS = 220;
 const KEYFRAME_STEPS = 14;
+const MASK_BLEED = 1;
 
 type PatternName =
   | "random"
@@ -493,13 +494,14 @@ function PixelSwap({
                     ref={(element) => {
                       pixelRefs.current[index] = element;
                     }}
-                    x={pixel.left}
-                    y={pixel.top}
-                    width={transition.grid.size}
-                    height={transition.grid.size}
+                    x={pixel.left - MASK_BLEED}
+                    y={pixel.top - MASK_BLEED}
+                    width={transition.grid.size + MASK_BLEED * 2}
+                    height={transition.grid.size + MASK_BLEED * 2}
                     rx={radius}
                     ry={radius}
                     fill="white"
+                    shapeRendering="crispEdges"
                     style={{
                       opacity: 0,
                       transform: "scale(0)",
