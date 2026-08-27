@@ -28,6 +28,15 @@
   background: transparent;
   pointer-events: none;
   z-index: 20;
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms ease;
+  will-change: transform;
+}
+
+.staggered-menu-header.is-hidden {
+  transform: translateY(-110%);
+  opacity: 0;
 }
 
 .staggered-menu-header > * {

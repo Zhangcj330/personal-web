@@ -3,7 +3,7 @@
 // Adapted from React Bits (https://reactbits.dev) — StaggeredMenu,
 // JavaScript + CSS variant, MIT licensed. Converted to TypeScript and
 // adjusted (optional text logo fallback) to fit this project.
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Link from "next/link";
 import "./StaggeredMenu.css";
@@ -61,7 +61,9 @@ export const StaggeredMenu = ({
   onMenuClose,
 }: StaggeredMenuProps) => {
   const [open, setOpen] = useState(false);
+  const [headerHidden, setHeaderHidden] = useState(false);
   const openRef = useRef(false);
+  const lastScrollYRef = useRef(0);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const preLayersRef = useRef<HTMLDivElement | null>(null);
   const preLayerElsRef = useRef<HTMLElement[]>([]);
@@ -71,6 +73,27 @@ export const StaggeredMenu = ({
   const textInnerRef = useRef<HTMLSpanElement | null>(null);
   const textWrapRef = useRef<HTMLSpanElement | null>(null);
   const [textLines, setTextLines] = useState(["Menu", "Close"]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const previousScrollY = lastScrollYRef.current;
+
+      if (openRef.current || currentScrollY < 40) {
+        setHeaderHidden(false);
+      } else if (currentScrollY > previousScrollY + 8) {
+        setHeaderHidden(true);
+      } else if (currentScrollY < previousScrollY - 8) {
+        setHeaderHidden(false);
+      }
+
+      lastScrollYRef.current = currentScrollY;
+    };
+
+    lastScrollYRef.current = window.scrollY;
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const openTlRef = useRef<gsap.core.Timeline | null>(null);
   const closeTweenRef = useRef<gsap.core.Tween | null>(null);
@@ -414,7 +437,10 @@ export const StaggeredMenu = ({
           return arr.map((c, i) => <div key={i} className="sm-prelayer" style={{ background: c }} />);
         })()}
       </div>
-      <header className="staggered-menu-header" aria-label="Main navigation header">
+      <header
+        className={`staggered-menu-header${headerHidden ? " is-hidden" : ""}`}
+        aria-label="Main navigation header"
+      >
         {logoLink ? (
           <Link href={logoLink} className="sm-logo" aria-label={logoText ?? "Home"}>
             {logoUrl ? (
