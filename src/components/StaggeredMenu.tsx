@@ -5,6 +5,7 @@
 // adjusted (optional text logo fallback) to fit this project.
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import Link from "next/link";
 import "./StaggeredMenu.css";
 
 export interface StaggeredMenuItem {
@@ -28,6 +29,7 @@ export interface StaggeredMenuProps {
   className?: string;
   logoUrl?: string;
   logoText?: string;
+  logoLink?: string;
   menuButtonColor?: string;
   openMenuButtonColor?: string;
   accentColor?: string;
@@ -48,6 +50,7 @@ export const StaggeredMenu = ({
   className,
   logoUrl,
   logoText,
+  logoLink,
   menuButtonColor = "#fff",
   openMenuButtonColor = "#fff",
   accentColor = "#5227FF",
@@ -412,21 +415,27 @@ export const StaggeredMenu = ({
         })()}
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
-        <div className="sm-logo" aria-label="Logo">
-          {logoUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={logoUrl}
-              alt="Logo"
-              className="sm-logo-img"
-              draggable={false}
-              width={110}
-              height={24}
-            />
-          ) : (
-            logoText && <span className="sm-logo-text">{logoText}</span>
-          )}
-        </div>
+        {logoLink ? (
+          <Link href={logoLink} className="sm-logo" aria-label={logoText ?? "Home"}>
+            {logoUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={logoUrl}
+                alt=""
+                className="sm-logo-img"
+                draggable={false}
+                width={110}
+                height={24}
+              />
+            ) : (
+              logoText && <span className="sm-logo-text">{logoText}</span>
+            )}
+          </Link>
+        ) : (
+          <div className="sm-logo" aria-label="Logo">
+            {logoText && <span className="sm-logo-text">{logoText}</span>}
+          </div>
+        )}
         <button
           ref={toggleBtnRef}
           className="sm-toggle"

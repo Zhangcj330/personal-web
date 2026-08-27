@@ -37,7 +37,17 @@
 .sm-logo {
   display: flex;
   align-items: center;
+  color: inherit;
+  text-decoration: none;
   user-select: none;
+}
+
+.sm-logo[href] {
+  transition: opacity 180ms ease;
+}
+
+.sm-logo[href]:hover {
+  opacity: 0.55;
 }
 
 .sm-logo-img {

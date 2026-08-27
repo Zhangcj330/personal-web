@@ -26,7 +26,7 @@ export default function IntroFlip() {
                       alt={site.name}
                       fill
                       sizes="160px"
-                      className="object-cover"
+                      className="-scale-x-100 object-cover"
                     />
                   </span>
                   <span className="flex h-10 items-center text-sm font-medium text-muted">

@@ -11,8 +11,13 @@ const socialItems = [{ label: "Email", link: `mailto:${site.email}` }];
 export default function SiteMenu({ homeAnchors = true }: { homeAnchors?: boolean }) {
   const prefix = homeAnchors ? "" : "/";
   const menuItems = [
-    { label: "Focus", ariaLabel: "Go to focus areas", link: `${prefix}#focus` },
-    { label: "Case Studies", ariaLabel: "Go to case studies", link: `${prefix}#case-studies` },
+    { label: "Home", ariaLabel: "Go to homepage", link: homeAnchors ? "#hero" : "/" },
+    { label: "What I Bring", ariaLabel: "Go to what I bring", link: `${prefix}#focus` },
+    {
+      label: "Featured Projects",
+      ariaLabel: "Go to featured projects",
+      link: `${prefix}#case-studies`,
+    },
     { label: "Impact", ariaLabel: "Go to impact", link: `${prefix}#impact` },
     { label: "Contact", ariaLabel: "Go to contact", link: `${prefix}#contact` },
   ];
@@ -25,6 +30,8 @@ export default function SiteMenu({ homeAnchors = true }: { homeAnchors?: boolean
       socialItems={socialItems}
       displaySocials
       displayItemNumbering
+      logoText={homeAnchors ? "CZ" : "← Projects"}
+      logoLink={homeAnchors ? "#hero" : "/#case-studies"}
       menuButtonColor="#111111"
       openMenuButtonColor="#111111"
       changeMenuColorOnOpen
