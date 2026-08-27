@@ -78,180 +78,181 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
       {/* CONTENT SECTIONS */}
       <div className="mx-auto max-w-6xl px-6">
         {page.sections.map((section, i) => (
-          <section key={i} className="border-t border-border py-14 sm:py-16">
+          <section key={i} className="border-t border-border py-16 sm:py-20">
             <Reveal>
-              <div className="max-w-2xl">
-                <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-                  {section.heading.map((line, j) => (
-                    <span key={j} className="block">
-                      {line}
-                    </span>
-                  ))}
-                </h2>
-                {section.subheading && (
-                  <p
-                    className="mt-2 font-mono text-xs font-semibold uppercase tracking-widest"
-                    style={{ color: page.accent }}
-                  >
-                    {section.subheading}
-                  </p>
-                )}
-                <div className="mt-5 space-y-4">
-                  {section.paragraphs.map((p, k) => (
-                    <p key={k} className="text-[15.5px] leading-relaxed text-muted">
-                      {p}
+              <div className="grid grid-cols-1 gap-10 lg:grid-cols-[260px_1fr]">
+                {/* Left: heading */}
+                <div className="lg:pt-1">
+                  <h2 className="font-display text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+                    {section.heading.map((line, j) => (
+                      <span key={j} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </h2>
+                  {section.subheading && (
+                    <p
+                      className="mt-2 font-mono text-[11px] font-semibold uppercase tracking-widest"
+                      style={{ color: page.accent }}
+                    >
+                      {section.subheading}
                     </p>
-                  ))}
+                  )}
+                </div>
+
+                {/* Right: content */}
+                <div>
+                  <div className="space-y-4">
+                    {section.paragraphs.map((p, k) => (
+                      <p key={k} className="text-[15.5px] leading-relaxed text-muted">
+                        {p}
+                      </p>
+                    ))}
+                  </div>
+
+                  {section.stats && (
+                    <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                      {section.stats.map((stat) => (
+                        <div
+                          key={stat.label}
+                          className="rounded-2xl bg-[#f5f5f5] p-5"
+                        >
+                          <div className="text-2xl font-bold tracking-tight sm:text-3xl">
+                            {stat.value}
+                          </div>
+                          <div className="mt-1 text-[12.5px] leading-snug text-muted">{stat.label}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.steps && (
+                    <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                      {section.steps.map((step) => (
+                        <div
+                          key={step.no}
+                          className="rounded-2xl bg-[#f5f5f5] p-5"
+                        >
+                          <div
+                            className="font-mono text-xs font-semibold"
+                            style={{ color: page.accent }}
+                          >
+                            {step.no}
+                          </div>
+                          <h4 className="mt-3 text-[14.5px] font-semibold tracking-tight">
+                            {step.title}
+                          </h4>
+                          <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{step.body}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.features && (
+                    <div
+                      className={`mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 ${
+                        section.features.length % 3 === 0 ? "lg:grid-cols-3" : ""
+                      }`}
+                    >
+                      {section.features.map((feature) => (
+                        <div
+                          key={feature.title}
+                          className="rounded-2xl bg-[#f5f5f5] p-5"
+                        >
+                          <div
+                            className="flex h-9 w-9 items-center justify-center rounded-[11px] text-[18px]"
+                            style={{ backgroundColor: page.accentBg }}
+                          >
+                            {feature.icon}
+                          </div>
+                          <h4 className="mt-3.5 text-[14.5px] font-semibold tracking-tight">
+                            {feature.title}
+                          </h4>
+                          <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
+                            {feature.body}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.gallery && (
+                    <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                      {section.gallery.map((img) => (
+                        <div
+                          key={img.src}
+                          className={`overflow-hidden rounded-2xl bg-[#f5f5f5] ${
+                            section.gallery!.length === 1 ? "sm:col-span-2" : ""
+                          }`}
+                        >
+                          <Image
+                            src={img.src}
+                            alt={img.alt}
+                            width={img.width}
+                            height={img.height}
+                            sizes={
+                              section.gallery!.length === 1
+                                ? "(min-width: 640px) 1128px, 100vw"
+                                : "(min-width: 640px) 552px, 100vw"
+                            }
+                            quality={90}
+                            className="w-full"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.techStack && section.techStack.length > 0 && (
+                    <div className="mt-7 flex flex-wrap gap-2">
+                      {section.techStack.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-full border border-border px-3.5 py-1.5 text-[13px] font-medium"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.galleryCaption && (
+                    <p className="mt-4 text-[12.5px] text-muted">{section.galleryCaption}</p>
+                  )}
+
+                  {page.chatMock && section.heading[0] === "A conversation," && (
+                    <div className="mt-8">
+                      <ChatMock page={page} />
+                    </div>
+                  )}
                 </div>
               </div>
             </Reveal>
-
-            {section.stats && (
-              <Reveal delay={0.05}>
-                <div className="mt-9 grid grid-cols-2 gap-4 sm:grid-cols-4">
-                  {section.stats.map((stat) => (
-                    <div
-                      key={stat.label}
-                      className="rounded-2xl border border-border bg-background p-5"
-                    >
-                      <div className="text-2xl font-bold tracking-tight sm:text-3xl">
-                        {stat.value}
-                      </div>
-                      <div className="mt-1 text-[13px] text-muted">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </Reveal>
-            )}
-
-            {section.steps && (
-              <Reveal delay={0.05}>
-                <div className="mt-9 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                  {section.steps.map((step) => (
-                    <div
-                      key={step.no}
-                      className="rounded-2xl border border-border bg-background p-5"
-                    >
-                      <div
-                        className="font-mono text-xs font-semibold"
-                        style={{ color: page.accent }}
-                      >
-                        {step.no}
-                      </div>
-                      <h4 className="mt-3 text-[15px] font-semibold tracking-tight">
-                        {step.title}
-                      </h4>
-                      <p className="mt-1.5 text-[13px] leading-relaxed text-muted">{step.body}</p>
-                    </div>
-                  ))}
-                </div>
-              </Reveal>
-            )}
-
-            {section.features && (
-              <Reveal delay={0.05}>
-                <div
-                  className={`mt-9 grid grid-cols-1 gap-4 sm:grid-cols-2 ${
-                    section.features.length % 3 === 0 ? "lg:grid-cols-3" : ""
-                  }`}
-                >
-                  {section.features.map((feature) => (
-                    <div
-                      key={feature.title}
-                      className="rounded-2xl border border-border bg-background p-5"
-                    >
-                      <div
-                        className="flex h-9 w-9 items-center justify-center rounded-[11px] text-[19px]"
-                        style={{ backgroundColor: page.accentBg }}
-                      >
-                        {feature.icon}
-                      </div>
-                      <h4 className="mt-3.5 text-[15px] font-semibold tracking-tight">
-                        {feature.title}
-                      </h4>
-                      <p className="mt-1.5 text-[13.5px] leading-relaxed text-muted">
-                        {feature.body}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </Reveal>
-            )}
-
-            {section.gallery && (
-              <Reveal delay={0.05}>
-                <div className="mt-9 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                  {section.gallery.map((img) => (
-                    <div
-                      key={img.src}
-                      className={`overflow-hidden rounded-2xl border border-border shadow-lg shadow-black/5 ${
-                        section.gallery!.length === 1 ? "sm:col-span-2" : ""
-                      }`}
-                    >
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        width={img.width}
-                        height={img.height}
-                        sizes={
-                          section.gallery!.length === 1
-                            ? "(min-width: 640px) 1128px, 100vw"
-                            : "(min-width: 640px) 552px, 100vw"
-                        }
-                        quality={90}
-                        className="w-full"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </Reveal>
-            )}
-
-            {section.techStack && (
-              <Reveal delay={0.05}>
-                <div className="mt-8 flex flex-wrap gap-2.5">
-                  {section.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-full border border-border px-3.5 py-2 text-[13.5px] font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </Reveal>
-            )}
-
-            {(section.galleryCaption) && (
-              <p className="mt-4 text-[13px] text-muted">{section.galleryCaption}</p>
-            )}
-
-            {page.chatMock && section.heading[0] === "A conversation," && (
-              <Reveal delay={0.1}>
-                <ChatMock page={page} />
-              </Reveal>
-            )}
           </section>
         ))}
 
         {/* CLOSING */}
         {page.closing && (
-        <section className="border-t border-border py-14 sm:py-16">
-          <Reveal>
-            <div className="max-w-2xl">
-              <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-                {page.closing.heading.map((line, i) => (
-                  <span key={i} className="block">
-                    {line}
-                  </span>
-                ))}
-              </h2>
-              <p className="mt-5 text-[15.5px] leading-relaxed text-muted">
-                {page.closing.paragraph}
-              </p>
-            </div>
-          </Reveal>
-        </section>
+          <section className="border-t border-border py-16 sm:py-20">
+            <Reveal>
+              <div className="grid grid-cols-1 gap-10 lg:grid-cols-[260px_1fr]">
+                <div className="lg:pt-1">
+                  <h2 className="font-display text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
+                    {page.closing.heading.map((line, i) => (
+                      <span key={i} className="block">
+                        {line}
+                      </span>
+                    ))}
+                  </h2>
+                </div>
+                <div>
+                  <p className="text-[15.5px] leading-relaxed text-muted">
+                    {page.closing.paragraph}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          </section>
         )}
       </div>
 
