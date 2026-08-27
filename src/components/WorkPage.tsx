@@ -417,12 +417,12 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
                           {section.gallery.slice(1).map((image) => (
                             <div
                               key={image.src}
-                              className="flex min-h-0 flex-1 items-center justify-center"
+                              className="flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-lg"
                             >
                               <GalleryImage
                                 image={image}
                                 unoptimized
-                                className="h-auto max-h-full w-full rounded-lg object-contain shadow-lg shadow-black/10"
+                                className="h-full w-full object-cover shadow-lg shadow-black/10"
                               />
                             </div>
                           ))}
