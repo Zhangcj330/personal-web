@@ -73,7 +73,7 @@ export default function Impact() {
               verticalDistance={30}
               delay={3000}
               pauseOnHover
-              skewAmount={4}
+              skewAmount={6}
               easing="elastic"
             >
               {impactCards.map((card, index) => (
@@ -84,8 +84,10 @@ export default function Impact() {
                       alt={companyLogos[card.company].alt}
                       width={40}
                       height={40}
-                      className={`h-10 w-10 object-contain ${
-                        card.company === "IAG · NRMA" ? "rounded-full bg-white" : "rounded-lg"
+                      className={`object-contain ${
+                        card.company === "IAG · NRMA"
+                          ? "h-9 w-9 rounded-full bg-white"
+                          : "h-10 w-10 rounded-lg"
                       }`}
                     />
                     <span className="text-[11px] font-semibold tabular-nums opacity-45">
