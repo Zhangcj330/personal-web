@@ -206,10 +206,10 @@ export const impact = {
             "Provided situational intelligence for bushfires, floods, hail and cyclones — supporting time-critical operational and workforce decisions in the command centre.",
         },
         {
-          eyebrow: "Actuaries Summit 2025",
-          title: "Agentic Workflows",
+          eyebrow: "at the Actuaries Summit 2025",
+          title: "Speaker",
           description:
-            "Presented how to build a ReAct agent for deep research — demonstrating how agentic workflows can plan, use tools and synthesise complex findings.",
+            "Presented at Actuaries Summit 2025, sharing a practical ReAct agent for deep research and how agentic workflows can plan, use tools and synthesise complex findings.",
         },
       ],
     },
