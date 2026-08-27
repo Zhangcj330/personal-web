@@ -334,7 +334,7 @@ export const caseStudyPages: CaseStudyPage[] = [
     accent: "#16a34a",
     accentBg: "#e7f6ec",
     facts: [
-      { label: "Category", value: "AI PropTech · Consumer" },
+      { label: "Category", value: "AI PropTech" },
       { label: "Role", value: "Founder & Full-Stack Engineer" },
       { label: "Year", value: "2026" },
       { label: "Stack", value: "Next.js · Supabase · LLM" },
