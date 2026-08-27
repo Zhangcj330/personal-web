@@ -5,7 +5,7 @@ import { impact } from "@/data/content";
 
 const companyLogos: Record<string, { src: string; alt: string }> = {
   "IAG · NRMA": {
-    src: "/logos/IAG.png",
+    src: "/logos/IAG-circle.png",
     alt: "IAG",
   },
   "Brick AI": {
@@ -79,25 +79,15 @@ export default function Impact() {
               {impactCards.map((card, index) => (
                 <Card key={`${card.company}-${card.label}`} customClass="impact-swap-card">
                   <div className="flex items-center justify-between gap-4">
-                    {card.company === "IAG · NRMA" ? (
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white">
-                        <Image
-                          src={companyLogos[card.company].src}
-                          alt={companyLogos[card.company].alt}
-                          width={56}
-                          height={56}
-                          className="h-14 w-14 max-w-none object-contain"
-                        />
-                      </div>
-                    ) : (
-                      <Image
-                        src={companyLogos[card.company].src}
-                        alt={companyLogos[card.company].alt}
-                        width={40}
-                        height={40}
-                        className="h-10 w-10 rounded-lg object-contain"
-                      />
-                    )}
+                    <Image
+                      src={companyLogos[card.company].src}
+                      alt={companyLogos[card.company].alt}
+                      width={40}
+                      height={40}
+                      className={`h-10 w-10 object-contain ${
+                        card.company === "IAG · NRMA" ? "rounded-full" : "rounded-lg"
+                      }`}
+                    />
                     <span className="text-[11px] font-semibold tabular-nums opacity-45">
                       0{index + 1}
                     </span>
