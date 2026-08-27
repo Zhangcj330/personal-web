@@ -210,7 +210,7 @@ export const caseStudyPages: CaseStudyPage[] = [
     accentBg: "#d7efec",
     facts: [
       { label: "Category", value: "AI Agent · Geo Data Ops" },
-      { label: "Role", value: "Agent Design & Data Engineering" },
+      { label: "Role", value: "Agent Design" },
       { label: "Year", value: "2026" },
       { label: "Company", value: "IAG" },
     ],
