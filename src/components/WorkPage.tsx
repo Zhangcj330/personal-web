@@ -256,32 +256,34 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
       </div>
 
       {/* MORE PROJECTS */}
-      <section className="border-t border-border bg-[#fafafa]">
-        <div className="mx-auto max-w-6xl px-6 py-16">
+      <section className="border-t border-border">
+        <div className="mx-auto max-w-6xl px-6 py-14 sm:py-16">
           <Reveal>
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted">
+            <h2 className="font-display text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
               More Projects
-            </span>
+            </h2>
           </Reveal>
-          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="mt-9 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2">
             {otherPages.slice(0, 2).map((other, i) => (
               <Reveal delay={0.05 * (i + 1)} key={other.slug}>
-                <Link
-                  href={`/work/${other.slug}`}
-                  className="group block overflow-hidden rounded-2xl border border-border bg-background transition-shadow hover:shadow-xl hover:shadow-black/5"
-                >
-                  <div className="overflow-hidden">
-                    <Image
-                      src={other.heroImage.src}
-                      alt={other.heroImage.alt}
-                      width={other.heroImage.width}
-                      height={other.heroImage.height}
-                      sizes="(min-width: 640px) 552px, 100vw"
-                      quality={90}
-                      className="aspect-[16/11] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                    />
+                <Link href={`/work/${other.slug}`} className="group block">
+                  <div
+                    className="overflow-hidden rounded-2xl p-4 sm:p-5"
+                    style={{ backgroundColor: other.accentBg }}
+                  >
+                    <div className="overflow-hidden rounded-xl">
+                      <Image
+                        src={other.heroImage.src}
+                        alt={other.heroImage.alt}
+                        width={other.heroImage.width}
+                        height={other.heroImage.height}
+                        sizes="(min-width: 640px) 552px, 100vw"
+                        quality={90}
+                        className="aspect-[16/11] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      />
+                    </div>
                   </div>
-                  <div className="p-6">
+                  <div className="mt-5">
                     <div className="text-lg font-semibold tracking-tight">
                       {other.title.join(" ")}
                     </div>
@@ -347,6 +349,11 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
           <div className="mt-14 flex flex-wrap items-center justify-between gap-3 border-t border-[#262622] pt-5 text-[12.5px] text-[#7d7b74]">
             <div>{page.footer.meta}</div>
             <div>© {new Date().getFullYear()} Chaojie Zhang</div>
+          </div>
+        </div>
+        <div className="overflow-hidden pb-2">
+          <div className="-mx-2 select-none whitespace-nowrap font-display text-[17vw] font-bold leading-none tracking-tight text-[#1a1a17]">
+            CHAOJIE ZHANG
           </div>
         </div>
       </footer>

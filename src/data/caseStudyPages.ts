@@ -91,7 +91,7 @@ export const caseStudyPages: CaseStudyPage[] = [
     lead: "An AI-powered tool that helps NRMA customers proactively protect their homes — turning trusted risk data into simple, ongoing actions.",
     heroImage: {
       src: "/projects/work/home-health-check/hero.png",
-      alt: "Home Health Check detailed report with AI-detected roof issues — NRMA / IAG",
+      alt: "Home Health Check report with an all-clear result and aerial property imagery — NRMA / IAG",
       width: 2880,
       height: 1986,
     },
