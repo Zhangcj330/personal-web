@@ -82,9 +82,9 @@ export default function Impact() {
                     <Image
                       src={companyLogos[card.company].src}
                       alt={companyLogos[card.company].alt}
-                      width={32}
-                      height={32}
-                      className="h-8 w-8 rounded-lg object-contain"
+                      width={40}
+                      height={40}
+                      className="h-10 w-10 rounded-lg object-contain"
                     />
                     <span className="text-[11px] font-semibold tabular-nums opacity-45">
                       0{index + 1}
