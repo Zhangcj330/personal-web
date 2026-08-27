@@ -36,6 +36,7 @@ export interface CaseStudyImage {
 
 export interface CaseStudySection {
   heading: string[];
+  subheading?: string;
   paragraphs: string[];
   stats?: CaseStudyStat[];
   steps?: CaseStudyStep[];
@@ -70,7 +71,7 @@ export interface CaseStudyPage {
     messages: ChatMessage[];
     cards: ChatCardRow[][];
   };
-  closing: { heading: string[]; paragraph: string };
+  closing?: { heading: string[]; paragraph: string };
   footer: { headline: string[]; meta: string; liveUrl?: string };
 }
 
@@ -87,7 +88,7 @@ export const caseStudyPages: CaseStudyPage[] = [
       { label: "Year", value: "2026" },
       { label: "Company", value: "IAG · NRMA" },
     ],
-    lead: "An AI-powered tool that helps NRMA customers proactively protect their homes — turning trusted risk data into simple, ongoing actions. Co-built with Google, launching for NRMA's centenary.",
+    lead: "An AI-powered tool that helps NRMA customers proactively protect their homes — turning trusted risk data into simple, ongoing actions.",
     heroImage: {
       src: "/projects/work/home-health-check/hero.png",
       alt: "Home Health Check detailed report with AI-detected roof issues — NRMA / IAG",
@@ -109,20 +110,14 @@ export const caseStudyPages: CaseStudyPage[] = [
         ],
         gallery: [
           {
-            src: "/projects/work/home-health-check/issues.png",
-            alt: "Detected issues flagged on aerial imagery",
-            width: 2880,
-            height: 1051,
-          },
-          {
             src: "/projects/work/home-health-check/findings.png",
             alt: "Risk findings and aerial imagery",
             width: 584,
-            height: 488,
+            height: 213,
           },
         ],
         galleryCaption:
-          "Real Home Health Check screens — detected issues flagged on the aerial image, and the \"all clear\" result.",
+          "Real Home Health Check screen — the \"all clear\" result with the aerial image and full issue checklist.",
       },
       {
         heading: ["Scan · Assess · Act"],
@@ -138,12 +133,6 @@ export const caseStudyPages: CaseStudyPage[] = [
         ],
         gallery: [
           {
-            src: "/projects/work/home-health-check/surge.png",
-            alt: "Extreme weather risk severity chart",
-            width: 2880,
-            height: 1228,
-          },
-          {
             src: "/projects/work/home-health-check/weather.png",
             alt: "Extreme weather risks with per-peril guidance",
             width: 2880,
@@ -151,7 +140,7 @@ export const caseStudyPages: CaseStudyPage[] = [
           },
         ],
         galleryCaption:
-          "Real screens — the extreme-weather severity scale and per-peril preparation guidance.",
+          "Real screen — the extreme-weather severity scale across bushfire, flood, cyclone, storm/hail and storm surge.",
       },
       {
         heading: ["My Role"],
@@ -196,7 +185,7 @@ export const caseStudyPages: CaseStudyPage[] = [
       { label: "Year", value: "2026" },
       { label: "Company", value: "IAG" },
     ],
-    lead: "An autonomous analyst that turns a \"move this location\" ticket into validated, ready-to-run SQL — with a human always in the loop.",
+    lead: "An autonomous analyst that turns a location fix ticket into validated, ready-to-run SQL — with a human always in the loop.",
     heroImage: {
       src: "/projects/work/location-fix-agent/hero.png",
       alt: "Move LatLong panel map with old and new coordinate markers",
@@ -207,23 +196,15 @@ export const caseStudyPages: CaseStudyPage[] = [
       {
         heading: ["About the Project"],
         paragraphs: [
-          "When a property is geocoded to the wrong spot, IAG's pricing and exposure models see the wrong risk. Fixing it means a \"Move LatLong\" request in ServiceNow — and, until now, a slow manual trail through multiple databases, satellite imagery and hand-written SQL for every single ticket.",
-          "The Location Fix Agent automates that investigation. It reads the RITM ticket, traces the GeoID across Helios and CRODS, validates the new coordinates against satellite imagery, and generates ready-to-copy REPORTING and PROD SQL — every claim backed by the exact query that proves it, and nothing executed without a human.",
+          "When a property is geocoded to the wrong spot, IAG's pricing and exposure models see the wrong risk. Fixing it means a location fix request in ServiceNow — and, until now, a slow manual trail through multiple databases, satellite imagery and hand-written SQL for every single ticket.",
+          "The Location Fix Agent automates that investigation. It pools tickets automatically, traces the GeoID across databases, cross-validates the new coordinates against multiple data sources — satellite imagery, address data and spatial context — and generates ready-to-copy REPORTING and PROD SQL — every finding backed by the exact query that proves it, and nothing executed without a human.",
         ],
       },
       {
         heading: ["From a ticket to", "reviewed SQL"],
         paragraphs: [
-          "Paste the ticket, and the agent does the legwork an analyst would — the lookups, the branching decisions, the satellite check — then hands back a structured report and the exact SQL, staged for a human to run.",
+          "The agent pools tickets automatically and does the legwork an analyst would — the lookups, the branching decisions, the multi-source coordinate validation — then hands back a structured report and the exact SQL, staged for a human to run.",
         ],
-        stats: [
-          { value: "3", label: "Decision paths auto-selected" },
-          { value: "100%", label: "Claims backed by a query" },
-          { value: "2", label: "Environments: REPORTING & PROD" },
-          { value: "0", label: "Auto-writes — human runs it" },
-        ],
-        galleryCaption:
-          "Investigate → validate → generate SQL → human review. The agent never writes to a database itself.",
       },
       {
         heading: ["How it works"],
@@ -234,12 +215,12 @@ export const caseStudyPages: CaseStudyPage[] = [
           {
             no: "01",
             title: "Investigate & branch",
-            body: "SELECT-only queries in Helios and CRODS confirm the GeoID type and current record, then choose Path A, B or C.",
+            body: "SELECT-only queries across databases confirm the GeoID type and current record, then choose Path A, B or C.",
           },
           {
             no: "02",
             title: "Validate the move",
-            body: "Satellite screenshots compare the old and new coordinates and measure the distance — the point must land on a rooftop centroid.",
+            body: "Satellite imagery, address data and spatial context are combined to confirm the new point lands on the right building.",
           },
           {
             no: "03",
@@ -262,22 +243,22 @@ export const caseStudyPages: CaseStudyPage[] = [
           {
             icon: "🔎",
             title: "Evidence-backed",
-            body: "No claim without the exact SELECT that proves it — GeoID type, coordinates, mappings, all shown.",
+            body: "Every finding is accompanied by the exact SELECT that proves it — GeoID type, coordinates, mappings, all shown.",
           },
           {
             icon: "🛰️",
-            title: "Satellite validation",
-            body: "Old-vs-new imagery comparison and distance check confirm the new point sits on the building.",
+            title: "Multi-source validation",
+            body: "Satellite imagery, address data and spatial context are combined to cross-validate the new coordinates — not just a single screenshot check.",
           },
           {
-            icon: "🔀",
-            title: "Three decision paths",
-            body: "Move LatLong, associate an existing GeoID, or create a new one — chosen from the data, not the ticket.",
+            icon: "👁️",
+            title: "Vision LLM",
+            body: "LLM vision analyses satellite imagery as the first layer of judgement — identifying the correct location before a human is involved.",
           },
           {
             icon: "📋",
-            title: "Ready-to-copy SQL",
-            body: "Structured REPORTING and PROD scripts with an investigate block a reviewer can re-run.",
+            title: "Rules-based skills",
+            body: "Every operation and decision step is encoded as an explicit skill — structured reasoning the agent follows, not improvised logic.",
           },
           {
             icon: "🛡️",
@@ -294,26 +275,16 @@ export const caseStudyPages: CaseStudyPage[] = [
       {
         heading: ["Engineered on", "MCP tooling"],
         paragraphs: [
-          "The agent is wired to IAG's geo systems through Model Context Protocol servers — live database access, satellite imagery and a browser — so it can investigate and validate against real data while staying strictly read-only.",
-        ],
-        techStack: [
-          "Custom agent (.agent.md)",
-          "MCP servers",
-          "Helios · CRODS replica",
-          "screenshot-mcp",
-          "GeoID · MGRS addressing",
-          "SQL · Db2",
-          "Playwright",
-          "ServiceNow RITM",
+          "The agent is wired to IAG's geo systems through Model Context Protocol servers — live database access, satellite imagery, address lookups and a browser — so it can cross-validate coordinates against multiple sources while staying strictly read-only.",
         ],
         galleryCaption:
-          "Read-only investigation across Helios and CRODS; Athena / EDH used to verify the change after a human runs it.",
+          "Read-only investigation across geo databases; Athena / EDH used to verify the change after a human runs it.",
       },
       {
         heading: ["My Role"],
         paragraphs: [
-          "I designed and authored the agent end to end — the branching investigation logic, the evidence-first rules, the satellite validation step and the SQL generation — and wired it to IAG's geo databases through MCP servers.",
-          "The hardest part wasn't automation; it was trust: shaping guardrails so the agent proves every statement, refuses to write to production, and knows exactly when to hand a decision back to a person.",
+          "I identified the geo-correction workflow as a high-friction, high-volume problem — analysts spending hours on repetitive investigation work that followed the same logical steps every time. I designed and built the agent to automate that entirely.",
+          "That meant encoding the full investigation logic as explicit, rules-based skills; wiring the agent to live geo systems through MCP servers; and building in the guardrails that make it safe to trust — evidence at every step, read-only access, and a clear handoff to humans when it matters.",
         ],
       },
     ],
@@ -350,7 +321,7 @@ export const caseStudyPages: CaseStudyPage[] = [
       {
         heading: ["About the Project"],
         paragraphs: [
-          "Buying a first home in Australia is overwhelming — opaque prices, confusing grants, and agents who work for the seller. Brick AI is a conversational buyer's agent that turns messy property data into clear, confident decisions.",
+          "Buying a first home in Australia is overwhelming — unclear pricing, hidden property issues, scattered information, and agents working for the seller. Unless you're a property expert, it's hard to know what to look for, what you're missing, and how to avoid costly mistakes. Brick AI is an AI buyer's agent on your side, helping you turn messy property data into clear, confident decisions.",
           "Ask Brick anything in plain English — a suburb, a budget, a specific listing — and it answers with comparable sales, suburb trends, grant eligibility, hidden costs and a negotiation strategy, in seconds. No forms, no filters, no jargon.",
         ],
       },
@@ -428,25 +399,6 @@ export const caseStudyPages: CaseStudyPage[] = [
         ],
       },
       {
-        heading: ["Engineered to scale"],
-        paragraphs: [
-          "Brick AI is a modern, full-stack product: a Next.js 16 / React 19 app with an LLM-powered conversational core that streams generative-UI components, backed by Supabase for auth and data and Leaflet for interactive maps.",
-          "LLM calls are traced and evaluated with Langfuse for reliability and cost control, animations are handled with Framer Motion, and the whole app ships on Vercel with analytics.",
-        ],
-        techStack: [
-          "Next.js 16",
-          "React 19",
-          "TypeScript",
-          "LLM · Generative UI",
-          "Langfuse",
-          "Supabase",
-          "Leaflet",
-          "Framer Motion",
-          "Tailwind CSS",
-          "Vercel",
-        ],
-      },
-      {
         heading: ["My Role"],
         paragraphs: [
           "I designed and built Brick AI end-to-end — product and brand, the full front-end, the conversational AI layer and its generative-UI system, the property-data pipeline, maps, and authentication.",
@@ -499,7 +451,7 @@ export const caseStudyPages: CaseStudyPage[] = [
       { label: "Year", value: "2026" },
       { label: "Company", value: "IAG" },
     ],
-    lead: "One live view of active natural perils and the insurance exposure in their path — so teams can respond faster when it matters most.",
+    lead: "One live map connecting active natural perils with insurance exposure — so IAG can see who's affected, protect customers, and deploy the right people and support where they're needed most.",
     heroImage: {
       src: "/projects/work/situational-awareness-map/hero.png",
       alt: "Situational Awareness Map — live cyclone map with AI agent",
@@ -510,51 +462,37 @@ export const caseStudyPages: CaseStudyPage[] = [
       {
         heading: ["About the Project"],
         paragraphs: [
-          "When bushfires, floods, storms or cyclones strike, an insurer needs to know — instantly — which perils are active, where they're heading, and how much of the portfolio sits in their path. That intelligence is usually scattered across hazard feeds, spreadsheets and GIS tools.",
-          "The Situational Awareness Map brings it together: a real-time geospatial dashboard that fuses live peril data with IAG's policy exposure into a single, shared operating picture.",
+          "During major events, operational teams need to make fast decisions — but the information they need is scattered across weather, hazard, property and policy data. Building a clear picture of what's happening, who's affected, and where resources are needed most takes critical time they don't have.",
+          "The Situational Awareness Map closes that gap — bringing live peril data and insurance exposure into one shared view, so teams can understand impact, protect customers and coordinate the response faster.",
         ],
       },
       {
-        heading: ["One live picture", "of risk"],
+        heading: ["From hazard", "to exposure"],
         paragraphs: [
-          "Live feeds from fire and weather agencies are joined, in space and time, to the portfolio — turning \"where is the fire?\" into \"how many of our policies, and how much exposure, is in the footprint right now?\"",
-        ],
-        stats: [
-          { value: "12", label: "Active events tracked live" },
-          { value: "8,432", label: "Policies in event footprints" },
-          { value: "$2.14B", label: "Exposure at risk, in real time" },
-          { value: "< 1 min", label: "Data refresh cadence" },
-        ],
-        galleryCaption:
-          "Live peril layers, policy-exposure overlay and an event feed — one shared operating picture.",
-      },
-      {
-        heading: ["See exposure the", "moment it matters"],
-        paragraphs: [
-          "Every active event carries its own footprint. The map instantly counts the policies and dollar exposure inside it, ranks events by severity, and surfaces the ones that need attention first — so response, claims and customer teams work from the same facts.",
+          "Live feeds from fire and weather agencies are joined, in space and time, to the portfolio — turning \"Where is the fire?\" into \"Who is affected — and how much exposure is inside the footprint right now?\"",
           "What took hours of manual GIS work now updates continuously, on its own.",
         ],
+        stats: [
+          { value: "6", label: "Major events supported since launch" },
+          { value: "1M+", label: "Policy exposures analysed" },
+          { value: "30 min", label: "Data refresh cadence" },
+        ],
       },
       {
-        heading: ["Built for the", "operating room"],
+        heading: ["Built for the", "command center"],
         paragraphs: [
           "Designed as a calm, dark command dashboard — dense with signal, easy to read under pressure.",
         ],
         features: [
           {
             icon: "🔥",
-            title: "Live peril layers",
+            title: "Live event feed",
             body: "Bushfire, flood, storm, hail and cyclone feeds — toggle on and off, colour-coded by type.",
           },
           {
             icon: "🏠",
             title: "Exposure overlay",
             body: "Policy and dollar exposure rendered spatially, so concentration is visible at a glance.",
-          },
-          {
-            icon: "📟",
-            title: "Live event feed",
-            body: "Every active event ranked by severity, with policies and exposure in its footprint.",
           },
           {
             icon: "🎯",
@@ -566,41 +504,83 @@ export const caseStudyPages: CaseStudyPage[] = [
             title: "Portfolio concentration",
             body: "See where risk clusters across the portfolio before, during and after an event.",
           },
+        ],
+      },
+      {
+        heading: ["Understanding", "the response"],
+        paragraphs: [
+          "Before building the map, I worked with claims and operational teams to understand how decisions are made during a major event — what they need to know, where the information comes from, and what slows the response down.",
+        ],
+        steps: [
           {
-            icon: "⟳",
-            title: "Always current",
-            body: "Sub-minute refresh keeps the operating picture live as events evolve.",
+            no: "01",
+            title: "What's happening?",
+            body: "Where is the event moving? How severe is it, and which areas are in its path?",
+          },
+          {
+            no: "02",
+            title: "Who's affected?",
+            body: "Which customers and properties are exposed? How much of the portfolio is inside the footprint?",
+          },
+          {
+            no: "03",
+            title: "What do we do next?",
+            body: "Who needs to be alerted, and where should people and support be deployed?",
           },
         ],
       },
       {
-        heading: ["Engineered for", "real time"],
+        heading: ["When it", "became real"],
+        subheading: "260108 · VIC Longwood Bushfire",
         paragraphs: [
-          "Under the hood, the map is a spatial data pipeline: live hazard feeds from fire and weather agencies are ingested, cleaned and spatially joined against the policy portfolio in the cloud, then served to an interactive, map-first front end.",
+          "During the Longwood Bushfire, the map brought together live government fire data with IAG's property exposure to identify properties potentially in the affected area.",
+          "As the event developed, we went beyond the fire footprint — bringing in post-event aerial imagery from a third-party provider to assess visible property damage, reviewing around 2,000 potentially affected properties and supporting the analysis of around 900 claims.",
+          "This gave response and claims teams a faster, shared picture of where the fire was, which properties may have been damaged, and where attention was needed most.",
         ],
-        techStack: [
-          "CARTO · spatial analytics",
-          "Interactive web map",
-          "NSW RFS · BoM feeds",
-          "Spatial joins",
-          "Python",
-          "Cloud data pipeline",
-          "Policy & exposure data",
+        stats: [
+          { value: "2,000+", label: "Properties reviewed for potential damage" },
+          { value: "900+", label: "Claims supported in analysis" },
         ],
       },
       {
         heading: ["My Role"],
         paragraphs: [
-          "I designed and built the situational-awareness capability — from the spatial data pipeline that fuses live peril feeds with policy exposure, to the map-first dashboard that turns it into a decision tool.",
-          "I shaped how hazard and exposure data come together spatially, and how that complexity is distilled into a single, calm view teams can trust in the middle of an event.",
+          "I worked across the full journey — understanding how operational teams make decisions during major events, shaping the product around those needs, and building the geospatial capability that brought it to life.",
+          "That meant working across users, hazard data, spatial modelling, policy exposure and the map experience — turning a complex operational problem into a tool teams could actually use under pressure.",
+        ],
+        steps: [
+          {
+            no: "01",
+            title: "Hazard Feeds",
+            body: "Live peril data from NSW RFS, BoM and other government sources, ingested continuously.",
+          },
+          {
+            no: "02",
+            title: "Ingestion & Processing",
+            body: "Python pipeline cleans, normalises and spatially joins hazard data in the cloud.",
+          },
+          {
+            no: "03",
+            title: "Policy Exposure",
+            body: "Spatial join against IAG's full policy and claims portfolio to calculate exposure inside each footprint.",
+          },
+          {
+            no: "04",
+            title: "CARTO Map",
+            body: "Interactive, map-first dashboard served to response, claims and customer teams.",
+          },
+        ],
+        techStack: [
+          "CARTO",
+          "Python",
+          "Spatial SQL",
+          "Cloud Data Pipeline",
+          "NSW RFS",
+          "BoM",
+          "Policy & Claims Data",
         ],
       },
     ],
-    closing: {
-      heading: ["Faster answers,", "when it counts"],
-      paragraph:
-        "The Situational Awareness Map turns fragmented hazard data into one shared, live picture of risk — helping IAG protect customers and respond with confidence when severe weather hits.",
-    },
     footer: {
       headline: ["Know your risk,", "as it happens."],
       meta: "Situational Awareness Map · IAG · Geospatial Risk Intelligence",

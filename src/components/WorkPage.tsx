@@ -88,6 +88,14 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
                     </span>
                   ))}
                 </h2>
+                {section.subheading && (
+                  <p
+                    className="mt-2 font-mono text-xs font-semibold uppercase tracking-widest"
+                    style={{ color: page.accent }}
+                  >
+                    {section.subheading}
+                  </p>
+                )}
                 <div className="mt-5 space-y-4">
                   {section.paragraphs.map((p, k) => (
                     <p key={k} className="text-[15.5px] leading-relaxed text-muted">
@@ -142,7 +150,11 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
 
             {section.features && (
               <Reveal delay={0.05}>
-                <div className="mt-9 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div
+                  className={`mt-9 grid grid-cols-1 gap-4 sm:grid-cols-2 ${
+                    section.features.length % 3 === 0 ? "lg:grid-cols-3" : ""
+                  }`}
+                >
                   {section.features.map((feature) => (
                     <div
                       key={feature.title}
@@ -172,14 +184,20 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
                   {section.gallery.map((img) => (
                     <div
                       key={img.src}
-                      className="overflow-hidden rounded-2xl border border-border shadow-lg shadow-black/5"
+                      className={`overflow-hidden rounded-2xl border border-border shadow-lg shadow-black/5 ${
+                        section.gallery!.length === 1 ? "sm:col-span-2" : ""
+                      }`}
                     >
                       <Image
                         src={img.src}
                         alt={img.alt}
                         width={img.width}
                         height={img.height}
-                        sizes="(min-width: 640px) 552px, 100vw"
+                        sizes={
+                          section.gallery!.length === 1
+                            ? "(min-width: 640px) 1128px, 100vw"
+                            : "(min-width: 640px) 552px, 100vw"
+                        }
                         quality={90}
                         className="w-full"
                       />
@@ -217,6 +235,7 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
         ))}
 
         {/* CLOSING */}
+        {page.closing && (
         <section className="border-t border-border py-14 sm:py-16">
           <Reveal>
             <div className="max-w-2xl">
@@ -233,6 +252,7 @@ export default function WorkPage({ page }: { page: CaseStudyPage }) {
             </div>
           </Reveal>
         </section>
+        )}
       </div>
 
       {/* MORE PROJECTS */}
