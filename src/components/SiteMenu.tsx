@@ -30,8 +30,8 @@ export default function SiteMenu({ homeAnchors = true }: { homeAnchors?: boolean
       socialItems={socialItems}
       displaySocials
       displayItemNumbering
-      logoText={homeAnchors ? "Choosie Zhang" : "← Projects"}
-      logoLink={homeAnchors ? "#hero" : "/#case-studies"}
+      logoText={homeAnchors ? undefined : "← Projects"}
+      logoLink={homeAnchors ? undefined : "/#case-studies"}
       menuButtonColor="#111111"
       openMenuButtonColor="#111111"
       changeMenuColorOnOpen
