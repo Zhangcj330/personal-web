@@ -423,7 +423,7 @@ export const caseStudyPages: CaseStudyPage[] = [
     accent: "#7c5ce0",
     accentBg: "#ece7fb",
     facts: [
-      { label: "Category", value: "Geospatial Risk · Insurance" },
+      { label: "Category", value: "Geospatial Risk" },
       { label: "Role", value: "Data & Geospatial Engineering" },
       { label: "Year", value: "2026" },
       { label: "Company", value: "IAG" },
