@@ -19,6 +19,7 @@ import "./CardSwap.css";
 
 type CardProps = HTMLAttributes<HTMLDivElement> & {
   customClass?: string;
+  "data-card-swap-index"?: number;
 };
 
 type CardElementProps = CardProps & RefAttributes<HTMLDivElement>;
@@ -43,6 +44,7 @@ type CardSwapProps = {
   delay?: number;
   pauseOnHover?: boolean;
   onCardClick?: (idx: number) => void;
+  bringToFrontOnClick?: boolean;
   skewAmount?: number;
   easing?: "linear" | "elastic";
   children: ReactNode;
@@ -80,6 +82,7 @@ export default function CardSwap({
   delay = 5000,
   pauseOnHover = false,
   onCardClick,
+  bringToFrontOnClick = false,
   skewAmount = 6,
   easing = "elastic",
   children,
@@ -215,6 +218,48 @@ export default function CardSwap({
       intervalRef.current = window.setInterval(swap, delay);
     };
 
+    const bringToFront = (index: number) => {
+      if (order.current[0] === index) return;
+
+      clearSwapInterval();
+      timelineRef.current?.kill();
+
+      const nextOrder = [
+        index,
+        ...order.current.filter((cardIndex) => cardIndex !== index),
+      ];
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          order.current = nextOrder;
+          if (!hoveredRef.current) startSwapInterval();
+        },
+      });
+      timelineRef.current = timeline;
+
+      nextOrder.forEach((cardIndex, slotIndex) => {
+        const element = refs[cardIndex].current;
+        if (!element) return;
+        const slot = makeSlot(
+          slotIndex,
+          cardDistance,
+          verticalDistance,
+          refs.length,
+        );
+        timeline.set(element, { zIndex: slot.zIndex }, 0);
+        timeline.to(
+          element,
+          {
+            x: slot.x,
+            y: slot.y,
+            z: slot.z,
+            duration: 0.6,
+            ease: "power2.out",
+          },
+          0,
+        );
+      });
+    };
+
     const container = containerRef.current;
     const visibilityObserver = new IntersectionObserver(
       ([entry]) => {
@@ -247,11 +292,21 @@ export default function CardSwap({
       timelineRef.current?.play();
       if (visibleRef.current) startSwapInterval();
     };
+    const handleCardClick = (event: MouseEvent) => {
+      const card = (event.target as HTMLElement | null)?.closest<HTMLElement>(
+        "[data-card-swap-index]",
+      );
+      if (!card) return;
+      const index = Number(card.dataset.cardSwapIndex);
+      if (bringToFrontOnClick) bringToFront(index);
+      onCardClick?.(index);
+    };
 
     if (pauseOnHover && container) {
       container.addEventListener("mouseenter", pause);
       container.addEventListener("mouseleave", resume);
     }
+    container?.addEventListener("click", handleCardClick);
     return () => {
       clearSwapInterval();
       timelineRef.current?.kill();
@@ -260,8 +315,10 @@ export default function CardSwap({
         container.removeEventListener("mouseenter", pause);
         container.removeEventListener("mouseleave", resume);
       }
+      container?.removeEventListener("click", handleCardClick);
     };
   }, [
+    bringToFrontOnClick,
     cardDistance,
     config,
     delay,
@@ -279,17 +336,16 @@ export default function CardSwap({
       key: i,
       ref: refs[i],
       style: { width, height, ...child.props.style },
-      onClick: (event) => {
-        child.props.onClick?.(event);
-        onCardClick?.(i);
-      },
+      "data-card-swap-index": i,
     });
   });
 
   return (
     <div
       ref={containerRef}
-      className={`card-swap-container${onCardClick ? " is-clickable" : ""}`}
+      className={`card-swap-container${
+        onCardClick || bringToFrontOnClick ? " is-clickable" : ""
+      }`}
       style={{ width, height }}
     >
       {rendered}
