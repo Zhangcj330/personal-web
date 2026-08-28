@@ -450,7 +450,7 @@ export const caseStudyPages: CaseStudyPage[] = [
           "What took hours of manual GIS work now updates continuously, on its own.",
         ],
         stats: [
-          { value: "6", label: "Major events supported since launch" },
+          { value: "15", label: "Major events supported since launch" },
           { value: "1M+", label: "Policy exposures analysed" },
           { value: "30 min", label: "Data refresh cadence" },
         ],
