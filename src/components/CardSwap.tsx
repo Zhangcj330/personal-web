@@ -224,9 +224,11 @@ export default function CardSwap({
       clearSwapInterval();
       timelineRef.current?.kill();
 
+      const clickedPosition = order.current.indexOf(index);
+      if (clickedPosition < 0) return;
       const nextOrder = [
-        index,
-        ...order.current.filter((cardIndex) => cardIndex !== index),
+        ...order.current.slice(clickedPosition),
+        ...order.current.slice(0, clickedPosition),
       ];
       const timeline = gsap.timeline({
         onComplete: () => {
